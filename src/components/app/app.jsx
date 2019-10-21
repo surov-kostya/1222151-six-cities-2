@@ -19,8 +19,10 @@ const App = () => {
       {
         id: 3,
         name: `Canal View Prinsengracht`
-      },
-    ]} />
+      }
+    ]}
+    onTitleClick={() => {}}
+    />
   );
 };
 
