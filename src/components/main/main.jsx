@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Main = ({places}) => {
+const Main = ({places, onTitleClick}) => {
 
   const placesLayout = places.map((place) => {
     return (
@@ -34,7 +34,7 @@ const Main = ({places}) => {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{place.name}</a>
+            <a href="#" onClick={onTitleClick}>{place.name}</a>
           </h2>
           <p className="place-card__type">Apartment</p>
         </div>
@@ -145,7 +145,8 @@ const Main = ({places}) => {
 };
 
 Main.propTypes = {
-  places: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number, name: PropTypes.string}))
+  places: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number, name: PropTypes.string})),
+  onTitleClick: PropTypes.func
 };
 
 export default Main;
