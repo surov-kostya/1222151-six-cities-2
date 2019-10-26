@@ -11,6 +11,8 @@ class PlaceList extends PureComponent {
     this.state = {
       activeCard: undefined
     };
+
+    this._cardActivateHandler = this._cardActivateHandler.bind(this);
   }
 
   render() {
@@ -20,7 +22,7 @@ class PlaceList extends PureComponent {
           key={place.id}
           place={place}
           onTitleClick={this.props.onTitleClick}
-          onCardActivate={this._cardActivateHandler.bind(this)}
+          onCardActivate={this._cardActivateHandler}
         />)}
       </div>
     );
