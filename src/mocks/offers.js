@@ -9,7 +9,7 @@ export const placeType = shape({
   mark: string,
   rating: number,
   parametres: shape({
-    entire: string,
+    place: string,
     bedrooms: number,
     adults: number
   }),
@@ -35,7 +35,7 @@ export const places = [
     mark: `Premium`,
     rating: 4.8,
     parametres: {
-      entire: `Entire place`,
+      place: `Entire`,
       bedrooms: 3,
       adults: 4
     },

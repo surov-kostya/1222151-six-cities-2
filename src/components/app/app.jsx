@@ -1,6 +1,6 @@
 import React from 'react';
 import Main from '../main/main';
-import PlaceDetails from '../place-detais/place-details';
+import PlaceDetails from '../place-details/place-details';
 import PropTypes from 'prop-types';
 import {placeType} from '../../mocks/offers';
 
@@ -18,8 +18,7 @@ const getPageScreen = ({places}) => {
 };
 
 getPageScreen.propTypes = {
-  places: PropTypes.arrayOf(placeType),
-  placeDetails: PropTypes.any // todo
+  places: PropTypes.arrayOf(placeType)
 };
 
 const App = (props) => {

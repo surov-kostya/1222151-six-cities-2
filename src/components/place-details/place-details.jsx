@@ -83,7 +83,7 @@ const PlaceDetails = ({place}) => {
 
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {place.parametres.entire}
+                  {place.parametres.place} place
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {place.parametres.bedrooms} Bedrooms
