@@ -1,12 +1,29 @@
 import React from 'react';
 import Main from '../main/main';
+import PlaceDetails from '../place-detais/place-details';
 import PropTypes from 'prop-types';
 import {placeType} from '../../mocks/offers';
 
-const App = ({places}) => {
-  return (
-    <Main places={places} onTitleClick={() => {}}/>
-  );
+const getPageScreen = ({places}) => {
+  switch (location.pathname) {
+    case `/`:
+      return <Main places={places} onTitleClick={() => {}} />;
+    case `/place-details`:
+      return <PlaceDetails place={places[0]} />;
+    default:
+      return (
+        <h1>Page not found</h1>
+      );
+  }
+};
+
+getPageScreen.propTypes = {
+  places: PropTypes.arrayOf(placeType),
+  placeDetails: PropTypes.any // todo
+};
+
+const App = (props) => {
+  return getPageScreen(props);
 };
 
 App.propTypes = {
