@@ -6,7 +6,6 @@ import {placeType} from '../../mocks/offers';
 class PlaceList extends PureComponent {
   constructor(props) {
     super(props);
-    this.props = props;
 
     this.state = {
       activeCard: undefined
