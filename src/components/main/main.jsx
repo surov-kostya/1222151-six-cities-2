@@ -93,7 +93,9 @@ const Main = ({places, onTitleClick}) => {
                 <option className="places__option" value="top-rated">Top rated first</option>
               </select> */}
               </form>
-              <PlaceList places={places} onTitleClick={onTitleClick}/>
+              <div className="cities__places-list tabs__content">
+                <PlaceList places={places} onTitleClick={onTitleClick}/>
+              </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
