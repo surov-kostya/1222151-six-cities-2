@@ -1,26 +1,10 @@
 import React from 'react';
 import Main from './main';
 import renderer from 'react-test-renderer';
+import {places} from '../../mocks/offers';
 
 it(`Main renders correctly`, () => {
-  const tree = renderer.create(<Main places={[
-    {
-      id: 0,
-      name: `Beautiful && luxurious apartment at great location`
-    },
-    {
-      id: 1,
-      name: `Wood and stone place`
-    },
-    {
-      id: 2,
-      name: `Nice, cozy, warm big bed apartment`
-    },
-    {
-      id: 3,
-      name: `Canal View Prinsengracht`
-    },
-  ]}/>).toJSON();
+  const tree = renderer.create(<Main places={places}/>).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

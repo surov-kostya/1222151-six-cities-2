@@ -4,6 +4,6 @@ import PlaceList from './place-list';
 import {places} from '../../mocks/offers';
 
 it(`PlaceList renders correctly`, () => {
-  const tree = renderer.create(<PlaceList places={places}/>).toJSON();
+  const tree = renderer.create(<PlaceList places={places} onTitleClick={() => {}}/>).toJSON();
   expect(tree).toMatchSnapshot();
 });
