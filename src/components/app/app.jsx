@@ -9,7 +9,15 @@ const getPageScreen = ({places}) => {
     case `/`:
       return <Main places={places} onTitleClick={() => {}} />;
     case `/place-details`:
-      return <PlaceDetails place={places[0]} />;
+      return (
+        <PlaceDetails
+          place={places[0]}
+          neighbors={
+            places[0].neighborIds
+              .map((id) => places.find((place) => place.id === id))
+          }
+        />
+      );
     default:
       return (
         <h1>Page not found</h1>

@@ -16,14 +16,14 @@ class PlaceList extends PureComponent {
 
   render() {
     return (
-      <div className="cities__places-list places__list tabs__content">
+      <>
         {this.props.places.map((place) => <PlaceCard
           key={place.id}
           place={place}
           onTitleClick={this.props.onTitleClick}
           onCardActivate={this._cardActivateHandler}
         />)}
-      </div>
+      </>
     );
   }
 
@@ -38,3 +38,5 @@ PlaceList.propTypes = {
 };
 
 export default PlaceList;
+
+
