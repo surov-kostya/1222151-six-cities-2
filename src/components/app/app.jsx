@@ -18,6 +18,7 @@ const getPageScreen = ({places, cities, city, chooseCity, fetchOfferList}) => {
     case `/place-details`:
       return (
         <PlaceDetails
+          currentCity={city}
           place={places[0]}
           neighbors={
             places[0].neighborIds

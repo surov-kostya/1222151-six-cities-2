@@ -69,7 +69,7 @@ const Main = ({places, cities, currentCity, onTitleClick, onChooseCity}) => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={currentCity} places={places} />
+                <Map cityCoords={currentCity.coords} places={places} />
               </section>
             </div>
           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Main from './main';
-import {places} from '../../mocks/offers';
+import {cities} from '../../mocks/offers';
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -10,8 +10,11 @@ it(`Should emit event by click`, () => {
   const clickHandler = jest.fn();
 
   const main = shallow(<Main
-    places={places}
-    onTitleClick={clickHandler}
+    places={cities[0].places}
+    cities={cities.map((city) => ({id: city.id, coords: city.coords, name: city.name}))}
+    currentCity={{id: 0, coords: [1, 2], name: `City`}}
+    onTitleClick={() => { }}
+    onChooseCity={() => { }}
   />);
 
   const headerLinks = main.find(`.place-card__name > a`);

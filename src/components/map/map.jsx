@@ -1,6 +1,6 @@
 import React, {PureComponent, createRef} from 'react';
-import {placeType, cityType} from '../../mocks/offers';
-import {arrayOf} from 'prop-types';
+import {placeType} from '../../mocks/offers';
+import {arrayOf, number} from 'prop-types';
 import leaflet from 'leaflet';
 
 class Map extends PureComponent {
@@ -10,7 +10,7 @@ class Map extends PureComponent {
     this._map = createRef();
     this.map = undefined;
 
-    this.city = props.city.coords;
+    this.cityCoords = props.cityCoords;
     this.icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
@@ -27,7 +27,7 @@ class Map extends PureComponent {
   componentDidMount() {
     if (this._map.current) {
       this.map = leaflet.map(`map`, {
-        center: this.city,
+        center: this.cityCoords,
         zoom: this.zoom,
         zoomControl: false,
         marker: true
@@ -52,7 +52,7 @@ class Map extends PureComponent {
   }
 
   componentDidUpdate() {
-    this.map.setView(this.props.city.coords, this.zoom);
+    this.map.setView(this.cityCoords, this.zoom);
     this.props.places.forEach((place) => {
       leaflet
         .marker(place.coords, {icon: this.icon})
@@ -63,7 +63,7 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   places: arrayOf(placeType),
-  city: cityType
+  cityCoords: arrayOf(number)
 };
 
 export default Map;

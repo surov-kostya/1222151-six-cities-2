@@ -1,9 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import PlaceList from './place-list';
-import {places} from '../../mocks/offers';
+import {cities} from '../../mocks/offers';
 
 it(`PlaceList renders correctly`, () => {
-  const tree = renderer.create(<PlaceList places={places} onTitleClick={() => {}}/>).toJSON();
+  const tree = renderer.create(<PlaceList places={cities[0].places} onTitleClick={() => {}}/>).toJSON();
   expect(tree).toMatchSnapshot();
 });

@@ -2,10 +2,10 @@ import React from 'react';
 import ReviewList from '../review-list/review-list';
 import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
-import {placeType} from '../../mocks/offers';
+import {placeType, cityType} from '../../mocks/offers';
 import {arrayOf} from 'prop-types';
 
-const PlaceDetails = ({place, neighbors}) => {
+const PlaceDetails = ({place, neighbors, currentCity}) => {
   const gallery = place.gallerySrcs.map((picSrc) => (
     <div key={picSrc} className="property__image-wrapper">
       <img className="property__image" src={picSrc} alt="Photo studio" />
@@ -176,7 +176,7 @@ const PlaceDetails = ({place, neighbors}) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map places={neighbors} />
+            <Map places={neighbors} cityCoords={currentCity.coords}/>
           </section>
         </section>
         <div className="container">
@@ -194,6 +194,7 @@ const PlaceDetails = ({place, neighbors}) => {
 };
 
 PlaceDetails.propTypes = {
+  currentCity: cityType,
   place: placeType,
   neighbors: arrayOf(placeType)
 };
