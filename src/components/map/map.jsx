@@ -7,10 +7,10 @@ class Map extends PureComponent {
   constructor(props) {
     super(props);
     this.places = props.places;
+    this.cityCoords = props.cityCoords;
     this._map = createRef();
     this.map = undefined;
 
-    this.cityCoords = props.cityCoords;
     this.icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
@@ -33,7 +33,7 @@ class Map extends PureComponent {
         marker: true
       });
 
-      this.map.setView(this.city, this.zoom);
+      this.map.setView(this.cityCoords, this.zoom);
 
       leaflet
         .tileLayer(
@@ -53,7 +53,7 @@ class Map extends PureComponent {
 
   componentDidUpdate() {
     this.map.setView(this.cityCoords, this.zoom);
-    this.props.places.forEach((place) => {
+    this.places.forEach((place) => {
       leaflet
         .marker(place.coords, {icon: this.icon})
         .addTo(this.map);
