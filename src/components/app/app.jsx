@@ -1,16 +1,24 @@
 import React from 'react';
 import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
-import PropTypes from 'prop-types';
-import {placeType} from '../../mocks/offers';
+import {arrayOf, func} from 'prop-types';
+import {placeType, cityType} from '../../mocks/offers';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../reducer';
 
-const getPageScreen = ({places}) => {
+const getPageScreen = ({places, cities, city, chooseCity, fetchOfferList}) => {
   switch (location.pathname) {
     case `/`:
-      return <Main places={places} onTitleClick={() => {}} />;
+      return <Main places={places} cities={cities} currentCity={city} onTitleClick={() => {}}
+        onChooseCity={(chosenCity) => {
+          chooseCity(chosenCity);
+          fetchOfferList(chosenCity.id);
+        }}
+      />;
     case `/place-details`:
       return (
         <PlaceDetails
+          currentCity={city}
           place={places[0]}
           neighbors={
             places[0].neighborIds
@@ -26,7 +34,11 @@ const getPageScreen = ({places}) => {
 };
 
 getPageScreen.propTypes = {
-  places: PropTypes.arrayOf(placeType)
+  places: arrayOf(placeType),
+  cities: arrayOf(cityType),
+  city: cityType,
+  chooseCity: func,
+  fetchOfferList: func
 };
 
 const App = (props) => {
@@ -34,7 +46,18 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  places: PropTypes.arrayOf(placeType),
+  places: arrayOf(placeType),
+  cities: arrayOf(cityType),
+  city: cityType,
+  chooseCity: func,
+  fetchOfferList: func
 };
 
-export default App;
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
+const mapDispatchToProps = (dispatch) => ({
+  chooseCity: (city) => dispatch(ActionCreator.chooseCity(city)),
+  fetchOfferList: (chosenCityId) => dispatch(ActionCreator.fetchOfferList(chosenCityId))
+});
+
+export {App};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
