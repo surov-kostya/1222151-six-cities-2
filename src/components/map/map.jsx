@@ -13,6 +13,10 @@ class Map extends PureComponent {
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
     });
+    this.activeIcon = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
+      iconSize: [30, 30]
+    });
     this.zoom = 12;
   }
 
@@ -53,7 +57,7 @@ class Map extends PureComponent {
     this.map.setView(this.props.cityCoords, this.zoom);
     this.props.places.forEach((place) => {
       leaflet
-        .marker(place.coords, {icon: this.icon})
+        .marker(place.coords, {icon: place.id === this.props.activePlace.id ? this.activeIcon : this.icon})
         .addTo(this.map);
     });
   }
@@ -61,7 +65,8 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   places: arrayOf(placeType),
-  cityCoords: arrayOf(number)
+  cityCoords: arrayOf(number),
+  activePlace: placeType
 };
 
 export default Map;

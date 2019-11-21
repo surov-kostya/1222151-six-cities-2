@@ -183,7 +183,7 @@ const PlaceDetails = ({place, neighbors, currentCity}) => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlaceList places={neighbors} onTitleClick={() => {}}/>
+              <PlaceList places={neighbors} onTitleClick={() => { }} onCardActivate={() => {}}/>
             </div>
           </section>
         </div>
