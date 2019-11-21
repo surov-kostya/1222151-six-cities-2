@@ -6,8 +6,6 @@ import leaflet from 'leaflet';
 class Map extends PureComponent {
   constructor(props) {
     super(props);
-    this.places = props.places;
-    this.cityCoords = props.cityCoords;
     this._map = createRef();
     this.map = undefined;
 
@@ -27,13 +25,13 @@ class Map extends PureComponent {
   componentDidMount() {
     if (this._map.current) {
       this.map = leaflet.map(`map`, {
-        center: this.cityCoords,
+        center: this.props.cityCoords,
         zoom: this.zoom,
         zoomControl: false,
         marker: true
       });
 
-      this.map.setView(this.cityCoords, this.zoom);
+      this.map.setView(this.props.cityCoords, this.zoom);
 
       leaflet
         .tileLayer(
@@ -43,7 +41,7 @@ class Map extends PureComponent {
             })
         .addTo(this.map);
 
-      this.places.forEach((place) => {
+      this.props.places.forEach((place) => {
         leaflet
           .marker(place.coords, {icon: this.icon})
           .addTo(this.map);
@@ -52,8 +50,8 @@ class Map extends PureComponent {
   }
 
   componentDidUpdate() {
-    this.map.setView(this.cityCoords, this.zoom);
-    this.places.forEach((place) => {
+    this.map.setView(this.props.cityCoords, this.zoom);
+    this.props.places.forEach((place) => {
       leaflet
         .marker(place.coords, {icon: this.icon})
         .addTo(this.map);
