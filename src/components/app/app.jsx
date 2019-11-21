@@ -8,15 +8,15 @@ import {ActionCreator} from '../../reducer';
 import {variantType} from '../../mocks/sort-variations';
 
 const sortPlaces = (places, sortVariant) => {
-  switch (sortVariant.name) {
+  switch (sortVariant && sortVariant.name) {
     case `Price: low to high`:
-      return places.sort((placeA, placeB) => placeA.price - placeB.price);
+      return places.slice().sort((placeA, placeB) => placeA.price - placeB.price);
 
     case `Price: high to low`:
-      return places.sort((placeA, placeB) => placeB.price - placeA.price);
+      return places.slice().sort((placeA, placeB) => placeB.price - placeA.price);
 
     case `Top rated first`:
-      return places.sort((placeA, placeB) => placeB.rating - placeA.rating);
+      return places.slice().sort((placeA, placeB) => placeB.rating - placeA.rating);
     default:
       return places;
   }

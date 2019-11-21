@@ -40,7 +40,8 @@ Array [
           <b
             className="place-card__price-value"
           >
-            €120
+            €
+            20
           </b>
           <span
             className="place-card__price-text"
@@ -77,7 +78,7 @@ Array [
           <span
             style={
               Object {
-                "width": "93%",
+                "width": "42.00000000000001%",
               }
             }
           />
@@ -143,7 +144,8 @@ Array [
           <b
             className="place-card__price-value"
           >
-            €120
+            €
+            132
           </b>
           <span
             className="place-card__price-text"
@@ -180,7 +182,7 @@ Array [
           <span
             style={
               Object {
-                "width": "93%",
+                "width": "78%",
               }
             }
           />
@@ -246,7 +248,8 @@ Array [
           <b
             className="place-card__price-value"
           >
-            €120
+            €
+            180
           </b>
           <span
             className="place-card__price-text"
@@ -283,7 +286,7 @@ Array [
           <span
             style={
               Object {
-                "width": "93%",
+                "width": "100%",
               }
             }
           />
@@ -349,7 +352,8 @@ Array [
           <b
             className="place-card__price-value"
           >
-            €120
+            €
+            112
           </b>
           <span
             className="place-card__price-text"
@@ -386,7 +390,7 @@ Array [
           <span
             style={
               Object {
-                "width": "93%",
+                "width": "20%",
               }
             }
           />

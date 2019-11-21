@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SortVariations rednders correct 1`] = `
+<div
+  action="#"
+  className="places__sorting"
+  method="get"
+>
+  <span
+    className="places__sorting-caption"
+  >
+    Sort by
+  </span>
+  <button
+    className="places__sorting-type"
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundColor": "transparent",
+        "border": "none",
+        "outline": "none",
+      }
+    }
+    tabIndex="0"
+  >
+    Popular
+    <svg
+      className="places__sorting-arrow"
+      height="4"
+      width="7"
+    >
+      <use
+        xlinkHref="#icon-arrow-select"
+      />
+    </svg>
+  </button>
+</div>
+`;

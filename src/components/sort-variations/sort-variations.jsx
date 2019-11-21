@@ -22,7 +22,7 @@ class SortVariations extends PureComponent {
         <button className="places__sorting-type" tabIndex="0"
           style={{border: `none`, backgroundColor: `transparent`, outline: `none`}}
           onClick={this._toggleDropdownHandler}>
-          {this.props.activeSortVariant.name}
+          {this.props.activeSortVariant && this.props.activeSortVariant.name}
           <svg className="places__sorting-arrow" width="7" height="4">
             <use xlinkHref="#icon-arrow-select"></use>
           </svg>
