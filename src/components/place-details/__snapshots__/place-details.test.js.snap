@@ -197,7 +197,7 @@ exports[`PlaceDetails renders correctly 1`] = `
             <span
               className="property__rating-value rating__value"
             >
-              4.8
+              2.1
             </span>
           </div>
           <ul
@@ -230,7 +230,7 @@ exports[`PlaceDetails renders correctly 1`] = `
               className="property__price-value"
             >
               €
-              120
+              20
             </b>
             <span
               className="property__price-text"
@@ -771,7 +771,8 @@ exports[`PlaceDetails renders correctly 1`] = `
                   <b
                     className="place-card__price-value"
                   >
-                    €120
+                    €
+                    132
                   </b>
                   <span
                     className="place-card__price-text"
@@ -808,7 +809,7 @@ exports[`PlaceDetails renders correctly 1`] = `
                   <span
                     style={
                       Object {
-                        "width": "93%",
+                        "width": "78%",
                       }
                     }
                   />
@@ -874,7 +875,8 @@ exports[`PlaceDetails renders correctly 1`] = `
                   <b
                     className="place-card__price-value"
                   >
-                    €120
+                    €
+                    180
                   </b>
                   <span
                     className="place-card__price-text"
@@ -911,7 +913,7 @@ exports[`PlaceDetails renders correctly 1`] = `
                   <span
                     style={
                       Object {
-                        "width": "93%",
+                        "width": "100%",
                       }
                     }
                   />
@@ -977,7 +979,8 @@ exports[`PlaceDetails renders correctly 1`] = `
                   <b
                     className="place-card__price-value"
                   >
-                    €120
+                    €
+                    112
                   </b>
                   <span
                     className="place-card__price-text"
@@ -1014,7 +1017,7 @@ exports[`PlaceDetails renders correctly 1`] = `
                   <span
                     style={
                       Object {
-                        "width": "93%",
+                        "width": "20%",
                       }
                     }
                   />

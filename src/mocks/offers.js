@@ -58,13 +58,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/map.jpg`],
         mark: `Premium`,
-        rating: 4.8,
+        rating: 2.1,
         parametres: {
           place: `Entire`,
           bedrooms: 3,
           adults: 4
         },
-        price: 120,
+        price: 20,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -122,7 +122,7 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
         mark: `Premium`,
-        rating: 4.9,
+        rating: 3.9,
         parametres: {
           entire: `Entire place`,
           bedrooms: 3,
@@ -186,7 +186,7 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
         mark: `Premium`,
-        rating: 3.8,
+        rating: 5.0,
         parametres: {
           entire: `Entire place`,
           bedrooms: 3,
@@ -250,7 +250,7 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
         mark: `Premium`,
-        rating: 4.0,
+        rating: 1.0,
         parametres: {
           entire: `Entire place`,
           bedrooms: 3,
@@ -321,13 +321,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/map.jpg`],
         mark: `Premium`,
-        rating: 4.8,
+        rating: 2.1,
         parametres: {
           place: `Entire`,
           bedrooms: 3,
           adults: 4
         },
-        price: 120,
+        price: 30,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -385,13 +385,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
         mark: `Premium`,
-        rating: 4.9,
+        rating: 3.0,
         parametres: {
           entire: `Entire place`,
           bedrooms: 3,
           adults: 4
         },
-        price: 132,
+        price: 32,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -455,7 +455,7 @@ export const cities = [
           bedrooms: 3,
           adults: 4
         },
-        price: 180,
+        price: 10,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -513,13 +513,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
         mark: `Premium`,
-        rating: 4.0,
+        rating: 5.0,
         parametres: {
           entire: `Entire place`,
           bedrooms: 3,
           adults: 4
         },
-        price: 112,
+        price: 1122,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -584,13 +584,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/map.jpg`],
         mark: `Premium`,
-        rating: 4.8,
+        rating: 0.5,
         parametres: {
           place: `Entire`,
           bedrooms: 3,
           adults: 4
         },
-        price: 120,
+        price: 1120,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -654,7 +654,7 @@ export const cities = [
           bedrooms: 3,
           adults: 4
         },
-        price: 132,
+        price: 1323,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -712,13 +712,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
         mark: `Premium`,
-        rating: 3.8,
+        rating: 3.5,
         parametres: {
           entire: `Entire place`,
           bedrooms: 3,
           adults: 4
         },
-        price: 180,
+        price: 1800,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -776,13 +776,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
         mark: `Premium`,
-        rating: 4.0,
+        rating: 2.5,
         parametres: {
           entire: `Entire place`,
           bedrooms: 3,
           adults: 4
         },
-        price: 112,
+        price: 1142,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -847,13 +847,13 @@ export const cities = [
         },
         gallerySrcs: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/map.jpg`],
         mark: `Premium`,
-        rating: 4.8,
+        rating: 1.5,
         parametres: {
           place: `Entire`,
           bedrooms: 3,
           adults: 4
         },
-        price: 120,
+        price: 40,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -917,7 +917,7 @@ export const cities = [
           bedrooms: 3,
           adults: 4
         },
-        price: 132,
+        price: 1432,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -981,7 +981,7 @@ export const cities = [
           bedrooms: 3,
           adults: 4
         },
-        price: 180,
+        price: 1804,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,
@@ -1045,7 +1045,7 @@ export const cities = [
           bedrooms: 3,
           adults: 4
         },
-        price: 112,
+        price: 4112,
         features: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
         host: {
           id: 100,

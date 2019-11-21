@@ -50,33 +50,53 @@ describe(`Reducer works correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
     expect(reducer(undefined, {})).toEqual({
       city: {id: 0, name: `Paris`, coords: [48.856663, 2.351556]},
-      places: cities[0].places
+      places: cities[0].places,
+      mainSortVariant: {
+        id: 0,
+        name: `Popular`
+      }
     });
   });
 
   it(`Reducer should change city`, () => {
     expect(reducer({
       city: {id: 0, name: `Paris`, coords: [48.856663, 2.351556]},
-      places: cities[0].places
+      places: cities[0].places,
+      mainSortVariant: {
+        id: 0,
+        name: `Popular`
+      }
     }, {
       type: ActionType.CHANGE_CITY,
       payload: CITY,
     })).toEqual({
       city: CITY,
-      places: cities[0].places
+      places: cities[0].places,
+      mainSortVariant: {
+        id: 0,
+        name: `Popular`
+      }
     });
   });
 
   it(`Reducer should fetch places`, () => {
     expect(reducer({
       city: {id: 0, name: `Paris`, coords: [48.856663, 2.351556]},
-      places: cities[0].places
+      places: cities[0].places,
+      mainSortVariant: {
+        id: 0,
+        name: `Popular`
+      }
     }, {
       type: ActionType.GET_OFFER_LIST,
       payload: cities[CITY.id].places,
     })).toEqual({
       city: {id: 0, name: `Paris`, coords: [48.856663, 2.351556]},
-      places: cities[CITY.id].places
+      places: cities[CITY.id].places,
+      mainSortVariant: {
+        id: 0,
+        name: `Popular`
+      }
     });
   });
 });
