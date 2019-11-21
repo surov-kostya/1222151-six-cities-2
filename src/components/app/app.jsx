@@ -7,6 +7,21 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../reducer';
 import {variantType} from '../../mocks/sort-variations';
 
+const sortPlaces = (places, sortVariant) => {
+  switch (sortVariant.name) {
+    case `Price: low to high`:
+      return places.sort((placeA, placeB) => placeA.price - placeB.price);
+
+    case `Price: high to low`:
+      return places.sort((placeA, placeB) => placeB.price - placeA.price);
+
+    case `Top rated first`:
+      return places.sort((placeA, placeB) => placeB.rating - placeA.rating);
+    default:
+      return places;
+  }
+};
+
 const getPageScreen = ({
   places,
   cities,
@@ -20,7 +35,7 @@ const getPageScreen = ({
   switch (location.pathname) {
     case `/`:
       return <Main
-        places={places}
+        places={sortPlaces(places, mainSortVariant)}
         cities={cities}
         currentCity={city}
         onTitleClick={() => {}}

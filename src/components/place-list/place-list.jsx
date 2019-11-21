@@ -7,7 +7,6 @@ class PlaceList extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.places = props.places;
     this.onTitleClick = props.onTitleClick;
 
     this.state = {
@@ -20,7 +19,7 @@ class PlaceList extends PureComponent {
   render() {
     return (
       <>
-        {this.places.map((place) => <PlaceCard
+        {this.props.places.map((place) => <PlaceCard
           key={place.id}
           place={place}
           onTitleClick={this.onTitleClick}
