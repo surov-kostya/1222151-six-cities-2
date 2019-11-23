@@ -8,7 +8,7 @@ import {cities} from './mocks/offers';
 import {variations} from './mocks/sort-variations';
 
 const init = () => {
-  const store = createStore(reducer);
+  const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f);
 
   ReactDOM.render(
       <Provider store={store}>
