@@ -3,6 +3,7 @@ import {arrayOf, func} from 'prop-types';
 import {placeType, cityType} from '../../mocks/offers';
 import CityList from '../city-list/city-list';
 import CityPlaces from '../city-places/city-places';
+import MainEmpty from '../main-empty/main-empty';
 import {variantType} from '../../mocks/sort-variations';
 import withActiveItem from '../../hocs/with-active-item/with-active-item';
 
@@ -36,7 +37,9 @@ const Main = (props) => {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={
+        `page__main page__main--index ${places.length && `page__main--index-empty`}`
+      }>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -48,14 +51,16 @@ const Main = (props) => {
           </section>
         </div>
         <div className="cities">
-          <CityPlacesWrapped
-            places={places}
-            currentCity={currentCity}
-            onSort={onSort}
-            activeSortVariant={activeSortVariant}
-            sortVariations={sortVariations}
-            onTitleClick={onTitleClick}
-          />
+          {places.length
+            ? <CityPlacesWrapped
+              places={places}
+              currentCity={currentCity}
+              onSort={onSort}
+              activeSortVariant={activeSortVariant}
+              sortVariations={sortVariations}
+              onTitleClick={onTitleClick}
+            />
+            : <MainEmpty currentCity={currentCity} />}
         </div>
       </main>
     </div>
