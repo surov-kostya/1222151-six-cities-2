@@ -57,7 +57,7 @@ exports[`App renders correctly 1`] = `
     </div>
   </header>
   <main
-    className="page__main page__main--index"
+    className="page__main page__main--index page__main--index-empty"
   >
     <h1
       className="visually-hidden"
