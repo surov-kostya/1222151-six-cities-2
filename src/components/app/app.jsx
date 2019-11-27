@@ -4,7 +4,7 @@ import PlaceDetails from '../place-details/place-details';
 import {arrayOf, func} from 'prop-types';
 import {placeType, cityType} from '../../mocks/offers';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../reducer';
+import {ActionCreator, Operation} from '../../reducer';
 import {variantType} from '../../mocks/sort-variations';
 
 const sortPlaces = (places, sortVariant) => {
@@ -41,7 +41,7 @@ const getPageScreen = ({
         onTitleClick={() => {}}
         onChooseCity={(chosenCity) => {
           chooseCity(chosenCity);
-          fetchOfferList(chosenCity.id);
+          fetchOfferList(chosenCity.name);
         }}
         activeSortVariant={mainSortVariant}
         onSort={(variantId) => sortMain(variantId)}
@@ -94,7 +94,7 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
 const mapDispatchToProps = (dispatch) => ({
   chooseCity: (city) => dispatch(ActionCreator.chooseCity(city)),
-  fetchOfferList: (chosenCityId) => dispatch(ActionCreator.fetchOfferList(chosenCityId)),
+  fetchOfferList: (cityName) => dispatch(Operation.fetchOfferList(cityName)),
   sortMain: (variantId) => dispatch(ActionCreator.sortMain(variantId))
 });
 
