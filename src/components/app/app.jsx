@@ -1,10 +1,11 @@
 import React from 'react';
 import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
-import {arrayOf, func} from 'prop-types';
+import {arrayOf, func, shape} from 'prop-types';
 import {placeType, cityType} from '../../mocks/offers';
 import {connect} from 'react-redux';
-import {ActionCreator, Operation} from '../../reducer';
+import {Operation} from '../../reducers/index';
+import {ActionCreator} from '../../reducers/application/application';
 import {variantType} from '../../mocks/sort-variations';
 
 const sortPlaces = (places, sortVariant) => {
@@ -23,15 +24,18 @@ const sortPlaces = (places, sortVariant) => {
 };
 
 const getPageScreen = ({
-  places,
-  cities,
-  city,
+  data,
+  application,
   chooseCity,
   fetchOfferList,
-  mainSortVariant,
   sortMain,
   sortVariations
 }) => {
+  const places = data.places;
+  const cities = data.cities;
+  const city = application.city;
+  const mainSortVariant = application.mainSortVariant;
+
   switch (location.pathname) {
     case `/`:
       return <Main
@@ -48,16 +52,11 @@ const getPageScreen = ({
         sortVariations={sortVariations}
       />;
     case `/place-details`:
-      return (
-        <PlaceDetails
-          currentCity={city}
-          place={places[0]}
-          neighbors={
-            places[0].neighborIds
-              .map((id) => places.find((place) => place.id === id))
-          }
-        />
-      );
+      return <PlaceDetails
+        currentCity={city}
+        place={places[0]}
+        neighbors={places.splice(0, 1)}
+      />;
     default:
       return (
         <h1>Page not found</h1>
@@ -66,12 +65,10 @@ const getPageScreen = ({
 };
 
 getPageScreen.propTypes = {
-  places: arrayOf(placeType),
-  cities: arrayOf(cityType),
-  city: cityType,
+  data: shape({places: arrayOf(placeType), cities: arrayOf(cityType)}),
+  application: shape({city: cityType, mainSortVariant: variantType}),
   chooseCity: func,
   fetchOfferList: func,
-  mainSortVariant: variantType,
   sortMain: func,
   sortVariations: arrayOf(variantType)
 };
@@ -81,12 +78,10 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  places: arrayOf(placeType),
-  cities: arrayOf(cityType),
-  city: cityType,
+  data: shape({places: arrayOf(placeType), cities: arrayOf(cityType)}),
+  application: shape({city: cityType, mainSortVariant: variantType}),
   chooseCity: func,
   fetchOfferList: func,
-  mainSortVariant: variantType,
   sortMain: func,
   sortVariations: arrayOf(variantType)
 };

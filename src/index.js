@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import {reducer, Operation} from './reducer';
-import {cities} from './mocks/offers';
+import {reducer, Operation} from './reducers/index';
 import {variations} from './mocks/sort-variations';
 import {compose} from 'recompose';
 import thunk from 'redux-thunk';
@@ -26,7 +25,6 @@ const init = () => {
   ReactDOM.render(
       <Provider store={store}>
         <App
-          cities={cities.map((city) => ({id: city.id, name: city.name, coords: city.coords}))}
           sortVariations={variations}
         />
       </Provider>,

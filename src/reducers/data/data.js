@@ -1,11 +1,8 @@
-// import {cities} from './mocks/offers';
-import {variations} from './mocks/sort-variations';
+import {ActionCreator as AppActionCreator} from '../application/application';
 
 const initialState = {
-  city: {id: -1, name: `temp`, coords: []},
   cities: [],
   places: [],
-  mainSortVariant: variations[0]
 };
 
 export const getInitState = () => {
@@ -13,27 +10,12 @@ export const getInitState = () => {
 };
 
 export const ActionType = {
-  SORT_MAIN: `SORT_MAIN`,
-  CHANGE_CITY: `CHANGE_CITY`,
   GET_OFFER_LIST: `GET_ORDER_LIST`,
   GET_CITY_LIST: `GET_CITY_LIST`,
   SERVER_ERROR: `SERVER_ERROR`
 };
 
 export const ActionCreator = {
-  sortMain: (variantId) => {
-    const variant = variations.find((item) => item.id === variantId);
-    return {
-      type: ActionType.SORT_MAIN,
-      payload: variant || initialState.mainSortVariant
-    };
-  },
-
-  chooseCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city
-  }),
-
   fetchOfferList: (places) => {
     return {
       type: ActionType.GET_OFFER_LIST,
@@ -99,8 +81,11 @@ export const Operation = {
             coords: [offer.city.location.latitude, offer.city.location.longitude]
           }));
 
+          console.log("TCL: AppActionCreator", AppActionCreator)
           dispatch(ActionCreator.fetchCityList(cities));
-          dispatch(ActionCreator.chooseCity(cities[0]));
+          dispatch(AppActionCreator.chooseCity(cities[0]));
+
+
 
           const defCityPlaces = response.data.filter((place) => place.city.name === cities[0].name).map(offerBuilder);
 
@@ -113,10 +98,6 @@ export const Operation = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.SORT_MAIN:
-      return Object.assign({}, state, {mainSortVariant: action.payload});
-    case ActionType.CHANGE_CITY:
-      return Object.assign({}, state, {city: action.payload});
     case ActionType.GET_OFFER_LIST:
       return Object.assign({}, state, {places: action.payload});
     case ActionType.GET_CITY_LIST:

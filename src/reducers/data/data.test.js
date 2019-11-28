@@ -1,37 +1,10 @@
-import {ActionCreator, ActionType, reducer, Operation, getInitState} from './reducer';
-import createAPI from './api';
-import {cities} from './mocks/offers';
+import {ActionCreator, ActionType, reducer, Operation, getInitState} from './data';
+import createAPI from '../../api';
+import {cities} from '../../mocks/offers';
 import MockAdapter from 'axios-mock-adapter';
 
-describe(`Business logic is correct`, () => {
-  it(`Render places of a city on navigate`, () => {
-    const CHOSEN_CITY_ID = 0;
-    const mockFunc = (chosenCityId) => {
-      return cities.find((city) =>
-        city.id === chosenCityId
-      ).places;
-    };
-    expect(JSON.stringify(mockFunc(CHOSEN_CITY_ID)) ===
-      JSON.stringify(cities[CHOSEN_CITY_ID].places)
-    ).toBe(true);
-  });
-});
-
 describe(`Action creators work correctly`, () => {
-  const CITY = {
-    id: 0,
-    name: `Paris`,
-    coords: [48.856663, 2.351556]
-  };
-
   const PLACES = cities[0].places;
-
-  it(`Action creator for changing city`, () => {
-    expect(ActionCreator.chooseCity(CITY)).toEqual({
-      type: ActionType.CHANGE_CITY,
-      payload: CITY
-    });
-  });
 
   it(`Action creator for download places`, () => {
     expect(ActionCreator.fetchOfferList(PLACES)).toEqual({
@@ -49,17 +22,6 @@ describe(`Reducer works correctly`, () => {
   };
 
   const initState = getInitState();
-
-  it(`Reducer without additional parameters should return initial state`, () => {
-    expect(reducer(undefined, {})).toEqual(initState);
-  });
-
-  it(`Reducer should change city`, () => {
-    expect(reducer(initState, {
-      type: ActionType.CHANGE_CITY,
-      payload: CITY,
-    })).toEqual(Object.assign({}, initState, {city: CITY}));
-  });
 
   it(`Reducer should fetch places`, () => {
     expect(reducer(initState, {
@@ -178,7 +140,6 @@ describe(`fetchOffers function`, () => {
 
     return offersLoader(dispatch, undefined, api)
       .then(() => {
-        // expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledWith({
           type: ActionType.GET_OFFER_LIST,
           payload: [resultMockPlace]
