@@ -1,7 +1,6 @@
 import React from 'react';
 import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
-import MainEmpty from '../main-empty/main-empty';
 import {arrayOf, func, shape} from 'prop-types';
 import {placeType, cityType} from '../../mocks/offers';
 import {connect} from 'react-redux';
@@ -66,7 +65,7 @@ const getPageScreen = ({
     }
   }
 
-  return <MainEmpty/>;
+  return <h1>Loading...</h1>;
 };
 
 getPageScreen.propTypes = {
