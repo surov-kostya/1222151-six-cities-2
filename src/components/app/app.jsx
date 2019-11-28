@@ -1,6 +1,7 @@
 import React from 'react';
 import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
+import MainEmpty from '../main-empty/main-empty';
 import {arrayOf, func, shape} from 'prop-types';
 import {placeType, cityType} from '../../mocks/offers';
 import {connect} from 'react-redux';
@@ -31,37 +32,41 @@ const getPageScreen = ({
   sortMain,
   sortVariations
 }) => {
-  const places = data.places;
-  const cities = data.cities;
-  const city = application.city;
-  const mainSortVariant = application.mainSortVariant;
+  if (data && application) {
+    const places = data.places;
+    const cities = data.cities;
+    const city = application.city;
+    const mainSortVariant = application.mainSortVariant;
 
-  switch (location.pathname) {
-    case `/`:
-      return <Main
-        places={sortPlaces(places, mainSortVariant)}
-        cities={cities}
-        currentCity={city}
-        onTitleClick={() => {}}
-        onChooseCity={(chosenCity) => {
-          chooseCity(chosenCity);
-          fetchOfferList(chosenCity.name);
-        }}
-        activeSortVariant={mainSortVariant}
-        onSort={(variantId) => sortMain(variantId)}
-        sortVariations={sortVariations}
-      />;
-    case `/place-details`:
-      return <PlaceDetails
-        currentCity={city}
-        place={places[0]}
-        neighbors={places.splice(0, 1)}
-      />;
-    default:
-      return (
-        <h1>Page not found</h1>
-      );
+    switch (location.pathname) {
+      case `/`:
+        return <Main
+          places={sortPlaces(places, mainSortVariant)}
+          cities={cities}
+          currentCity={city}
+          onTitleClick={() => {}}
+          onChooseCity={(chosenCity) => {
+            chooseCity(chosenCity);
+            fetchOfferList(chosenCity.name);
+          }}
+          activeSortVariant={mainSortVariant}
+          onSort={(variantId) => sortMain(variantId)}
+          sortVariations={sortVariations}
+        />;
+      case `/place-details`:
+        return <PlaceDetails
+          currentCity={city}
+          place={places[0]}
+          neighbors={places.splice(0, 1)}
+        />;
+      default:
+        return (
+          <h1>Page not found</h1>
+        );
+    }
   }
+
+  return <MainEmpty/>;
 };
 
 getPageScreen.propTypes = {

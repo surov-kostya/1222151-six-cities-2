@@ -81,11 +81,8 @@ export const Operation = {
             coords: [offer.city.location.latitude, offer.city.location.longitude]
           }));
 
-          console.log("TCL: AppActionCreator", AppActionCreator)
           dispatch(ActionCreator.fetchCityList(cities));
           dispatch(AppActionCreator.chooseCity(cities[0]));
-
-
 
           const defCityPlaces = response.data.filter((place) => place.city.name === cities[0].name).map(offerBuilder);
 
