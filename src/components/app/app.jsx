@@ -1,10 +1,11 @@
 import React from 'react';
 import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
-import {arrayOf, func} from 'prop-types';
+import {arrayOf, func, shape} from 'prop-types';
 import {placeType, cityType} from '../../mocks/offers';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../reducer';
+import {Operation} from '../../reducers/index';
+import {ActionCreator} from '../../reducers/application/application';
 import {variantType} from '../../mocks/sort-variations';
 
 const sortPlaces = (places, sortVariant) => {
@@ -23,55 +24,55 @@ const sortPlaces = (places, sortVariant) => {
 };
 
 const getPageScreen = ({
-  places,
-  cities,
-  city,
+  data,
+  application,
   chooseCity,
   fetchOfferList,
-  mainSortVariant,
   sortMain,
   sortVariations
 }) => {
-  switch (location.pathname) {
-    case `/`:
-      return <Main
-        places={sortPlaces(places, mainSortVariant)}
-        cities={cities}
-        currentCity={city}
-        onTitleClick={() => {}}
-        onChooseCity={(chosenCity) => {
-          chooseCity(chosenCity);
-          fetchOfferList(chosenCity.id);
-        }}
-        activeSortVariant={mainSortVariant}
-        onSort={(variantId) => sortMain(variantId)}
-        sortVariations={sortVariations}
-      />;
-    case `/place-details`:
-      return (
-        <PlaceDetails
+  if (data && application) {
+    const places = data.places;
+    const cities = data.cities;
+    const city = application.city;
+    const mainSortVariant = application.mainSortVariant;
+
+    switch (location.pathname) {
+      case `/`:
+        return <Main
+          places={sortPlaces(places, mainSortVariant)}
+          cities={cities}
+          currentCity={city}
+          onTitleClick={() => {}}
+          onChooseCity={(chosenCity) => {
+            chooseCity(chosenCity);
+            fetchOfferList(chosenCity.name);
+          }}
+          activeSortVariant={mainSortVariant}
+          onSort={(variantId) => sortMain(variantId)}
+          sortVariations={sortVariations}
+        />;
+      case `/place-details`:
+        return <PlaceDetails
           currentCity={city}
           place={places[0]}
-          neighbors={
-            places[0].neighborIds
-              .map((id) => places.find((place) => place.id === id))
-          }
-        />
-      );
-    default:
-      return (
-        <h1>Page not found</h1>
-      );
+          neighbors={places.splice(0, 1)}
+        />;
+      default:
+        return (
+          <h1>Page not found</h1>
+        );
+    }
   }
+
+  return <h1>Loading...</h1>;
 };
 
 getPageScreen.propTypes = {
-  places: arrayOf(placeType),
-  cities: arrayOf(cityType),
-  city: cityType,
+  data: shape({places: arrayOf(placeType), cities: arrayOf(cityType)}),
+  application: shape({city: cityType, mainSortVariant: variantType}),
   chooseCity: func,
   fetchOfferList: func,
-  mainSortVariant: variantType,
   sortMain: func,
   sortVariations: arrayOf(variantType)
 };
@@ -81,12 +82,10 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  places: arrayOf(placeType),
-  cities: arrayOf(cityType),
-  city: cityType,
+  data: shape({places: arrayOf(placeType), cities: arrayOf(cityType)}),
+  application: shape({city: cityType, mainSortVariant: variantType}),
   chooseCity: func,
   fetchOfferList: func,
-  mainSortVariant: variantType,
   sortMain: func,
   sortVariations: arrayOf(variantType)
 };
@@ -94,7 +93,7 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
 const mapDispatchToProps = (dispatch) => ({
   chooseCity: (city) => dispatch(ActionCreator.chooseCity(city)),
-  fetchOfferList: (chosenCityId) => dispatch(ActionCreator.fetchOfferList(chosenCityId)),
+  fetchOfferList: (cityName) => dispatch(Operation.fetchOfferList(cityName)),
   sortMain: (variantId) => dispatch(ActionCreator.sortMain(variantId))
 });
 
