@@ -43,11 +43,16 @@ exports[`Main renders correctly 1`] = `
               >
                 <div
                   className="header__avatar-wrapper user__avatar-wrapper"
+                  style={
+                    Object {
+                      "backgroundImage": "tratata",
+                    }
+                  }
                 />
                 <span
                   className="header__user-name user__name"
                 >
-                  Oliver.conner@gmail.com
+                  as@as.ru
                 </span>
               </a>
             </li>

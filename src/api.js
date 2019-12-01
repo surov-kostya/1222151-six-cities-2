@@ -10,10 +10,9 @@ const createAPI = (dispatch) => {
 
   const onSuccess = (response) => response;
   const onFail = (err) => {
-    if (err.response.status === 403) {
+    if ([403, 400, 401].includes(err.response.status)) {
       dispatch(ActionType.SERVER_ERROR);
     }
-
     return err;
   };
 

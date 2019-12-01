@@ -10,6 +10,13 @@ it(`Main renders correctly`, () => {
     currentCity={{id: 0, coords: [1, 2], name: `City`}}
     onTitleClick={() => {}}
     onChooseCity={() => {}}
+    userParams={{
+      id: 1,
+      name: `Vasya`,
+      email: `as@as.ru`,
+      avatarSrc: `tratata`,
+      isPro: false
+    }}
   />).toJSON();
 
   expect(tree).toMatchSnapshot();

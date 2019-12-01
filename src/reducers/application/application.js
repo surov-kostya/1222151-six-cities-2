@@ -1,8 +1,10 @@
 import {variations} from '../../mocks/sort-variations';
 
 const initialState = {
-  city: {id: -1, name: `temp`, coords: []},
-  mainSortVariant: variations[0]
+  city: {id: -1, name: ``, coords: []},
+  mainSortVariant: variations[0],
+  isAuthorizationRequired: true,
+  userParams: {}
 };
 
 export const getInitState = () => {
@@ -12,6 +14,8 @@ export const getInitState = () => {
 export const ActionType = {
   SORT_MAIN: `SORT_MAIN`,
   CHANGE_CITY: `CHANGE_CITY`,
+  TOGGLE_AUTH_REQ: `TOGGLE_AUTH_REQ`,
+  SET_USER_PARAMS: `SET_USER_PARAMS`
 };
 
 export const ActionCreator = {
@@ -27,7 +31,36 @@ export const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: city
   }),
+
+  toggleAuthReq: () => ({
+    type: ActionType.TOGGLE_AUTH_REQ,
+  }),
+
+  setUserParams: (params) => ({
+    type: ActionType.SET_USER_PARAMS,
+    payload: params
+  })
 };
+
+export const Operation = {
+  signIn: (email, password) => (dispatch, _, api) => {
+    return api.post(`/login`, {email, password})
+        .then((response) => {
+          if (response.status === 200) {
+            dispatch(ActionCreator.toggleAuthReq());
+            const data = response.data;
+            dispatch(ActionCreator.setUserParams({
+              id: data.id,
+              name: data.name,
+              email: data.email,
+              avatarSrc: data.avatar_url,
+              isPro: data.is_pro
+            }));
+          }
+        });
+  }
+};
+
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -35,6 +68,10 @@ export const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {mainSortVariant: action.payload});
     case ActionType.CHANGE_CITY:
       return Object.assign({}, state, {city: action.payload});
+    case ActionType.TOGGLE_AUTH_REQ:
+      return Object.assign({}, state, {isAuthorizationRequired: !state.isAuthorizationRequired});
+    case ActionType.SET_USER_PARAMS:
+      return Object.assign({}, state, {userParams: action.payload});
     default:
       return state;
   }
