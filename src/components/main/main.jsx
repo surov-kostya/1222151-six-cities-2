@@ -6,12 +6,17 @@ import CityPlaces from '../city-places/city-places';
 import MainEmpty from '../main-empty/main-empty';
 import {variantType} from '../../mocks/sort-variations';
 import withActiveItem from '../../hocs/with-active-item/with-active-item';
+import {userParamsType} from '../../models/index';
 
 const CityListWrapped = withActiveItem(CityList);
 const CityPlacesWrapped = withActiveItem(CityPlaces);
 
 const Main = (props) => {
-  const {cities, currentCity, onChooseCity, places, onSort, activeSortVariant, sortVariations, onTitleClick} = props;
+  const {cities, currentCity, onChooseCity, places, onSort, activeSortVariant, sortVariations, onTitleClick, userParams} = props;
+
+  const avatarStyle = {
+    backgroundImage: `${userParams.avatarSrc}`,
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -25,12 +30,27 @@ const Main = (props) => {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
+                {userParams && userParams.email
+                  ? <li className="header__nav-item user">
+                    <a className="header__nav-link header__nav-link--profile" href="#">
+                      <div
+                        className="header__avatar-wrapper user__avatar-wrapper"
+                        style={avatarStyle}
+                      ></div>
+                      <span className="header__user-name user__name">
+                        {userParams.email}
+                      </span>
+                    </a>
+                  </li>
+                  : <li className="header__nav-item user">
+                    <a className="header__nav-link header__nav-link--profile" href="#">
+                      <span className="header__user-name user__name">
+                        Sign in
+                      </span>
+                    </a>
+                  </li>
+
+                }
               </ul>
             </nav>
           </div>
@@ -75,7 +95,8 @@ Main.propTypes = {
   onChooseCity: func,
   activeSortVariant: variantType,
   onSort: func,
-  sortVariations: arrayOf(variantType)
+  sortVariations: arrayOf(variantType),
+  userParams: userParamsType
 };
 
 export default Main;

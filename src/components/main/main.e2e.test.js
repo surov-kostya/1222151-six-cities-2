@@ -15,6 +15,7 @@ it(`Should emit event by click`, () => {
     currentCity={{id: 0, coords: [1, 2], name: `City`}}
     onTitleClick={() => { }}
     onChooseCity={() => { }}
+    userParams={{id: 1, name: `Vasya`, email: `at@at.ru`, avatarSrc: `static/avatar/6.jpg`, isPro: false}}
   />);
 
   const headerLinks = main.find(`.place-card__name > a`);

@@ -13,6 +13,15 @@ it(`App renders correctly`, () => {
       chooseCity={() => {}}
       fetchOfferList={() => {}}
       sortVariations={variations}
+      application={
+        {
+          isAuthorizationRequired: true,
+          mainSortVariant: {
+            id: 0,
+            name: `Popular`
+          }
+        }
+      }
     />)
     .toJSON();
   expect(tree).toMatchSnapshot();
