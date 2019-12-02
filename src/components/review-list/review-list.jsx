@@ -1,7 +1,7 @@
 import React from 'react';
 import Review from '../review/review';
 import {arrayOf} from 'prop-types';
-import {reviewType} from '../../mocks/offers';
+import {reviewType} from '../../models/index';
 
 const ReviewList = ({reviews}) => {
   return (

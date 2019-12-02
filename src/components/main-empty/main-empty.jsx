@@ -1,5 +1,5 @@
 import React from 'react';
-import {cityType} from '../../mocks/offers';
+import {cityType} from '../../models/index';
 
 const MainEmpty = ({currentCity}) => {
   return (

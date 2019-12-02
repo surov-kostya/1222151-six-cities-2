@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {placeType} from '../../mocks/offers';
+import {placeType} from '../../models/index';
 
 const PlaceCard = ({place, onTitleClick, onCardActivate}) => {
   return (

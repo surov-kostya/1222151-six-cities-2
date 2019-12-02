@@ -1,5 +1,5 @@
 import React, {PureComponent, createRef} from 'react';
-import {placeType} from '../../mocks/offers';
+import {placeType} from '../../models/index';
 import {arrayOf, number} from 'prop-types';
 import leaflet from 'leaflet';
 

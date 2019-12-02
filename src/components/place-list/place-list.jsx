@@ -1,7 +1,7 @@
 import React from 'react';
 import PlaceCard from '../place-card/place-card';
 import PropTypes from 'prop-types';
-import {placeType} from '../../mocks/offers';
+import {placeType} from '../../models/index';
 
 const PlaceList = (props) => {
   return (

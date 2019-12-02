@@ -1,5 +1,5 @@
 import React from 'react';
-import {reviewType} from '../../mocks/offers';
+import {reviewType} from '../../models/index';
 
 const converDate = (dateString) => {
   const month = new Date(dateString).getMonth();

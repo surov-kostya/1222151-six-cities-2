@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import ReviewList from '../review-list/review-list';
 import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
-import {placeType, cityType} from '../../mocks/offers';
+import {placeType, cityType} from '../../models/index';
 import {arrayOf} from 'prop-types';
 
 class PlaceDetails extends PureComponent {

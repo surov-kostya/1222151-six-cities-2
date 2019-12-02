@@ -1,10 +1,10 @@
 import React from 'react';
 import {arrayOf, func} from 'prop-types';
-import {placeType, cityType} from '../../mocks/offers';
+import {placeType, cityType} from '../../models/index';
 import CityList from '../city-list/city-list';
 import CityPlaces from '../city-places/city-places';
 import MainEmpty from '../main-empty/main-empty';
-import {variantType} from '../../mocks/sort-variations';
+import {variantType} from '../../models/index';
 import withActiveItem from '../../hocs/with-active-item/with-active-item';
 import {userParamsType} from '../../models/index';
 
