@@ -1,10 +1,10 @@
 import {variations} from '../../mocks/sort-variations';
 
 const initialState = {
-  city: {id: -1, name: ``, coords: []},
+  city: undefined,
   mainSortVariant: variations[0],
   isAuthorizationRequired: true,
-  userParams: {}
+  userParams: undefined
 };
 
 export const getInitState = () => {
@@ -54,7 +54,7 @@ export const Operation = {
               name: data.name,
               email: data.email,
               avatarSrc: data.avatar_url,
-              isPro: data.is_pro
+              status: data.is_pro ? `Pro` : ``
             }));
           }
         });

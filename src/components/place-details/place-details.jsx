@@ -1,20 +1,28 @@
 import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
 import ReviewList from '../review-list/review-list';
 import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
-import {placeType, cityType} from '../../models/index';
-import {arrayOf} from 'prop-types';
+import ReviewForm from '../review-form/review-form';
+import {placeType, cityType, userParamsType, reviewType} from '../../models/index';
+import {arrayOf, func, shape} from 'prop-types';
+import {Operation} from '../../reducers/index';
 
 class PlaceDetails extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {activeCard: undefined};
+    this.state = {
+      hotelComments: undefined,
+      activeCard: undefined
+    };
 
     this._cardActivateHandler = this._cardActivateHandler.bind(this);
+    this._postCommentHandler = this._postCommentHandler.bind(this);
   }
 
   render() {
-    const {place, neighbors, currentCity} = this.props;
+    const {place, neighbors, currentCity, userParams} = this.props;
+    const hotelComments = this.props.data.hotelComments;
 
     const gallery = place.gallerySrcs.map((picSrc) => (
       <div key={picSrc} className="property__image-wrapper">
@@ -28,11 +36,11 @@ class PlaceDetails extends PureComponent {
       </li>
     ));
 
-    const hostsReviews = place.hostsReview.map((review) => (
-      <p key={review} className="property__text">
-        {review}
-      </p>
-    ));
+    // const hostsReviews = place.hostsReview.map((review) => (
+    //   <p key={review} className="property__text">
+    //     {review}
+    //   </p>
+    // ));
 
     return (
       <div className="page">
@@ -50,7 +58,9 @@ class PlaceDetails extends PureComponent {
                     <a className="header__nav-link header__nav-link--profile" href="#">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">{place.contacts.eMail}</span>
+                      <span className="header__user-name user__name">
+                        {userParams && userParams.email}
+                      </span>
                     </a>
                   </li>
                 </ul>
@@ -97,13 +107,13 @@ class PlaceDetails extends PureComponent {
 
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    {place.parametres.place} place
+                    {place.parametres && place.parametres.place} place
                   </li>
                   <li className="property__feature property__feature--bedrooms">
-                    {place.parametres.bedrooms} Bedrooms
+                    {place.parametres && place.parametres.bedrooms} Bedrooms
                   </li>
                   <li className="property__feature property__feature--adults">
-                    Max {place.parametres.adults} adults
+                    Max {place.parametres && place.parametres.adults} adults
                   </li>
                 </ul>
                 <div className="property__price">
@@ -130,58 +140,17 @@ class PlaceDetails extends PureComponent {
                     </span>
                   </div>
                   <div className="property__description">
-                    {hostsReviews}
+                    {/* {hostsReviews} */}
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                  <ReviewList reviews={place.reviews}/>
-                  <form className="reviews__form form" action="#" method="post">
-                    <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                    <div className="reviews__rating-form form__rating">
-                      <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-                      <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                        <svg className="form__star-image" width="37" height="33">
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-                      <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                        <svg className="form__star-image" width="37" height="33">
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-                      <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                        <svg className="form__star-image" width="37" height="33">
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                      <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                        <svg className="form__star-image" width="37" height="33">
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                      <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                        <svg className="form__star-image" width="37" height="33">
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-                    </div>
-                    <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                    <div className="reviews__button-wrapper">
-                      <p className="reviews__help">
-                        To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                      </p>
-                      <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-                    </div>
-                  </form>
+                  <h2 className="reviews__title">
+                    Reviews &middot; <span className="reviews__amount">1</span>
+                  </h2>
+                  {hotelComments && <ReviewList reviews={hotelComments}/>}
+                  {userParams && <ReviewForm
+                    onCommentPost={(rawComment) => this._postCommentHandler(rawComment)}/>
+                  }
                 </section>
               </div>
             </div>
@@ -207,15 +176,39 @@ class PlaceDetails extends PureComponent {
     );
   }
 
+  componentDidMount() {
+    this.props.fetchHotelComments(this.props.place.id);
+  }
+
   _cardActivateHandler(place) {
     this.setState({activeCard: place});
+  }
+
+  _postCommentHandler(rawComment) {
+    this.props.postComment(this.props.place.id, Object.assign(rawComment, {
+      creationDate: new Date().toISOString(),
+      author: this.props.userParams
+    }));
   }
 }
 
 PlaceDetails.propTypes = {
   currentCity: cityType,
   place: placeType,
-  neighbors: arrayOf(placeType)
+  neighbors: arrayOf(placeType),
+  userParams: userParamsType,
+  fetchHotelComments: func,
+  data: shape({hotelComments: arrayOf(reviewType)}),
+  postComment: func
 };
 
-export default PlaceDetails;
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, ownProps, state);
+};
+const mapDispatchToProps = (dispatch) => ({
+  fetchHotelComments: (hotelId) => dispatch(Operation.fetchHotelComments(hotelId)),
+  postComment: (hotelId, comment) => dispatch(Operation.postComment(hotelId, comment))
+});
+
+export {PlaceDetails};
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceDetails);

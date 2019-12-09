@@ -15,7 +15,7 @@ const Main = (props) => {
   const {cities, currentCity, onChooseCity, places, onSort, activeSortVariant, sortVariations, onTitleClick, userParams} = props;
 
   const avatarStyle = {
-    backgroundImage: `${userParams.avatarSrc}`,
+    backgroundImage: `${userParams && userParams.avatarSrc}`,
   };
 
   return (
@@ -35,7 +35,7 @@ const Main = (props) => {
                     <a className="header__nav-link header__nav-link--profile" href="#">
                       <div
                         className="header__avatar-wrapper user__avatar-wrapper"
-                        style={avatarStyle}
+                        style={userParams && avatarStyle}
                       ></div>
                       <span className="header__user-name user__name">
                         {userParams.email}

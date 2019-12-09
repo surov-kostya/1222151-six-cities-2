@@ -33,7 +33,7 @@ const getPageScreen = ({
   sortMain,
   sortVariations
 }) => {
-  if (data && application) {
+  if (data.places.length && application) {
     const places = data.places;
     const cities = data.cities;
     const city = application.city;
@@ -60,7 +60,7 @@ const getPageScreen = ({
         return <PlaceDetails
           currentCity={city}
           place={places[0]}
-          neighbors={places.splice(0, 1)}
+          neighbors={places.slice(1)}
           userParams={userParams}
         />;
       default:

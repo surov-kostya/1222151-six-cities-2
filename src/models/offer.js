@@ -3,6 +3,7 @@ import {shape, number, string, arrayOf} from 'prop-types';
 export const personType = shape({
   id: number.isRequired,
   name: string.isRequired,
+  email: string,
   avatarSrc: string,
   status: string
 });
@@ -19,7 +20,7 @@ export const placeType = shape({
   id: number,
   name: string,
   imageSrc: string,
-  contacts: shape({eMail: string}),
+  // contacts: shape({eMail: string}),
   gallerySrcs: arrayOf(string),
   mark: string,
   rating: number,
