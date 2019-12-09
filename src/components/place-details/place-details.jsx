@@ -185,10 +185,7 @@ class PlaceDetails extends PureComponent {
   }
 
   _postCommentHandler(rawComment) {
-    this.props.postComment(this.props.place.id, Object.assign(rawComment, {
-      creationDate: new Date().toISOString(),
-      author: this.props.userParams
-    }));
+    this.props.postComment(this.props.place.id, rawComment);
   }
 }
 

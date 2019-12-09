@@ -71,6 +71,21 @@ const offerBuilder = (item) => ({
   coords: [item.location.latitude, item.location.longitude]
 });
 
+const reviewsBuilder = (reviewArr) => (
+  reviewArr.map((review) => ({
+    id: review.id,
+    author: {
+      id: review.user.id,
+      name: review.user.name,
+      status: review.user.is_pro ? `Pro` : ``,
+      avatarSrc: review.user.avatar_url
+    },
+    rating: review.rating,
+    text: review.comment,
+    creationDate: review.date
+  }))
+);
+
 export const Operation = {
   fetchOfferList: (cityName) => (dispatch, _, api) => {
     return api.get(`/hotels`)
@@ -112,18 +127,7 @@ export const Operation = {
     return api.get(`/comments/${hotelId}`)
       .then((response) => {
         if (response.status === 200) {
-          dispatch(ActionCreator.fetchHotelComments(response.data.map((review) => ({
-            id: review.id,
-            author: {
-              id: review.user.id,
-              name: review.user.name,
-              status: review.user.is_pro ? `Pro` : ``,
-              avatarSrc: review.user.avatar_url
-            },
-            rating: review.rating,
-            text: review.comment,
-            creationDate: review.date
-          }))));
+          dispatch(ActionCreator.fetchHotelComments(reviewsBuilder(response.data)));
         }
       });
   },
@@ -132,7 +136,7 @@ export const Operation = {
     return api.post(`comments/${hotelId}`, {rating: comment.rating, comment: comment.text}).
       then((response) => {
         if (response.status === 200) {
-          dispatch(ActionCreator.postComment(comment));
+          dispatch(ActionCreator.postComment(reviewsBuilder(response.data)));
         }
       });
   }
@@ -148,7 +152,7 @@ export const reducer = (state = initialState, action) => {
     case ActionType.GET_HOTEL_COMMENTS:
       return Object.assign({}, state, {hotelComments: action.payload});
     case ActionType.POST_COMMENT:
-      return Object.assign({}, state, {hotelComments: [...state.hotelComments, action.payload]});
+      return Object.assign({}, state, {hotelComments: action.payload});
     default:
       return state;
   }
