@@ -1,6 +1,6 @@
 import React from 'react';
 import {arrayOf, func, number} from 'prop-types';
-import {cityType} from '../../mocks/offers';
+import {cityType} from '../../models/index';
 
 const CityList = ({cities, currentCityId, onChooseCity, onSelect}) => {
   return (

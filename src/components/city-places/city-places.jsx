@@ -2,8 +2,8 @@ import React from 'react';
 import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
 import SortVariations from '../sort-variations/sort-variations';
-import {placeType, cityType} from '../../mocks/offers';
-import {variantType} from '../../mocks/sort-variations';
+import {placeType, cityType} from '../../models/index';
+import {variantType} from '../../models/index';
 import {arrayOf, func, number} from 'prop-types';
 
 const CityPlaces = (props) => {

@@ -3,11 +3,11 @@ import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
 import SignIn from '../sign-in/sign-in';
 import {arrayOf, func, shape, bool} from 'prop-types';
-import {placeType, cityType} from '../../mocks/offers';
+import {placeType, cityType} from '../../models/index';
 import {connect} from 'react-redux';
 import {Operation} from '../../reducers/index';
 import {ActionCreator} from '../../reducers/application/application';
-import {variantType} from '../../mocks/sort-variations';
+import {variantType} from '../../models/index';
 import {userParamsType} from '../../models/index';
 
 const sortPlaces = (places, sortVariant) => {
@@ -33,7 +33,7 @@ const getPageScreen = ({
   sortMain,
   sortVariations
 }) => {
-  if (data && application) {
+  if (data.places.length && application) {
     const places = data.places;
     const cities = data.cities;
     const city = application.city;
@@ -60,7 +60,7 @@ const getPageScreen = ({
         return <PlaceDetails
           currentCity={city}
           place={places[0]}
-          neighbors={places.splice(0, 1)}
+          neighbors={places.slice(1)}
           userParams={userParams}
         />;
       default:

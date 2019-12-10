@@ -1,10 +1,10 @@
 import React from 'react';
 import {arrayOf, func} from 'prop-types';
-import {placeType, cityType} from '../../mocks/offers';
+import {placeType, cityType} from '../../models/index';
 import CityList from '../city-list/city-list';
 import CityPlaces from '../city-places/city-places';
 import MainEmpty from '../main-empty/main-empty';
-import {variantType} from '../../mocks/sort-variations';
+import {variantType} from '../../models/index';
 import withActiveItem from '../../hocs/with-active-item/with-active-item';
 import {userParamsType} from '../../models/index';
 
@@ -15,7 +15,7 @@ const Main = (props) => {
   const {cities, currentCity, onChooseCity, places, onSort, activeSortVariant, sortVariations, onTitleClick, userParams} = props;
 
   const avatarStyle = {
-    backgroundImage: `${userParams.avatarSrc}`,
+    backgroundImage: `${userParams && userParams.avatarSrc}`,
   };
 
   return (
@@ -35,7 +35,7 @@ const Main = (props) => {
                     <a className="header__nav-link header__nav-link--profile" href="#">
                       <div
                         className="header__avatar-wrapper user__avatar-wrapper"
-                        style={avatarStyle}
+                        style={userParams && avatarStyle}
                       ></div>
                       <span className="header__user-name user__name">
                         {userParams.email}

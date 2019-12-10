@@ -1,5 +1,5 @@
 import React from 'react';
-import {reviewType} from '../../mocks/offers';
+import {reviewType} from '../../models/index';
 
 const converDate = (dateString) => {
   const month = new Date(dateString).getMonth();
@@ -28,7 +28,7 @@ const Review = ({review}) => {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${review.rating}%`}}></span>
+            <span style={{width: `${100 / 5 * review.rating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

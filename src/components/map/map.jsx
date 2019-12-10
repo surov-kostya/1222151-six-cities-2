@@ -1,5 +1,5 @@
 import React, {PureComponent, createRef} from 'react';
-import {placeType} from '../../mocks/offers';
+import {placeType} from '../../models/index';
 import {arrayOf, number} from 'prop-types';
 import leaflet from 'leaflet';
 
@@ -57,7 +57,7 @@ class Map extends PureComponent {
     this.map.setView(this.props.cityCoords, this.zoom);
     this.props.places.forEach((place) => {
       leaflet
-        .marker(place.coords, {icon: place.id === this.props.activePlace ? this.activeIcon : this.icon})
+        .marker(place.coords, {icon: this.props.activePlace && place.id === this.props.activePlace ? this.activeIcon : this.icon})
         .addTo(this.map);
     });
   }

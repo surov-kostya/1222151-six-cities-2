@@ -62,7 +62,7 @@ describe(`Sign on function`, () => {
     name: `Vasya`,
     email: `qw@qw.ru`,
     avatarSrc: undefined,
-    isPro: undefined
+    status: ``
   };
 
   it(`post to /login runs toggle auth and set user params`, () => {

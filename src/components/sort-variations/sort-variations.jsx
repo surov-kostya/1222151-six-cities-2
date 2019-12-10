@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {func, arrayOf} from 'prop-types';
-import {variantType} from '../../mocks/sort-variations';
+import {variantType} from '../../models/index';
 
 class SortVariations extends PureComponent {
   constructor(props) {

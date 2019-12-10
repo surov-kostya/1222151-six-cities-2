@@ -3,6 +3,7 @@ import {ActionCreator as AppActionCreator} from '../application/application';
 const initialState = {
   cities: [],
   places: [],
+  hotelComments: []
 };
 
 export const getInitState = () => {
@@ -12,7 +13,9 @@ export const getInitState = () => {
 export const ActionType = {
   GET_OFFER_LIST: `GET_ORDER_LIST`,
   GET_CITY_LIST: `GET_CITY_LIST`,
-  SERVER_ERROR: `SERVER_ERROR`
+  SERVER_ERROR: `SERVER_ERROR`,
+  GET_HOTEL_COMMENTS: `GET_HOTEL_COMMENTS`,
+  POST_COMMENT: `POST_COMMENT`
 };
 
 export const ActionCreator = {
@@ -27,6 +30,20 @@ export const ActionCreator = {
     return {
       type: ActionType.GET_CITY_LIST,
       payload: cities
+    };
+  },
+
+  fetchHotelComments: (comments) => {
+    return {
+      type: ActionType.GET_HOTEL_COMMENTS,
+      payload: comments
+    };
+  },
+
+  postComment: (comments) => {
+    return {
+      type: ActionType.POST_COMMENT,
+      payload: comments
     };
   }
 };
@@ -53,6 +70,21 @@ const offerBuilder = (item) => ({
   },
   coords: [item.location.latitude, item.location.longitude]
 });
+
+export const reviewsBuilder = (reviewArr) => (
+  reviewArr.map((review) => ({
+    id: review.id,
+    author: {
+      id: review.user.id,
+      name: review.user.name,
+      status: review.user.is_pro ? `Pro` : ``,
+      avatarSrc: review.user.avatar_url
+    },
+    rating: review.rating,
+    text: review.comment,
+    creationDate: review.date
+  }))
+);
 
 export const Operation = {
   fetchOfferList: (cityName) => (dispatch, _, api) => {
@@ -89,6 +121,24 @@ export const Operation = {
           dispatch(ActionCreator.fetchOfferList(defCityPlaces));
         }
       });
+  },
+
+  fetchHotelComments: (hotelId) => (dispatch, _, api) => {
+    return api.get(`/comments/${hotelId}`)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(ActionCreator.fetchHotelComments(reviewsBuilder(response.data)));
+        }
+      });
+  },
+
+  postComment: (hotelId, comment) => (dispatch, _, api) => {
+    return api.post(`comments/${hotelId}`, {rating: comment.rating, comment: comment.text}).
+      then((response) => {
+        if (response.status === 200) {
+          dispatch(ActionCreator.postComment(reviewsBuilder(response.data)));
+        }
+      });
   }
 };
 
@@ -99,6 +149,10 @@ export const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {places: action.payload});
     case ActionType.GET_CITY_LIST:
       return Object.assign({}, state, {cities: action.payload});
+    case ActionType.GET_HOTEL_COMMENTS:
+      return Object.assign({}, state, {hotelComments: action.payload});
+    case ActionType.POST_COMMENT:
+      return Object.assign({}, state, {hotelComments: action.payload});
     default:
       return state;
   }
