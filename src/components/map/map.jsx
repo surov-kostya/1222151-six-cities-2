@@ -57,7 +57,7 @@ class Map extends PureComponent {
     this.map.setView(this.props.cityCoords, this.zoom);
     this.props.places.forEach((place) => {
       leaflet
-        .marker(place.coords, {icon: place.id === this.props.activePlace ? this.activeIcon : this.icon})
+        .marker(place.coords, {icon: this.props.activePlace && place.id === this.props.activePlace.id ? this.activeIcon : this.icon})
         .addTo(this.map);
     });
   }
@@ -66,7 +66,7 @@ class Map extends PureComponent {
 Map.propTypes = {
   places: arrayOf(placeType),
   cityCoords: arrayOf(number),
-  activePlace: number
+  activePlace: placeType
 };
 
 export default Map;
