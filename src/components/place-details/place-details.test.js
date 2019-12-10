@@ -8,6 +8,7 @@ it(`PlaceDetails renders correctly`, () => {
     currentCity={cities[0]}
     place={cities[0].places[0]}
     neighbors={cities[0].places.slice(1)}
+    fetchHotelComments={() => {}}
   />).toJSON();
   expect(tree).toMatchSnapshot();
 });

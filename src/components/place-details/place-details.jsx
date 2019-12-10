@@ -22,7 +22,7 @@ class PlaceDetails extends PureComponent {
 
   render() {
     const {place, neighbors, currentCity, userParams} = this.props;
-    const hotelComments = this.props.data.hotelComments;
+    const hotelComments = this.props.data ? this.props.data.hotelComments : undefined;
 
     const gallery = place.gallerySrcs.map((picSrc) => (
       <div key={picSrc} className="property__image-wrapper">
@@ -155,7 +155,11 @@ class PlaceDetails extends PureComponent {
               </div>
             </div>
             <section className="property__map map">
-              <Map places={neighbors} cityCoords={currentCity.coords} activePlace={this.state.activeCard}/>
+              <Map
+                places={neighbors}
+                cityCoords={currentCity.coords}
+                activePlace={this.state.activeCard ? this.state.activeCard.id : undefined}
+              />
             </section>
           </section>
           <div className="container">
