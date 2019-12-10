@@ -40,10 +40,10 @@ export const ActionCreator = {
     };
   },
 
-  postComment: (comment) => {
+  postComment: (comments) => {
     return {
       type: ActionType.POST_COMMENT,
-      payload: comment
+      payload: comments
     };
   }
 };
@@ -71,7 +71,7 @@ const offerBuilder = (item) => ({
   coords: [item.location.latitude, item.location.longitude]
 });
 
-const reviewsBuilder = (reviewArr) => (
+export const reviewsBuilder = (reviewArr) => (
   reviewArr.map((review) => ({
     id: review.id,
     author: {
