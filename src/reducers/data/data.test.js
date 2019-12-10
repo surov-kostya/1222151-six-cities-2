@@ -40,11 +40,6 @@ describe(`Action creators work correctly`, () => {
 });
 
 describe(`Reducer works correctly`, () => {
-  const CITY = {
-    id: 1,
-    name: `Cologne`,
-    coords: [50.930779, 6.938399]
-  };
   const PLACES = cities[0].places;
   const CITIES = cities;
   const COMMENTS = cities[0].places[0].reviews;
