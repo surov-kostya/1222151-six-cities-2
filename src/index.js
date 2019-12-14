@@ -8,6 +8,8 @@ import {variations} from './mocks/sort-variations';
 import {compose} from 'recompose';
 import thunk from 'redux-thunk';
 import createAPI from "./api.js";
+import {BrowserRouter} from 'react-router-dom';
+
 
 const api = createAPI((...args) => store.dispatch(...args));
 
@@ -21,12 +23,16 @@ const store = createStore(
 
 
 const init = () => {
+  console.log('init');
   store.dispatch(Operation.fetchCityList());
+  if (!store.getState().application.isAuthorizationRequired) {
+    store.dispatch(Operation.fetchFavorites());
+  }
   ReactDOM.render(
       <Provider store={store}>
-        <App
-          sortVariations={variations}
-        />
+        <BrowserRouter>
+          <App sortVariations={variations}/>
+        </BrowserRouter>
       </Provider>,
       document.querySelector(`#root`)
   );

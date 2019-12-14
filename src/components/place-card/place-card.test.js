@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import PlaceCard from './place-card';
+import {PlaceCard} from './place-card';
 import {cities} from '../../mocks/offers';
 
 it(`PlaceCard renders correctly`, () => {

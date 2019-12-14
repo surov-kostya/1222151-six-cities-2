@@ -8,7 +8,6 @@ const CityList = ({cities, currentCityId, onChooseCity, onSelect}) => {
       {cities.map((city) => (
         <li key={city.id} className="locations__item">
           <a className={`locations__item-link tabs__item${city.id === currentCityId && ` tabs__item--active`}`}
-            href="#"
             onClick={() => {
               onChooseCity(city);
               onSelect(city.id);

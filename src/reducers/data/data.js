@@ -3,7 +3,9 @@ import {ActionCreator as AppActionCreator} from '../application/application';
 const initialState = {
   cities: [],
   places: [],
-  hotelComments: []
+  hotelComments: [],
+  favorites: [],
+  serverError: 0
 };
 
 export const getInitState = () => {
@@ -15,10 +17,20 @@ export const ActionType = {
   GET_CITY_LIST: `GET_CITY_LIST`,
   SERVER_ERROR: `SERVER_ERROR`,
   GET_HOTEL_COMMENTS: `GET_HOTEL_COMMENTS`,
-  POST_COMMENT: `POST_COMMENT`
+  POST_COMMENT: `POST_COMMENT`,
+  ADD_FAVORITE: `ADD_FAVORITE`,
+  DELETE_FAVORITE: `DELETE_FAVORITE`,
+  GET_FAVORITES: `GET_FAVORITES`
 };
 
 export const ActionCreator = {
+  serverError: (errorCode) => {
+    return {
+      type: ActionType.SERVER_ERROR,
+      payload: errorCode
+    };
+  },
+
   fetchOfferList: (places) => {
     return {
       type: ActionType.GET_OFFER_LIST,
@@ -45,11 +57,33 @@ export const ActionCreator = {
       type: ActionType.POST_COMMENT,
       payload: comments
     };
+  },
+
+  fetchFavorites: (favPlaces) => {
+    return {
+      type: ActionType.GET_FAVORITES,
+      payload: favPlaces
+    };
+  },
+
+  addFavorites: (favPlace) => {
+    return {
+      type: ActionType.ADD_FAVORITE,
+      payload: favPlace
+    };
+  },
+
+  deleteFavorites: (favPlaceId) => {
+    return {
+      type: ActionType.DELETE_FAVORITE,
+      payload: favPlaceId
+    };
   }
 };
 
 const offerBuilder = (item) => ({
   id: item.id,
+  city: item.city.name,
   name: item.title,
   imageSrc: item.preview_image,
   gallerySrcs: item.images,
@@ -139,12 +173,37 @@ export const Operation = {
           dispatch(ActionCreator.postComment(reviewsBuilder(response.data)));
         }
       });
+  },
+
+  fetchFavorites: () => (dispatch, _, api) => {
+    return api.get(`/favorite`).
+      then((response) => {
+        if (response.status === 200) {
+          dispatch(ActionCreator.fetchFavorites(response.data.map((favPlace) => offerBuilder(favPlace))));
+        }
+      });
+  },
+
+  changeFavorites: (placeId, status) => (dispatch, _, api) => {
+    return api.post(`/favorite/${placeId}/${status}`).
+      then((response) => {
+        if (response.status === 200) {
+          if (status === 1) {
+            dispatch(ActionCreator.addFavorites(offerBuilder(response.data)));
+          } else {
+            dispatch(ActionCreator.deleteFavorites(placeId));
+          }
+        }
+      });
   }
 };
 
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.SERVER_ERROR:
+      console.log(action);
+      return Object.assign({}, state, {serverError: action.payload});
     case ActionType.GET_OFFER_LIST:
       return Object.assign({}, state, {places: action.payload});
     case ActionType.GET_CITY_LIST:
@@ -153,6 +212,16 @@ export const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {hotelComments: action.payload});
     case ActionType.POST_COMMENT:
       return Object.assign({}, state, {hotelComments: action.payload});
+    case ActionType.GET_FAVORITES:
+      return Object.assign({}, state, {favorites: action.payload});
+    case ActionType.ADD_FAVORITE:
+      return Object.assign({}, state, {favorites: [...state.favorites, action.payload]});
+    case ActionType.DELETE_FAVORITE:
+      let resultFavorites = state.favorites.slice();
+      resultFavorites.splice(state.favorites.findIndex(
+          (place) => place.id === action.payload), 1
+      );
+      return Object.assign({}, state, {favorites: resultFavorites});
     default:
       return state;
   }
