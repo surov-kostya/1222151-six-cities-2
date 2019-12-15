@@ -11,6 +11,10 @@ import {Operation} from '../../reducers/index';
 import {ActionCreator} from '../../reducers/application/application';
 import {variantType} from '../../models/index';
 import {userParamsType} from '../../models/index';
+import withAuth from '../../hocs/with-auth/with-auth';
+
+const FavoritesWithAuth = withAuth(Favorites);
+const MainWithAuth = withAuth(Main);
 
 const sortPlaces = (places, sortVariant) => {
   switch (sortVariant && sortVariant.name) {
@@ -56,12 +60,7 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
             userParams={userParams}
           />}
       </Route>
-      <Route path="/details" exact>
-        <PlaceDetails
-          currentCity={city}
-          place={places[0]}
-          neighbors={places.slice(1)}
-          userParams={userParams}/>;
+      <Route path="/offer/:id" exact component={PlaceDetails}>
       </Route>
       <Route path="/login" exact>
         {
@@ -71,6 +70,7 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
         }
       </Route>
       <Route path="/favorites" exact>
+        {/* <FavoritesWithAuth serverError={serverError} path={`/favorites`}/> */}
         {serverError === 401
           ? <Redirect to="/login?prevUrl=/favorites" />
           : <Favorites />}
