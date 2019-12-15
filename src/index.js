@@ -23,7 +23,6 @@ const store = createStore(
 
 
 const init = () => {
-  console.log('init');
   store.dispatch(Operation.fetchCityList());
   if (!store.getState().application.isAuthorizationRequired) {
     store.dispatch(Operation.fetchFavorites());

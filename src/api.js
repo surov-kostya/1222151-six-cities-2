@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {ActionType} from './reducers/index';
 import {ActionCreator} from './reducers/data/data';
 
 const createAPI = (dispatch) => {

@@ -66,14 +66,14 @@ export const ActionCreator = {
     };
   },
 
-  addFavorites: (favPlace) => {
+  addFavorite: (favPlace) => {
     return {
       type: ActionType.ADD_FAVORITE,
       payload: favPlace
     };
   },
 
-  deleteFavorites: (favPlaceId) => {
+  deleteFavorite: (favPlaceId) => {
     return {
       type: ActionType.DELETE_FAVORITE,
       payload: favPlaceId
@@ -189,9 +189,9 @@ export const Operation = {
       then((response) => {
         if (response.status === 200) {
           if (status === 1) {
-            dispatch(ActionCreator.addFavorites(offerBuilder(response.data)));
+            dispatch(ActionCreator.addFavorite(offerBuilder(response.data)));
           } else {
-            dispatch(ActionCreator.deleteFavorites(placeId));
+            dispatch(ActionCreator.deleteFavorite(placeId));
           }
         }
       });
@@ -202,7 +202,6 @@ export const Operation = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.SERVER_ERROR:
-      console.log(action);
       return Object.assign({}, state, {serverError: action.payload});
     case ActionType.GET_OFFER_LIST:
       return Object.assign({}, state, {places: action.payload});

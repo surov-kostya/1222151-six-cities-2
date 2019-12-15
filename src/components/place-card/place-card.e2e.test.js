@@ -72,7 +72,7 @@ const mockPlace = {
 
 it(`PlaceCard should emit place data on hover`, () => {
   const callbackFunc = jest.fn();
-  const placeCard = shallow(<PlaceCard place={mockPlace} onCardActivate={callbackFunc}/>);
+  const placeCard = shallow(<PlaceCard place={mockPlace} onCardActivate={callbackFunc} data={{favorites: [mockPlace]}}/>);
   const placeCardParentNode = placeCard.find(`article`);
   placeCardParentNode.simulate(`mouseEnter`);
   expect(callbackFunc).toBeCalledWith(mockPlace);

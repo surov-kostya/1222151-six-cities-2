@@ -6,13 +6,13 @@ import PlaceCard from '../place-card/place-card';
 import {shape, arrayOf, func} from 'prop-types';
 import {placeType} from '../../models/index';
 
-class Favorites extends PureComponent {
+export class Favorites extends PureComponent {
   constructor(props) {
     super(props);
     this.data = props.data;
     this.fetchFavorites = props.fetchFavorites;
-    this.favPlace = this.data.favorites;
-    this.favCities = this.favPlace
+    this.favPlaces = props.data.favorites;
+    this.favCities = this.favPlaces
       .map((place) => place.city)
       .filter((city, index, array) => array.indexOf(city) === index);
   }
@@ -39,7 +39,7 @@ class Favorites extends PureComponent {
                       </div>
                       <div className="favorites__places">
                         {
-                          this.favPlace.filter((place) => place.city === city).map((place) => (
+                          this.favPlaces.filter((place) => place.city === city).map((place) => (
                             <PlaceCard
                               key={place.id}
                               place={place}
@@ -70,7 +70,7 @@ class Favorites extends PureComponent {
 }
 
 Favorites.propTypes = {
-  data: shape({favoorites: arrayOf(placeType)}),
+  data: shape({favorites: arrayOf(placeType)}),
   fetchFavorites: func
 };
 

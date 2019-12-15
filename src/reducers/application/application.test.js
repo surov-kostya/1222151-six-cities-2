@@ -78,10 +78,10 @@ describe(`Sign on function`, () => {
 
     return postToLogin(dispatch, undefined, api)
       .then(() => {
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.TOGGLE_AUTH_REQ
         });
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: ActionType.SET_USER_PARAMS,
           payload: MOCK_RESPONSE
         });

@@ -18,6 +18,8 @@ exports[`Main renders correctly 1`] = `
         >
           <a
             className="header__logo-link header__logo-link--active"
+            href="/"
+            onClick={[Function]}
           >
             <img
               alt="6 cities logo"
@@ -39,20 +41,21 @@ exports[`Main renders correctly 1`] = `
             >
               <a
                 className="header__nav-link header__nav-link--profile"
-                href="#"
+                href="/favorites"
+                onClick={[Function]}
               >
                 <div
                   className="header__avatar-wrapper user__avatar-wrapper"
                   style={
                     Object {
-                      "backgroundImage": "tratata",
+                      "backgroundImage": "/static/avatar/2.jpg",
                     }
                   }
                 />
                 <span
                   className="header__user-name user__name"
                 >
-                  as@as.ru
+                  q@q.ru
                 </span>
               </a>
             </li>
@@ -83,7 +86,6 @@ exports[`Main renders correctly 1`] = `
           >
             <a
               className="locations__item-link tabs__item tabs__item--active"
-              href="#"
               onClick={[Function]}
             >
               <span>
@@ -96,7 +98,6 @@ exports[`Main renders correctly 1`] = `
           >
             <a
               className="locations__item-link tabs__itemfalse"
-              href="#"
               onClick={[Function]}
             >
               <span>
@@ -109,7 +110,6 @@ exports[`Main renders correctly 1`] = `
           >
             <a
               className="locations__item-link tabs__itemfalse"
-              href="#"
               onClick={[Function]}
             >
               <span>
@@ -122,7 +122,6 @@ exports[`Main renders correctly 1`] = `
           >
             <a
               className="locations__item-link tabs__itemfalse"
-              href="#"
               onClick={[Function]}
             >
               <span>
@@ -238,7 +237,8 @@ exports[`Main renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button button"
+                    className="place-card__bookmark-buttonfalse button"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -342,7 +342,8 @@ exports[`Main renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button button"
+                    className="place-card__bookmark-buttonfalse button"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -446,7 +447,8 @@ exports[`Main renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button button"
+                    className="place-card__bookmark-buttonfalse button"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -550,7 +552,8 @@ exports[`Main renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button button"
+                    className="place-card__bookmark-buttonfalse button"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
