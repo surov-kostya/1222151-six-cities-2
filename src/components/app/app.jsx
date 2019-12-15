@@ -1,8 +1,10 @@
 import React from 'react';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
 import SignIn from '../sign-in/sign-in';
-import {arrayOf, func, shape, bool} from 'prop-types';
+import Favorites from '../favorites/favorites';
+import {arrayOf, func, shape, bool, number} from 'prop-types';
 import {placeType, cityType} from '../../models/index';
 import {connect} from 'react-redux';
 import {Operation} from '../../reducers/index';
@@ -25,77 +27,63 @@ const sortPlaces = (places, sortVariant) => {
   }
 };
 
-const getPageScreen = ({
-  data,
-  application,
-  chooseCity,
-  fetchOfferList,
-  sortMain,
-  sortVariations
-}) => {
-  if (data.places.length && application) {
-    const places = data.places;
-    const cities = data.cities;
-    const city = application.city;
-    const mainSortVariant = application.mainSortVariant;
-    const userParams = application.userParams;
+const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sortMain, signIn}) => {
+  const places = data.places;
+  const cities = data.cities;
+  const city = application.city;
+  const mainSortVariant = application.mainSortVariant;
+  const userParams = application.userParams;
+  const serverError = data.serverError;
+  const queryParams = new URLSearchParams(window.location.search);
+  return (
 
-    switch (location.pathname) {
-      case `/`:
-        return <Main
-          places={sortPlaces(places, mainSortVariant)}
-          cities={cities}
-          currentCity={city}
-          onTitleClick={() => {}}
-          onChooseCity={(chosenCity) => {
-            chooseCity(chosenCity);
-            fetchOfferList(chosenCity.name);
-          }}
-          activeSortVariant={mainSortVariant}
-          onSort={(variantId) => sortMain(variantId)}
-          sortVariations={sortVariations}
-          userParams={userParams}
-        />;
-      case `/place-details`:
-        return <PlaceDetails
+    <Switch>
+      <Route path="/" exact>
+        {serverError === 401
+          ? <Redirect to="/login?prevUrl=/" />
+          : <Main
+            places={sortPlaces(places, mainSortVariant)}
+            cities={cities}
+            currentCity={city}
+            onTitleClick={() => {}}
+            onChooseCity={(chosenCity) => {
+              chooseCity(chosenCity);
+              fetchOfferList(chosenCity.name);
+            }}
+            activeSortVariant={mainSortVariant}
+            onSort={(variantId) => sortMain(variantId)}
+            sortVariations={sortVariations}
+            userParams={userParams}
+          />}
+      </Route>
+      <Route path="/details" exact>
+        <PlaceDetails
           currentCity={city}
           place={places[0]}
           neighbors={places.slice(1)}
-          userParams={userParams}
-        />;
-      default:
-        return (
-          <h1>Page not found</h1>
-        );
-    }
-  }
-
-  return <h1>Loading...</h1>;
-};
-
-getPageScreen.propTypes = {
-  data: shape({places: arrayOf(placeType), cities: arrayOf(cityType)}),
-  application: shape({
-    city: cityType,
-    mainSortVariant: variantType,
-    isAuthorizationRequired: bool
-  }),
-  chooseCity: func,
-  fetchOfferList: func,
-  sortMain: func,
-  sortVariations: arrayOf(variantType),
-  userProps: userParamsType
-};
-
-const App = (props) => {
-  if (props.application.isAuthorizationRequired) {
-    return <SignIn onSignIn={(email, password) => props.signIn(email, password)}/>;
-  }
-  return getPageScreen(props);
+          userParams={userParams}/>;
+      </Route>
+      <Route path="/login" exact>
+        {
+          userParams
+            ? <Redirect to={queryParams.get(`prevUrl`) || `/`} />
+            : <SignIn onSignIn={(email, password) => signIn(email, password)}/>
+        }
+      </Route>
+      <Route path="/favorites" exact>
+        {serverError === 401
+          ? <Redirect to="/login?prevUrl=/favorites" />
+          : <Favorites />}
+      </Route>
+      <Route path="page-not-found" render={() => (
+        <h1>Page not found</h1>
+      )}/>
+    </Switch>
+  );
 };
 
 App.propTypes = {
-  data: shape({places: arrayOf(placeType), cities: arrayOf(cityType)}),
+  data: shape({places: arrayOf(placeType), cities: arrayOf(cityType), serverError: number}),
   application: shape({
     city: cityType,
     mainSortVariant: variantType,
@@ -105,7 +93,7 @@ App.propTypes = {
   fetchOfferList: func,
   sortMain: func,
   sortVariations: arrayOf(variantType),
-  singIn: func,
+  signIn: func,
   userProps: userParamsType
 };
 

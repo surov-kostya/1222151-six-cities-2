@@ -1,12 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import PlaceCard from './place-card';
-import {cities} from '../../mocks/offers';
+import Favorites from './favorites';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 
 const mockStore = configureStore([]);
+
 const PLACES = [{
   "id": 101,
   "city": `Hamburg`,
@@ -42,16 +42,25 @@ const PLACES = [{
 
 const store = mockStore({
   data: {favorites: PLACES},
+  application: {
+    userParams: {
+      id: 1,
+      name: `q`,
+      email: `q@q.ru`,
+      avatarSrc: `/static/avatar/2.jpg`,
+      status: ``
+    }
+  }
 });
 
-
-it(`PlaceCard renders correctly`, () => {
+it(`Favorites renders correctly`, () => {
   const tree = renderer.create(
       <Provider store={store}>
         <BrowserRouter>
-          <PlaceCard place={cities[0].places[0]} onTitleClick={() => {}}/>
+          <Favorites />
         </BrowserRouter>
       </Provider>
   ).toJSON();
+
   expect(tree).toMatchSnapshot();
 });

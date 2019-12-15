@@ -1,4 +1,5 @@
 import {variations} from '../../mocks/sort-variations';
+import {ActionCreator as ActionCreatorData} from '../data/data';
 
 const initialState = {
   city: undefined,
@@ -36,10 +37,13 @@ export const ActionCreator = {
     type: ActionType.TOGGLE_AUTH_REQ,
   }),
 
-  setUserParams: (params) => ({
-    type: ActionType.SET_USER_PARAMS,
-    payload: params
-  })
+  setUserParams: (params) => {
+    return {
+      type: ActionType.SET_USER_PARAMS,
+      payload: params
+    }
+    ;
+  }
 };
 
 export const Operation = {
@@ -47,6 +51,9 @@ export const Operation = {
     return api.post(`/login`, {email, password})
         .then((response) => {
           if (response.status === 200) {
+            // const queryParams = new URLSearchParams(window.location.search);
+            // window.location.replace(queryParams.get(`prevUrl`));
+            dispatch(ActionCreatorData.serverError(0));
             dispatch(ActionCreator.toggleAuthReq());
             const data = response.data;
             dispatch(ActionCreator.setUserParams({

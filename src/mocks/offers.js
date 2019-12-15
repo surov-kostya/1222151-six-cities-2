@@ -6,6 +6,7 @@ export const cities = [
     places: [
       {
         id: 0,
+        city: `Paris`,
         name: `Beautiful && luxurious apartment at great location`,
         imageSrc: `img/apartment-01.jpg`,
         contacts: {
@@ -71,6 +72,7 @@ export const cities = [
       {
         id: 1,
         name: `Wood and stone place`,
+        city: `Paris`,
         imageSrc: `img/apartment-02.jpg`,
         contacts: {
           eMail: `Oliver.conner@gmail.com`
@@ -135,6 +137,7 @@ export const cities = [
       {
         id: 2,
         name: `Nice, cozy, warm big bed apartment`,
+        city: `Paris`,
         imageSrc: `img/apartment-03.jpg`,
         contacts: {
           eMail: `Oliver.conner@gmail.com`
@@ -199,6 +202,7 @@ export const cities = [
       {
         id: 3,
         name: `Canal View Prinsengracht`,
+        city: `Paris`,
         imageSrc: `img/room.jpg`,
         contacts: {
           eMail: `Oliver.conner@gmail.com`

@@ -1,8 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {Operation} from '../../reducers/index';
+import {shape, arrayOf, func} from 'prop-types';
 import {placeType} from '../../models/index';
 
-const PlaceCard = ({place, onTitleClick, onCardActivate}) => {
+export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites, data}) => {
+  const isPlaceFavorite = data.favorites.length
+    ? data.favorites.some((favPlace) => place.id === favPlace.id)
+    : false;
+  const active = `--active`;
   return (
     <article className="cities__place-card place-card" onMouseEnter={() => onCardActivate(place)}>
       <div className="place-card__mark">
@@ -19,7 +25,9 @@ const PlaceCard = ({place, onTitleClick, onCardActivate}) => {
             <b className="place-card__price-value">&euro;{place.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={`place-card__bookmark-button${isPlaceFavorite && active} button`} type="button"
+            onClick={() => changeFavorites(place.id, isPlaceFavorite ? 0 : 1)}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -43,8 +51,19 @@ const PlaceCard = ({place, onTitleClick, onCardActivate}) => {
 
 PlaceCard.propTypes = {
   place: placeType,
-  onTitleClick: PropTypes.func,
-  onCardActivate: PropTypes.func
+  onTitleClick: func,
+  onCardActivate: func,
+  changeFavorites: func,
+  data: shape({favorites: arrayOf(placeType)})
 };
 
-export default PlaceCard;
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, ownProps, state);
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  changeFavorites: (placeId, status) => dispatch(Operation.changeFavorites(placeId, status))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceCard);
+

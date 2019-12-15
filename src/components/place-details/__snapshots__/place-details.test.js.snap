@@ -17,8 +17,9 @@ exports[`PlaceDetails renders correctly 1`] = `
           className="header__left"
         >
           <a
-            className="header__logo-link"
-            href="main.html"
+            className="header__logo-link header__logo-link--active"
+            href="/"
+            onClick={[Function]}
           >
             <img
               alt="6 cities logo"
@@ -40,14 +41,22 @@ exports[`PlaceDetails renders correctly 1`] = `
             >
               <a
                 className="header__nav-link header__nav-link--profile"
-                href="#"
+                href="/favorites"
+                onClick={[Function]}
               >
                 <div
                   className="header__avatar-wrapper user__avatar-wrapper"
+                  style={
+                    Object {
+                      "backgroundImage": "/static/avatar/2.jpg",
+                    }
+                  }
                 />
                 <span
                   className="header__user-name user__name"
-                />
+                >
+                  q@q.ru
+                </span>
               </a>
             </li>
           </ul>
@@ -427,7 +436,8 @@ exports[`PlaceDetails renders correctly 1`] = `
                   </span>
                 </div>
                 <button
-                  className="place-card__bookmark-button button"
+                  className="place-card__bookmark-buttonfalse button"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
@@ -531,7 +541,8 @@ exports[`PlaceDetails renders correctly 1`] = `
                   </span>
                 </div>
                 <button
-                  className="place-card__bookmark-button button"
+                  className="place-card__bookmark-buttonfalse button"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
@@ -635,7 +646,8 @@ exports[`PlaceDetails renders correctly 1`] = `
                   </span>
                 </div>
                 <button
-                  className="place-card__bookmark-button button"
+                  className="place-card__bookmark-buttonfalse button"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg

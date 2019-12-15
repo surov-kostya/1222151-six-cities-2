@@ -36,6 +36,27 @@ describe(`Action creators work correctly`, () => {
     });
   });
 
+  it(`Action creator for fetch favorites`, () => {
+    expect(ActionCreator.fetchFavorites(PLACES)).toEqual({
+      type: ActionType.GET_FAVORITES,
+      payload: PLACES
+    });
+  });
+
+  it(`Action creator for add favorite`, () => {
+    expect(ActionCreator.addFavorite(PLACES[0])).toEqual({
+      type: ActionType.ADD_FAVORITE,
+      payload: PLACES[0]
+    });
+  });
+
+  it(`Action creator for delete favorite`, () => {
+    expect(ActionCreator.addFavorite(PLACES[0].id)).toEqual({
+      type: ActionType.ADD_FAVORITE,
+      payload: PLACES[0].id
+    });
+  });
+
 
 });
 
@@ -71,6 +92,24 @@ describe(`Reducer works correctly`, () => {
       type: ActionType.POST_COMMENT,
       payload: COMMENTS,
     })).toEqual(Object.assign({}, initState, {hotelComments: COMMENTS}));
+  });
+  it(`Reducer should update favorites on fetch`, () => {
+    expect(reducer(initState, {
+      type: ActionType.GET_FAVORITES,
+      payload: PLACES,
+    })).toEqual(Object.assign({}, initState, {favorites: PLACES}));
+  });
+  it(`Reducer should update favorites on add place`, () => {
+    expect(reducer(initState, {
+      type: ActionType.ADD_FAVORITE,
+      payload: PLACES[0],
+    })).toEqual(Object.assign({}, initState, {favorites: [...initState.favorites, PLACES[0]]}));
+  });
+  it(`Reducer should update favorites on delete place`, () => {
+    expect(reducer(initState, {
+      type: ActionType.DELETE_FAVORITE,
+      payload: PLACES[0].id,
+    })).toEqual(Object.assign({}, initState, {favorites: initState.favorites}));
   });
 });
 
@@ -129,6 +168,7 @@ describe(`fetchOffers function`, () => {
 
   const resultMockPlace = {
     "id": 101,
+    "city": `Hamburg`,
     "name": `Loft Studio in the Central Area`,
     "imageSrc": `https://htmlacademy-react-2.appspot.com/six-cities/static/hotel/6.jpg`,
     "gallerySrcs": [
@@ -316,6 +356,69 @@ describe(`fetchOffers function`, () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: ActionType.POST_COMMENT,
           payload: reviewsBuilder(mockComments)
+        });
+      });
+  });
+
+  it(`makes correct get to /favorite`, () => {
+    const dispatch = jest.fn();
+    const api = createAPI(dispatch);
+    const mockApi = new MockAdapter(api);
+
+    const commentsLoader = Operation.fetchFavorites();
+
+    mockApi
+      .onGet(`/favorite`)
+      .reply(200, [mockPlace]);
+
+    return commentsLoader(dispatch, undefined, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: ActionType.GET_FAVORITES,
+          payload: [resultMockPlace]
+        });
+      });
+  });
+
+  it(`makes correct add to favorites by post to /favorite/:placeId/:status`, () => {
+    const HOTEL_ID = 1;
+    const STATUS = 1;
+    const dispatch = jest.fn();
+    const api = createAPI(dispatch);
+    const mockApi = new MockAdapter(api);
+
+    const commentsLoader = Operation.changeFavorites(HOTEL_ID, STATUS);
+
+    mockApi
+      .onPost(`/favorite/${HOTEL_ID}/${STATUS}`)
+      .reply(200, mockPlace);
+
+    return commentsLoader(dispatch, undefined, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: ActionType.ADD_FAVORITE,
+          payload: resultMockPlace
+        });
+      });
+  });
+  it(`makes correct delete from favorites by post to /favorite/:placeId/:status`, () => {
+    const HOTEL_ID = 1;
+    const STATUS = 0;
+    const dispatch = jest.fn();
+    const api = createAPI(dispatch);
+    const mockApi = new MockAdapter(api);
+
+    const commentsLoader = Operation.changeFavorites(HOTEL_ID, STATUS);
+
+    mockApi
+      .onPost(`/favorite/${HOTEL_ID}/${STATUS}`)
+      .reply(200, mockPlace);
+
+    return commentsLoader(dispatch, undefined, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: ActionType.DELETE_FAVORITE,
+          payload: HOTEL_ID
         });
       });
   });
