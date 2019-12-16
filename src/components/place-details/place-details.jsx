@@ -12,12 +12,7 @@ import Header from '../header/header';
 class PlaceDetails extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      hotelComments: undefined,
-      activeCard: undefined
-    };
     this.id = Number(props.match.params.id);
-    this._cardActivateHandler = this._cardActivateHandler.bind(this);
     this._postCommentHandler = this._postCommentHandler.bind(this);
   }
 
@@ -135,7 +130,7 @@ class PlaceDetails extends PureComponent {
               <Map
                 places={this.neighbors}
                 cityCoords={this.city.coords}
-                activePlace={this.state.activeCard ? this.state.activeCard.id : undefined}
+                activePlace={this.props.activeItem}
               />
             </section>
           </section>
@@ -146,7 +141,7 @@ class PlaceDetails extends PureComponent {
                 <PlaceList
                   places={this.neighbors}
                   onTitleClick={() => { }}
-                  onCardActivate={(activePlace) => this._cardActivateHandler(activePlace)}
+                  onCardActivate={(activePlace) => this.props.onSelect(activePlace.id)}
                 />
               </div>
             </section>
@@ -161,16 +156,14 @@ class PlaceDetails extends PureComponent {
     this.props.fetchHotelComments(this.id);
   }
 
-  _cardActivateHandler(place) {
-    this.setState({activeCard: place});
-  }
-
   _postCommentHandler(rawComment) {
     this.props.postComment(this.id, rawComment);
   }
 }
 
 PlaceDetails.propTypes = {
+  onSelect: func,
+  activeItem: number,
   fetchHotelComments: func,
   postComment: func,
   data: shape({hotelComments: arrayOf(reviewType), places: arrayOf(placeType)}),

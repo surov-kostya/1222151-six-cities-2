@@ -12,9 +12,11 @@ import {ActionCreator} from '../../reducers/application/application';
 import {variantType} from '../../models/index';
 import {userParamsType} from '../../models/index';
 import withAuth from '../../hocs/with-auth/with-auth';
+import withActiveItem from '../../hocs/with-active-item/with-active-item';
 
 const FavoritesWithAuth = withAuth(Favorites);
 const MainWithAuth = withAuth(Main);
+const PlaceDetailsWrapped = withActiveItem(PlaceDetails);
 
 const sortPlaces = (places, sortVariant) => {
   switch (sortVariant && sortVariant.name) {
@@ -60,7 +62,7 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
           userParams={userParams}
         />
       </Route>
-      <Route path="/offer/:id" exact component={PlaceDetails}>
+      <Route path="/offer/:id" exact component={PlaceDetailsWrapped}>
       </Route>
       <Route path="/login" exact>
         {
