@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Operation} from '../../reducers/index';
+import {Operation} from '../../reducers/reducer';
 import {shape, arrayOf, func} from 'prop-types';
 import {placeType} from '../../models/index';
+import {Link} from 'react-router-dom';
 
 export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites, data}) => {
   const isPlaceFavorite = data.favorites.length
@@ -15,9 +16,9 @@ export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites,
         <span>{place.mark}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/offer/${place.id}`}>
           <img className="place-card__image" src={place.imageSrc} width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

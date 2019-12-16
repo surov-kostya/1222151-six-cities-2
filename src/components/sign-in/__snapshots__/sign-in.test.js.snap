@@ -31,6 +31,7 @@ exports[`SignIn should renders correctly 1`] = `
               E-mail
             </label>
             <input
+              autoComplete="off"
               className="login__input form__input"
               name="email"
               onChange={[Function]}
@@ -48,6 +49,7 @@ exports[`SignIn should renders correctly 1`] = `
               Password
             </label>
             <input
+              autoComplete="off"
               className="login__input form__input"
               name="password"
               onChange={[Function]}
@@ -69,16 +71,7 @@ exports[`SignIn should renders correctly 1`] = `
       >
         <div
           className="locations__item"
-        >
-          <a
-            className="locations__item-link"
-            href="#"
-          >
-            <span>
-              Amsterdam
-            </span>
-          </a>
-        </div>
+        />
       </section>
     </div>
   </main>

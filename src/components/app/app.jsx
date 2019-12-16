@@ -7,10 +7,16 @@ import Favorites from '../favorites/favorites';
 import {arrayOf, func, shape, bool, number} from 'prop-types';
 import {placeType, cityType} from '../../models/index';
 import {connect} from 'react-redux';
-import {Operation} from '../../reducers/index';
+import {Operation} from '../../reducers/reducer';
 import {ActionCreator} from '../../reducers/application/application';
 import {variantType} from '../../models/index';
 import {userParamsType} from '../../models/index';
+import withAuth from '../../hocs/with-auth/with-auth';
+import withActiveItem from '../../hocs/with-active-item/with-active-item';
+
+const FavoritesWithAuth = withAuth(Favorites);
+const MainWithAuth = withAuth(Main);
+const PlaceDetailsWrapped = withActiveItem(PlaceDetails);
 
 const sortPlaces = (places, sortVariant) => {
   switch (sortVariant && sortVariant.name) {
@@ -39,29 +45,24 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
 
     <Switch>
       <Route path="/" exact>
-        {serverError === 401
-          ? <Redirect to="/login?prevUrl=/" />
-          : <Main
-            places={sortPlaces(places, mainSortVariant)}
-            cities={cities}
-            currentCity={city}
-            onTitleClick={() => {}}
-            onChooseCity={(chosenCity) => {
-              chooseCity(chosenCity);
-              fetchOfferList(chosenCity.name);
-            }}
-            activeSortVariant={mainSortVariant}
-            onSort={(variantId) => sortMain(variantId)}
-            sortVariations={sortVariations}
-            userParams={userParams}
-          />}
-      </Route>
-      <Route path="/details" exact>
-        <PlaceDetails
+        <MainWithAuth
+          serverError={serverError}
+          path={`/`}
+          places={sortPlaces(places, mainSortVariant)}
+          cities={cities}
           currentCity={city}
-          place={places[0]}
-          neighbors={places.slice(1)}
-          userParams={userParams}/>;
+          onTitleClick={() => {}}
+          onChooseCity={(chosenCity) => {
+            chooseCity(chosenCity);
+            fetchOfferList(chosenCity.name);
+          }}
+          activeSortVariant={mainSortVariant}
+          onSort={(variantId) => sortMain(variantId)}
+          sortVariations={sortVariations}
+          userParams={userParams}
+        />
+      </Route>
+      <Route path="/offer/:id" exact component={PlaceDetailsWrapped}>
       </Route>
       <Route path="/login" exact>
         {
@@ -71,9 +72,7 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
         }
       </Route>
       <Route path="/favorites" exact>
-        {serverError === 401
-          ? <Redirect to="/login?prevUrl=/favorites" />
-          : <Favorites />}
+        <FavoritesWithAuth serverError={serverError} path={`/favorites`}/>
       </Route>
       <Route path="page-not-found" render={() => (
         <h1>Page not found</h1>

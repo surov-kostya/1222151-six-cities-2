@@ -5,44 +5,38 @@ import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
 import ReviewForm from '../review-form/review-form';
 import {placeType, cityType, userParamsType, reviewType} from '../../models/index';
-import {arrayOf, func, shape} from 'prop-types';
-import {Operation} from '../../reducers/index';
+import {arrayOf, func, shape, string, number} from 'prop-types';
+import {Operation} from '../../reducers/reducer';
 import Header from '../header/header';
 
 class PlaceDetails extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      hotelComments: undefined,
-      activeCard: undefined
-    };
-
-    this._cardActivateHandler = this._cardActivateHandler.bind(this);
+    this.id = Number(props.match.params.id);
     this._postCommentHandler = this._postCommentHandler.bind(this);
   }
 
   render() {
-    const {place, neighbors, currentCity, userParams} = this.props;
-    const hotelComments = this.props.data ? this.props.data.hotelComments : undefined;
+    if (!this.props.data.places.length) {
+      return <h1>Loading...</h1>;
+    }
+    this.userParams = this.props.application.userParams;
+    this.place = this.props.data.places.find((place) => place.id === this.id);
+    this.city = this.props.application.city;
+    this.neighbors = this.props.data.places.filter((place) => place.id !== this.id);
+    this.hotelComments = this.props.data ? this.props.data.hotelComments : undefined;
 
-    const gallery = place.gallerySrcs.map((picSrc) => (
+    const gallery = this.place.gallerySrcs.map((picSrc) => (
       <div key={picSrc} className="property__image-wrapper">
         <img className="property__image" src={picSrc} alt="Photo studio" />
       </div>
     ));
 
-    const features = place.features.map((feature) => (
+    const features = this.place.features.map((feature) => (
       <li key={feature} className="property__inside-item">
         {feature}
       </li>
     ));
-
-
-    // const hostsReviews = place.hostsReview.map((review) => (
-    //   <p key={review} className="property__text">
-    //     {review}
-    //   </p>
-    // ));
 
     return (
       <div className="page">
@@ -53,7 +47,7 @@ class PlaceDetails extends PureComponent {
             <div className="property__gallery-container container">
               <div className="property__gallery">
                 <div className="property__image-wrapper">
-                  <img className="property__image" src={place.imageSrc} alt="Photo studio" />
+                  <img className="property__image" src={this.place.imageSrc} alt="Photo studio" />
                 </div>
                 {gallery}
               </div>
@@ -62,11 +56,11 @@ class PlaceDetails extends PureComponent {
 
               <div className="property__wrapper">
                 <div className="property__mark">
-                  <span>{place.mark}</span>
+                  <span>{this.place.mark}</span>
                 </div>
                 <div className="property__name-wrapper">
                   <h1 className="property__name">
-                    {place.name}
+                    {this.place.name}
                   </h1>
                   <button className="property__bookmark-button button" type="button">
                     <svg className="property__bookmark-icon" width="31" height="33">
@@ -80,23 +74,23 @@ class PlaceDetails extends PureComponent {
                     <span style={{width: `96%`}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="property__rating-value rating__value">{place.rating}</span>
+                  <span className="property__rating-value rating__value">{this.place.rating}</span>
                 </div>
 
 
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    {place.parametres && place.parametres.place} place
+                    {this.place.parametres && this.place.parametres.place} place
                   </li>
                   <li className="property__feature property__feature--bedrooms">
-                    {place.parametres && place.parametres.bedrooms} Bedrooms
+                    {this.place.parametres && this.place.parametres.bedrooms} Bedrooms
                   </li>
                   <li className="property__feature property__feature--adults">
-                    Max {place.parametres && place.parametres.adults} adults
+                    Max {this.place.parametres && this.place.parametres.adults} adults
                   </li>
                 </ul>
                 <div className="property__price">
-                  <b className="property__price-value">&euro;{place.price}</b>
+                  <b className="property__price-value">&euro;{this.place.price}</b>
                   <span className="property__price-text">&nbsp;night</span>
                 </div>
                 <div className="property__inside">
@@ -112,22 +106,21 @@ class PlaceDetails extends PureComponent {
                       <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
                     </div>
                     <span className="property__user-name">
-                      {place.host.name}
+                      {this.place.host.name}
                     </span>
                     <span className="property__user-status">
-                      {place.host.status}
+                      {this.place.host.status}
                     </span>
                   </div>
                   <div className="property__description">
-                    {/* {hostsReviews} */}
                   </div>
                 </div>
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">
                     Reviews &middot; <span className="reviews__amount">1</span>
                   </h2>
-                  {hotelComments && <ReviewList reviews={hotelComments}/>}
-                  {userParams && <ReviewForm
+                  {this.hotelComments && <ReviewList reviews={this.hotelComments}/>}
+                  {this.userParams && <ReviewForm
                     onCommentPost={(rawComment) => this._postCommentHandler(rawComment)}/>
                   }
                 </section>
@@ -135,9 +128,9 @@ class PlaceDetails extends PureComponent {
             </div>
             <section className="property__map map">
               <Map
-                places={neighbors}
-                cityCoords={currentCity.coords}
-                activePlace={this.state.activeCard ? this.state.activeCard.id : undefined}
+                places={this.neighbors}
+                cityCoords={this.city.coords}
+                activePlace={this.props.activeItem}
               />
             </section>
           </section>
@@ -146,9 +139,9 @@ class PlaceDetails extends PureComponent {
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
                 <PlaceList
-                  places={neighbors}
+                  places={this.neighbors}
                   onTitleClick={() => { }}
-                  onCardActivate={(activePlace) => this._cardActivateHandler(activePlace)}
+                  onCardActivate={(activePlace) => this.props.onSelect(activePlace.id)}
                 />
               </div>
             </section>
@@ -160,26 +153,22 @@ class PlaceDetails extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchHotelComments(this.props.place.id);
-  }
-
-  _cardActivateHandler(place) {
-    this.setState({activeCard: place});
+    this.props.fetchHotelComments(this.id);
   }
 
   _postCommentHandler(rawComment) {
-    this.props.postComment(this.props.place.id, rawComment);
+    this.props.postComment(this.id, rawComment);
   }
 }
 
 PlaceDetails.propTypes = {
-  currentCity: cityType,
-  place: placeType,
-  neighbors: arrayOf(placeType),
-  userParams: userParamsType,
+  onSelect: func,
+  activeItem: number,
   fetchHotelComments: func,
-  data: shape({hotelComments: arrayOf(reviewType)}),
-  postComment: func
+  postComment: func,
+  data: shape({hotelComments: arrayOf(reviewType), places: arrayOf(placeType)}),
+  application: shape({userParams: userParamsType, city: cityType}),
+  match: shape({params: shape({id: string | number})})
 };
 
 const mapStateToProps = (state, ownProps) => {
