@@ -43,22 +43,22 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
 
     <Switch>
       <Route path="/" exact>
-        {serverError === 401
-          ? <Redirect to="/login?prevUrl=/" />
-          : <Main
-            places={sortPlaces(places, mainSortVariant)}
-            cities={cities}
-            currentCity={city}
-            onTitleClick={() => {}}
-            onChooseCity={(chosenCity) => {
-              chooseCity(chosenCity);
-              fetchOfferList(chosenCity.name);
-            }}
-            activeSortVariant={mainSortVariant}
-            onSort={(variantId) => sortMain(variantId)}
-            sortVariations={sortVariations}
-            userParams={userParams}
-          />}
+        <MainWithAuth
+          serverError={serverError}
+          path={`/`}
+          places={sortPlaces(places, mainSortVariant)}
+          cities={cities}
+          currentCity={city}
+          onTitleClick={() => {}}
+          onChooseCity={(chosenCity) => {
+            chooseCity(chosenCity);
+            fetchOfferList(chosenCity.name);
+          }}
+          activeSortVariant={mainSortVariant}
+          onSort={(variantId) => sortMain(variantId)}
+          sortVariations={sortVariations}
+          userParams={userParams}
+        />
       </Route>
       <Route path="/offer/:id" exact component={PlaceDetails}>
       </Route>
@@ -70,10 +70,7 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
         }
       </Route>
       <Route path="/favorites" exact>
-        {/* <FavoritesWithAuth serverError={serverError} path={`/favorites`}/> */}
-        {serverError === 401
-          ? <Redirect to="/login?prevUrl=/favorites" />
-          : <Favorites />}
+        <FavoritesWithAuth serverError={serverError} path={`/favorites`}/>
       </Route>
       <Route path="page-not-found" render={() => (
         <h1>Page not found</h1>

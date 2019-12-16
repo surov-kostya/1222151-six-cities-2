@@ -17,6 +17,7 @@ const SignIn = ({onSignIn}) => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
+                  autoComplete="off"
                   className="login__input form__input"
                   type="email"
                   name="email"
@@ -30,6 +31,7 @@ const SignIn = ({onSignIn}) => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
+                  autoComplete="off"
                   className="login__input form__input"
                   type="password"
                   name="password" placeholder="Password"
@@ -44,9 +46,6 @@ const SignIn = ({onSignIn}) => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
             </div>
           </section>
         </div>

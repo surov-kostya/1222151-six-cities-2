@@ -8,11 +8,10 @@ const withAuth = (Component) => {
       super(props);
 
       this.path = props.path;
-      this.serverError = props.serverError;
     }
 
     render() {
-      if (this.serverError === 401) {
+      if (this.props.serverError === 401) {
         return (
           <Redirect to={`/login?prevUrl=${this.path}`}/>
         );

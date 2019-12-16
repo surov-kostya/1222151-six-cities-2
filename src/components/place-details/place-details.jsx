@@ -5,7 +5,7 @@ import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
 import ReviewForm from '../review-form/review-form';
 import {placeType, cityType, userParamsType, reviewType} from '../../models/index';
-import {arrayOf, func, shape, string} from 'prop-types';
+import {arrayOf, func, shape, number} from 'prop-types';
 import {Operation} from '../../reducers/index';
 import Header from '../header/header';
 
@@ -183,7 +183,7 @@ PlaceDetails.propTypes = {
   postComment: func,
   data: shape({hotelComments: arrayOf(reviewType), places: arrayOf(placeType)}),
   application: shape({userParams: userParamsType, city: cityType}),
-  match: shape({params: shape({id: string})})
+  match: shape({params: shape({id: number})})
 };
 
 const mapStateToProps = (state, ownProps) => {

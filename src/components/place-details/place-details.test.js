@@ -1,7 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {PlaceDetails} from './place-details';
-import {cities} from '../../mocks/offers';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
@@ -39,10 +38,17 @@ const PLACES = [{
   ]
 }];
 
+const CITY = {
+  id: 1,
+  name: `Hamburg`,
+  coords: [55.55, 55.55]
+};
+
 const mockStore = configureStore([]);
 const store = mockStore({
-  data: {favorites: PLACES},
+  data: {places: PLACES, favorites: PLACES},
   application: {
+    city: CITY,
     userParams: {
       id: 1,
       name: `q`,
@@ -58,10 +64,19 @@ it(`PlaceDetails renders correctly`, () => {
       <Provider store={store}>
         <BrowserRouter>
           <PlaceDetails
-            currentCity={cities[0]}
-            place={cities[0].places[0]}
-            neighbors={cities[0].places.slice(1)}
+            match={{params: {id: 101}}}
             fetchHotelComments={() => {}}
+            data={{places: PLACES, favorites: PLACES}}
+            application={{
+              city: CITY,
+              userParams: {
+                id: 1,
+                name: `q`,
+                email: `q@q.ru`,
+                avatarSrc: `/static/avatar/2.jpg`,
+                status: ``
+              }
+            }}
           />
         </BrowserRouter>
       </Provider>

@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Favorites from './favorites';
+import {Favorites} from './favorites';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
@@ -57,7 +57,14 @@ it(`Favorites renders correctly`, () => {
   const tree = renderer.create(
       <Provider store={store}>
         <BrowserRouter>
-          <Favorites />
+          <Favorites data={{favorites: PLACES}} fetchFavorites={() => {}}
+            application={{userParams: {
+              id: 1,
+              name: `q`,
+              email: `q@q.ru`,
+              avatarSrc: `/static/avatar/2.jpg`,
+              status: ``
+            }}}/>
         </BrowserRouter>
       </Provider>
   ).toJSON();
