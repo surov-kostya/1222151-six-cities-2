@@ -5,7 +5,7 @@ import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
 import ReviewForm from '../review-form/review-form';
 import {placeType, cityType, userParamsType, reviewType} from '../../models/index';
-import {arrayOf, func, shape, number} from 'prop-types';
+import {arrayOf, func, shape, string, number} from 'prop-types';
 import {Operation} from '../../reducers/index';
 import Header from '../header/header';
 
@@ -42,13 +42,6 @@ class PlaceDetails extends PureComponent {
         {feature}
       </li>
     ));
-
-
-    // const hostsReviews = place.hostsReview.map((review) => (
-    //   <p key={review} className="property__text">
-    //     {review}
-    //   </p>
-    // ));
 
     return (
       <div className="page">
@@ -125,7 +118,6 @@ class PlaceDetails extends PureComponent {
                     </span>
                   </div>
                   <div className="property__description">
-                    {/* {hostsReviews} */}
                   </div>
                 </div>
                 <section className="property__reviews reviews">
@@ -183,7 +175,7 @@ PlaceDetails.propTypes = {
   postComment: func,
   data: shape({hotelComments: arrayOf(reviewType), places: arrayOf(placeType)}),
   application: shape({userParams: userParamsType, city: cityType}),
-  match: shape({params: shape({id: number})})
+  match: shape({params: shape({id: string | number})})
 };
 
 const mapStateToProps = (state, ownProps) => {
