@@ -8,16 +8,11 @@ const createAPI = (dispatch) => {
     withCredentials: true
   });
 
-  const onSuccess = (response) => {
-    // dispatch(ActionCreator.serverError(0));
-
-    return response;
-  };
+  const onSuccess = (response) => response;
   const onFail = (err) => {
     if (err.response && [403, 400, 401].includes(err.response.status)) {
       switch (err.response.status) {
         case 401:
-          // window.location.replace(`/login?prevUrl=${window.location.pathname}`);
           dispatch(ActionCreator.serverError(401));
           break;
         default:

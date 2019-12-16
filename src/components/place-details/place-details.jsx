@@ -5,7 +5,7 @@ import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
 import ReviewForm from '../review-form/review-form';
 import {placeType, cityType, userParamsType, reviewType} from '../../models/index';
-import {arrayOf, func, shape, string, number} from 'prop-types';
+import {arrayOf, func, shape, string, number, bool} from 'prop-types';
 import {Operation} from '../../reducers/reducer';
 import Header from '../header/header';
 
@@ -25,8 +25,11 @@ class PlaceDetails extends PureComponent {
     this.city = this.props.application.city;
     this.neighbors = this.props.data.places.filter((place) => place.id !== this.id);
     this.hotelComments = this.props.data ? this.props.data.hotelComments : undefined;
+    const isPlaceFavorite = this.props.data.favorites.length
+      ? this.props.data.favorites.some((favPlace) => this.id === favPlace.id)
+      : false;
 
-    const gallery = this.place.gallerySrcs.map((picSrc) => (
+    const gallery = this.place.gallerySrcs.slice(0, 6).map((picSrc) => (
       <div key={picSrc} className="property__image-wrapper">
         <img className="property__image" src={picSrc} alt="Photo studio" />
       </div>
@@ -38,6 +41,8 @@ class PlaceDetails extends PureComponent {
       </li>
     ));
 
+    const active = isPlaceFavorite ? `property__bookmark-button--active` : ``;
+
     return (
       <div className="page">
         <Header />
@@ -46,9 +51,6 @@ class PlaceDetails extends PureComponent {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                <div className="property__image-wrapper">
-                  <img className="property__image" src={this.place.imageSrc} alt="Photo studio" />
-                </div>
                 {gallery}
               </div>
             </div>
@@ -62,8 +64,18 @@ class PlaceDetails extends PureComponent {
                   <h1 className="property__name">
                     {this.place.name}
                   </h1>
-                  <button className="property__bookmark-button button" type="button">
-                    <svg className="property__bookmark-icon" width="31" height="33">
+                  <button
+                    className={`property__bookmark-button ${active} button`} type="button"
+                    onClick={() => this.props.changeFavorites(this.id, isPlaceFavorite ? 0 : 1)}
+                  >
+                    <svg className="property__bookmark-icon" width="31" height="33"
+                      style={
+                        {
+                          fill: isPlaceFavorite ? `#4481c3` : `none`,
+                          stroke: isPlaceFavorite ? `#4481c3` : `#b8b8b8`
+                        }
+                      }
+                    >
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
                     <span className="visually-hidden">To bookmarks</span>
@@ -71,7 +83,7 @@ class PlaceDetails extends PureComponent {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: `96%`}}></span>
+                    <span style={{width: `${100 / 5 * this.place.rating}%`}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{this.place.rating}</span>
@@ -80,13 +92,13 @@ class PlaceDetails extends PureComponent {
 
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    {this.place.parametres && this.place.parametres.place} place
+                    {this.place.parameters && this.place.parameters.place} place
                   </li>
                   <li className="property__feature property__feature--bedrooms">
-                    {this.place.parametres && this.place.parametres.bedrooms} Bedrooms
+                    {this.place.parameters && this.place.parameters.bedrooms} Bedrooms
                   </li>
                   <li className="property__feature property__feature--adults">
-                    Max {this.place.parametres && this.place.parametres.adults} adults
+                    Max {this.place.parameters && this.place.parameters.adults} adults
                   </li>
                 </ul>
                 <div className="property__price">
@@ -166,9 +178,18 @@ PlaceDetails.propTypes = {
   activeItem: number,
   fetchHotelComments: func,
   postComment: func,
-  data: shape({hotelComments: arrayOf(reviewType), places: arrayOf(placeType)}),
-  application: shape({userParams: userParamsType, city: cityType}),
-  match: shape({params: shape({id: string | number})})
+  data: shape({
+    hotelComments: arrayOf(reviewType),
+    places: arrayOf(placeType),
+    favorites: arrayOf(placeType)
+  }),
+  application: shape({
+    userParams: userParamsType,
+    city: cityType,
+    isAuthorizationRequired: bool
+  }),
+  match: shape({params: shape({id: string | number, city: string})}),
+  changeFavorites: func
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -176,7 +197,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch) => ({
   fetchHotelComments: (hotelId) => dispatch(Operation.fetchHotelComments(hotelId)),
-  postComment: (hotelId, comment) => dispatch(Operation.postComment(hotelId, comment))
+  postComment: (hotelId, comment) => dispatch(Operation.postComment(hotelId, comment)),
+  changeFavorites: (hotelId, status) => dispatch(Operation.changeFavorites(hotelId, status)),
 });
 
 export {PlaceDetails};

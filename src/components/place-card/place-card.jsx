@@ -1,22 +1,22 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Operation} from '../../reducers/reducer';
-import {shape, arrayOf, func} from 'prop-types';
+import {shape, arrayOf, func, string} from 'prop-types';
 import {placeType} from '../../models/index';
 import {Link} from 'react-router-dom';
 
-export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites, data}) => {
+export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites, data, application}) => {
   const isPlaceFavorite = data.favorites.length
     ? data.favorites.some((favPlace) => place.id === favPlace.id)
     : false;
-  const active = `--active`;
+  const active = isPlaceFavorite ? `place-card__bookmark-button--active` : ``;
   return (
     <article className="cities__place-card place-card" onMouseEnter={() => onCardActivate(place)}>
       <div className="place-card__mark">
         <span>{place.mark}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${place.id}`}>
+        <Link to={`/offer/${application.city.name}/${place.id}`}>
           <img className="place-card__image" src={place.imageSrc} width="260" height="200" alt="Place image" />
         </Link>
       </div>
@@ -26,7 +26,8 @@ export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites,
             <b className="place-card__price-value">&euro;{place.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button${isPlaceFavorite && active} button`} type="button"
+          <button
+            className={`place-card__bookmark-button ${active} button`} type="button"
             onClick={() => changeFavorites(place.id, isPlaceFavorite ? 0 : 1)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -55,7 +56,8 @@ PlaceCard.propTypes = {
   onTitleClick: func,
   onCardActivate: func,
   changeFavorites: func,
-  data: shape({favorites: arrayOf(placeType)})
+  data: shape({favorites: arrayOf(placeType)}),
+  application: shape({city: shape({name: string})})
 };
 
 const mapStateToProps = (state, ownProps) => {

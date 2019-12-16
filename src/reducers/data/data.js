@@ -87,9 +87,9 @@ const offerBuilder = (item) => ({
   name: item.title,
   imageSrc: item.preview_image,
   gallerySrcs: item.images,
-  mark: item.is_premium ? `Premium` : ``,
-  rating: item.rating,
-  parametrs: {
+  mark: item.is_premium ? `Premium` : `Standard`,
+  rating: Math.round(item.rating),
+  parameters: {
     place: `Entire`,
     bedrooms: item.bedrooms,
     adults: item.max_adults

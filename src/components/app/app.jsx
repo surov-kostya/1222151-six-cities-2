@@ -4,7 +4,7 @@ import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
 import SignIn from '../sign-in/sign-in';
 import Favorites from '../favorites/favorites';
-import {arrayOf, func, shape, bool, number} from 'prop-types';
+import {arrayOf, func, shape, bool, number, string} from 'prop-types';
 import {placeType, cityType} from '../../models/index';
 import {connect} from 'react-redux';
 import {Operation} from '../../reducers/reducer';
@@ -16,7 +16,7 @@ import withActiveItem from '../../hocs/with-active-item/with-active-item';
 
 const FavoritesWithAuth = withAuth(Favorites);
 const MainWithAuth = withAuth(Main);
-const PlaceDetailsWrapped = withActiveItem(PlaceDetails);
+const PlaceDetailsWrapped = withAuth(withActiveItem(PlaceDetails));
 
 const sortPlaces = (places, sortVariant) => {
   switch (sortVariant && sortVariant.name) {
@@ -62,7 +62,11 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
           userParams={userParams}
         />
       </Route>
-      <Route path="/offer/:id" exact component={PlaceDetailsWrapped}>
+      <Route path="/offer/:city/:id" exact render={(props) => <PlaceDetailsWrapped
+        {...props}
+        serverError={serverError}
+        path={`/offer/${props[`match`].params.city}/${props[`match`].params.id}`}
+      />}>
       </Route>
       <Route path="/login" exact>
         {
