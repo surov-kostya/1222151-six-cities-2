@@ -7,7 +7,7 @@ import Favorites from '../favorites/favorites';
 import {arrayOf, func, shape, bool, number} from 'prop-types';
 import {placeType, cityType} from '../../models/index';
 import {connect} from 'react-redux';
-import {Operation} from '../../reducers/index';
+import {Operation} from '../../reducers/reducer';
 import {ActionCreator} from '../../reducers/application/application';
 import {variantType} from '../../models/index';
 import {userParamsType} from '../../models/index';

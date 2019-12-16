@@ -6,7 +6,7 @@ import Map from '../map/map';
 import ReviewForm from '../review-form/review-form';
 import {placeType, cityType, userParamsType, reviewType} from '../../models/index';
 import {arrayOf, func, shape, string, number} from 'prop-types';
-import {Operation} from '../../reducers/index';
+import {Operation} from '../../reducers/reducer';
 import Header from '../header/header';
 
 class PlaceDetails extends PureComponent {

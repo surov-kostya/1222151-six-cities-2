@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Operation} from '../../reducers/index';
+import {Operation} from '../../reducers/reducer';
 import {shape, arrayOf, func} from 'prop-types';
 import {placeType} from '../../models/index';
 import {Link} from 'react-router-dom';

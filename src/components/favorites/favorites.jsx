@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {Operation} from '../../reducers/index';
+import {Operation} from '../../reducers/reducer';
 import Header from '../header/header';
 import PlaceCard from '../place-card/place-card';
 import {shape, arrayOf, func} from 'prop-types';
