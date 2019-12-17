@@ -43,7 +43,7 @@ class Map extends PureComponent {
       const places = this.currentPlace ? [...this.props.places, this.currentPlace] : this.props.places;
       places.forEach((place) => {
         leaflet
-          .marker(place.coords, { icon: this.currentPlace && this.currentPlace.id === place.id ? this.activeIcon : this.icon })
+          .marker(place.coords, {icon: this.currentPlace && this.currentPlace.id === place.id ? this.activeIcon : this.icon})
           .addTo(this.map);
       });
     }
@@ -65,8 +65,6 @@ class Map extends PureComponent {
       <div id="map" ref={this._map} style={{height: `100%`}}></div>
     );
   }
-
-  
 }
 
 Map.propTypes = {
