@@ -11,7 +11,7 @@ import Header from '../header/header';
 
 const CityListWrapped = withActiveItem(CityList);
 const CityPlacesWrapped = withActiveItem(CityPlaces);
-
+const DEF_CITY_ID = 0;
 const Main = (props) => {
   const {cities, currentCity, onChooseCity, places, onSort, activeSortVariant, sortVariations} = props;
 
@@ -27,7 +27,7 @@ const Main = (props) => {
           <section className="locations container">
             <CityListWrapped
               cities={cities}
-              currentCityId={currentCity ? currentCity.id : 0}
+              currentCityId={currentCity ? currentCity.id : DEF_CITY_ID}
               onChooseCity={onChooseCity}
             />
           </section>

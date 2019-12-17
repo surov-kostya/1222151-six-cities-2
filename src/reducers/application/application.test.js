@@ -62,6 +62,7 @@ describe(`Reducer works correctly`, () => {
 });
 
 describe(`Sign on function`, () => {
+  const GOOD_STATUS = 200;
   const EMAIL = `qw@qw.ru`;
   const PASSWORD = 1234;
   const MOCK_RESPONSE = {
@@ -81,7 +82,7 @@ describe(`Sign on function`, () => {
 
     mockApi
       .onPost(`/login`, {email: EMAIL, password: PASSWORD})
-      .reply(200, MOCK_RESPONSE);
+      .reply(GOOD_STATUS, MOCK_RESPONSE);
 
     return postToLogin(dispatch, undefined, api)
       .then(() => {
@@ -101,7 +102,7 @@ describe(`Sign on function`, () => {
 
     mockApi
       .onGet(`/login`)
-      .reply(200, MOCK_RESPONSE);
+      .reply(GOOD_STATUS, MOCK_RESPONSE);
 
     return getToLogin(dispatch, undefined, api)
       .then(() => {

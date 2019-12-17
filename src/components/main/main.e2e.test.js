@@ -5,6 +5,8 @@ import Main from './main';
 import {cities} from '../../mocks/offers';
 
 Enzyme.configure({adapter: new Adapter()});
+const MOCK_CITY = {id: 0, coords: [1, 2], name: `City`};
+const USER_PARAMS = {id: 1, name: `Vasya`, email: `at@at.ru`, avatarSrc: `static/avatar/6.jpg`, isPro: false};
 
 it(`Should emit event by click`, () => {
   const clickHandler = jest.fn();
@@ -12,10 +14,10 @@ it(`Should emit event by click`, () => {
   const main = shallow(<Main
     places={cities[0].places}
     cities={cities.map((city) => ({id: city.id, coords: city.coords, name: city.name}))}
-    currentCity={{id: 0, coords: [1, 2], name: `City`}}
+    currentCity={MOCK_CITY}
     onTitleClick={() => { }}
     onChooseCity={() => { }}
-    userParams={{id: 1, name: `Vasya`, email: `at@at.ru`, avatarSrc: `static/avatar/6.jpg`, isPro: false}}
+    userParams={USER_PARAMS}
   />);
 
   const headerLinks = main.find(`.place-card__name > a`);

@@ -20,7 +20,6 @@ export const placeType = shape({
   id: number,
   name: string,
   imageSrc: string,
-  // contacts: shape({eMail: string}),
   gallerySrcs: arrayOf(string),
   mark: string,
   rating: number,

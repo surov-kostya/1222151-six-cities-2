@@ -114,6 +114,7 @@ describe(`Reducer works correctly`, () => {
 });
 
 describe(`fetchOffers function`, () => {
+  const GOOD_STATUS = 200;
   const mockPlace = {
     "city": {
       "name": `Hamburg`,
@@ -307,7 +308,7 @@ describe(`fetchOffers function`, () => {
 
     mockApi
       .onGet(`/hotels`)
-      .reply(200, [mockPlace]);
+      .reply(GOOD_STATUS, [mockPlace]);
 
     return offersLoader(dispatch, undefined, api)
       .then(() => {
@@ -328,7 +329,7 @@ describe(`fetchOffers function`, () => {
 
     mockApi
       .onGet(`/comments/${HOTEL_ID}`)
-      .reply(200, mockComments);
+      .reply(GOOD_STATUS, mockComments);
 
     return commentsLoader(dispatch, undefined, api)
       .then(() => {
@@ -350,7 +351,7 @@ describe(`fetchOffers function`, () => {
 
     mockApi
       .onPost(`/comments/${HOTEL_ID}`)
-      .reply(200, mockComments);
+      .reply(GOOD_STATUS, mockComments);
 
     return commentsLoader(dispatch, undefined, api)
       .then(() => {
@@ -370,7 +371,7 @@ describe(`fetchOffers function`, () => {
 
     mockApi
       .onGet(`/favorite`)
-      .reply(200, [mockPlace]);
+      .reply(GOOD_STATUS, [mockPlace]);
 
     return commentsLoader(dispatch, undefined, api)
       .then(() => {
@@ -392,7 +393,7 @@ describe(`fetchOffers function`, () => {
 
     mockApi
       .onPost(`/favorite/${HOTEL_ID}/${STATUS}`)
-      .reply(200, mockPlace);
+      .reply(GOOD_STATUS, mockPlace);
 
     return commentsLoader(dispatch, undefined, api)
       .then(() => {
@@ -413,7 +414,7 @@ describe(`fetchOffers function`, () => {
 
     mockApi
       .onPost(`/favorite/${HOTEL_ID}/${STATUS}`)
-      .reply(200, mockPlace);
+      .reply(GOOD_STATUS, mockPlace);
 
     return commentsLoader(dispatch, undefined, api)
       .then(() => {

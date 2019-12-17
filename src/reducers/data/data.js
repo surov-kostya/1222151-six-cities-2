@@ -1,5 +1,7 @@
 import {ActionCreator as AppActionCreator} from '../application/application';
 
+const GOOD_STATUS = 200;
+
 const initialState = {
   cities: [],
   places: [],
@@ -125,7 +127,7 @@ export const Operation = {
   fetchOfferList: (cityName) => (dispatch, _, api) => {
     return api.get(`/hotels`)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === GOOD_STATUS) {
           const cityOffers = response.data.filter((place) => place.city.name === cityName).map(offerBuilder);
 
           dispatch(ActionCreator.fetchOfferList(cityOffers));
@@ -136,7 +138,7 @@ export const Operation = {
   fetchCityList: () => (dispatch, _, api) => {
     return api.get(`/hotels`)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === GOOD_STATUS) {
           const cities = response.data.reduce((accumulator, offer) => {
             if (accumulator.findIndex((item) => item.city.name === offer.city.name) === -1) {
               return [...accumulator, offer];
@@ -161,7 +163,7 @@ export const Operation = {
   fetchHotelComments: (hotelId) => (dispatch, _, api) => {
     return api.get(`/comments/${hotelId}`)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === GOOD_STATUS) {
           dispatch(ActionCreator.fetchHotelComments(reviewsBuilder(response.data)));
         }
       });
@@ -171,7 +173,7 @@ export const Operation = {
     return api.post(`/comments/${hotelId}`, {rating: comment.rating, comment: comment.comment}).
       then((response) => {
         cb(response);
-        if (response.status === 200) {
+        if (response.status === GOOD_STATUS) {
           dispatch(ActionCreator.postComment(reviewsBuilder(response.data)));
         }
       });
@@ -180,7 +182,7 @@ export const Operation = {
   fetchFavorites: () => (dispatch, _, api) => {
     return api.get(`/favorite`).
       then((response) => {
-        if (response.status === 200) {
+        if (response.status === GOOD_STATUS) {
           dispatch(ActionCreator.fetchFavorites(response.data.map((favPlace) => offerBuilder(favPlace))));
         }
       });
@@ -189,7 +191,7 @@ export const Operation = {
   changeFavorites: (placeId, status) => (dispatch, _, api) => {
     return api.post(`/favorite/${placeId}/${status}`).
       then((response) => {
-        if (response.status === 200) {
+        if (response.status === GOOD_STATUS) {
           if (status === 1) {
             dispatch(ActionCreator.addFavorite(offerBuilder(response.data)));
           } else {

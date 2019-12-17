@@ -45,12 +45,14 @@ const store = mockStore({
   application: {city: {name: `Paris`}}
 });
 
+const MOCK_CITY_INDEX = 0;
+const MOCK_HOTEL_INDEX = 0;
 
 it(`PlaceCard renders correctly`, () => {
   const tree = renderer.create(
       <Provider store={store}>
         <BrowserRouter>
-          <PlaceCard place={cities[0].places[0]} onTitleClick={() => {}}/>
+          <PlaceCard place={cities[MOCK_CITY_INDEX].places[MOCK_HOTEL_INDEX]} onTitleClick={() => {}}/>
         </BrowserRouter>
       </Provider>
   ).toJSON();

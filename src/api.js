@@ -8,7 +8,7 @@ const createAPI = (dispatch) => {
     timeout: 5000,
     withCredentials: true
   });
-
+  const UN_AUTH_STATUS = 401;
   const onSuccess = (response) => {
     dispatch(ActionCreatorData.serverError({status: 0, message: ``}));
     return response;
@@ -17,9 +17,9 @@ const createAPI = (dispatch) => {
     dispatch(ActionCreatorApp.toggleFormBlock(false));
     const {url, method} = err.response.config;
     switch (err.response.status) {
-      case 401:
+      case UN_AUTH_STATUS:
         if (!url.endsWith(`/login`) && method !== `get`) {
-          dispatch(ActionCreatorData.serverError({status: 401, message: ``}));
+          dispatch(ActionCreatorData.serverError({status: UN_AUTH_STATUS, message: ``}));
         }
         break;
       default:

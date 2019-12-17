@@ -63,27 +63,35 @@ const store = mockStore({
   }
 });
 
+const USER_PARAMS = {
+  id: 1,
+  name: `q`,
+  email: `q@q.ru`,
+  avatarSrc: `/static/avatar/2.jpg`,
+  status: ``
+};
+
+const HOTEL_COMMENT = {
+  id: 1, rating: 4, text: `atata`, author: {avatarSrc: `ddd`, name: `ddd`}
+};
+
+const MOCK_HOTEL_ID = 101;
+
 it(`PlaceDetails renders correctly`, () => {
   const tree = renderer.create(
       <Provider store={store}>
         <BrowserRouter>
           <PlaceDetails
-            match={{params: {id: 101}}}
+            match={{params: {id: MOCK_HOTEL_ID}}}
             fetchHotelComments={() => {}}
             data={{
               places: PLACES,
               favorites: PLACES,
-              hotelComments: [{id: 1, rating: 4, text: `atata`, author: {avatarSrc: `ddd`, name: `ddd`}}]
+              hotelComments: [HOTEL_COMMENT]
             }}
             application={{
               city: CITY,
-              userParams: {
-                id: 1,
-                name: `q`,
-                email: `q@q.ru`,
-                avatarSrc: `/static/avatar/2.jpg`,
-                status: ``
-              }
+              userParams: USER_PARAMS
             }}
           />
         </BrowserRouter>

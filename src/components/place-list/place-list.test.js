@@ -53,11 +53,13 @@ const store = mockStore({
   }
 });
 
+const SOME_CITY_INDEX = 0;
+
 it(`PlaceList renders correctly`, () => {
   const tree = renderer.create(
       <Provider store={store}>
         <BrowserRouter>
-          <PlaceList places={cities[0].places} onTitleClick={() => {}}/>
+          <PlaceList places={cities[SOME_CITY_INDEX].places} onTitleClick={() => {}}/>
         </BrowserRouter>
       </Provider>
   ).toJSON();

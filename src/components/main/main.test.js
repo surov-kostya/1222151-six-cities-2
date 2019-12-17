@@ -52,15 +52,16 @@ const store = mockStore({
   }
 });
 
+const MOCK_CITY = {id: 0, coords: [1, 2], name: `City`};
+
 it(`Main renders correctly`, () => {
   const tree = renderer.create(
       <Provider store={store}>
         <BrowserRouter>
-
           <Main
             places={cities[0].places}
             cities={cities.map((city) => ({id: city.id, coords: city.coords, name: city.name}))}
-            currentCity={{id: 0, coords: [1, 2], name: `City`}}
+            currentCity={MOCK_CITY}
             onTitleClick={() => {}}
             onChooseCity={() => {}}
             userParams={{

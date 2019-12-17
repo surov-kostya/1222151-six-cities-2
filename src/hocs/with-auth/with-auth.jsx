@@ -2,6 +2,8 @@ import React, {PureComponent} from 'react';
 import {string, number, element} from 'prop-types';
 import {Redirect} from 'react-router-dom';
 
+const UN_AUTH_STATUS = 401;
+
 const withAuth = (Component) => {
   class WithAuth extends PureComponent {
     constructor(props) {
@@ -11,7 +13,7 @@ const withAuth = (Component) => {
     }
 
     render() {
-      if (this.props.serverError === 401) {
+      if (this.props.serverError === UN_AUTH_STATUS) {
         return (
           <Redirect to={`/login?prevUrl=${this.path}`}/>
         );

@@ -1,6 +1,8 @@
 import {variations} from '../../mocks/sort-variations';
 import {Operation as OperationData} from '../data/data';
 
+const GOOD_STATUS = 200;
+
 const initialState = {
   city: undefined,
   mainSortVariant: variations[0],
@@ -54,7 +56,7 @@ export const Operation = {
   signIn: (email, password) => (dispatch, _, api) => {
     return api.post(`/login`, {email, password})
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status === GOOD_STATUS) {
             const data = response.data;
             dispatch(ActionCreator.setUserParams({
               id: data.id,
@@ -70,7 +72,7 @@ export const Operation = {
   checkAuth: () => (dispatch, _, api) => {
     return api.get(`/login`).
       then(({data, status}) => {
-        if (status === 200) {
+        if (status === GOOD_STATUS) {
           dispatch(ActionCreator.setUserParams({
             id: data.id,
             name: data.name,

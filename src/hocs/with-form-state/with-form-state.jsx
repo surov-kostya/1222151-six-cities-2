@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {element} from 'prop-types';
 
-
+const DEF_RATING = 0;
 const withFromState = (Component) => {
   class WithFormState extends PureComponent {
     constructor(props) {
@@ -9,7 +9,7 @@ const withFromState = (Component) => {
 
       this.state = {
         comment: ``,
-        rating: 0
+        rating: DEF_RATING
       };
 
       this._commentInputHandler = this._commentInputHandler.bind(this);
