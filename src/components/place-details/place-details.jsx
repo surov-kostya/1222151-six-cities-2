@@ -20,23 +20,23 @@ class PlaceDetails extends PureComponent {
     if (!this.props.data.places.length) {
       return <h1>Loading...</h1>;
     }
-    this.id = Number(this.props.match.params.id);
-    this.userParams = this.props.application.userParams;
-    this.place = this.props.data.places.find((place) => place.id === this.id);
-    this.city = this.props.application.city;
-    this.neighbors = this.props.data.places.filter((place) => place.id !== this.id);
-    this.hotelComments = this.props.data.hotelComments;
+    const place = this.props.data.places.find((item) => item.id === this.id);
+    const neighbors = this.props.data.places.filter((item) => item.id !== this.id);
+    const city = this.props.application.city;
+    const hotelComments = this.props.data.hotelComments;
+    const userParams = this.props.application.userParams;
+
     const isPlaceFavorite = this.props.data.favorites.length
       ? this.props.data.favorites.some((favPlace) => this.id === favPlace.id)
       : false;
 
-    const gallery = this.place.gallerySrcs.slice(0, 6).map((picSrc) => (
+    const gallery = place.gallerySrcs.slice(0, 6).map((picSrc) => (
       <div key={picSrc} className="property__image-wrapper">
         <img className="property__image" src={picSrc} alt="Photo studio" />
       </div>
     ));
 
-    const features = this.place.features.map((feature) => (
+    const features = place.features.map((feature) => (
       <li key={feature} className="property__inside-item">
         {feature}
       </li>
@@ -59,11 +59,11 @@ class PlaceDetails extends PureComponent {
 
               <div className="property__wrapper">
                 <div className="property__mark">
-                  <span>{this.place.mark}</span>
+                  <span>{place.mark}</span>
                 </div>
                 <div className="property__name-wrapper">
                   <h1 className="property__name">
-                    {this.place.name}
+                    {place.name}
                   </h1>
                   <button
                     className={`property__bookmark-button ${active} button`} type="button"
@@ -84,26 +84,26 @@ class PlaceDetails extends PureComponent {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: `${100 / 5 * this.place.rating}%`}}></span>
+                    <span style={{width: `${100 / 5 * place.rating}%`}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="property__rating-value rating__value">{this.place.rating}</span>
+                  <span className="property__rating-value rating__value">{place.rating}</span>
                 </div>
 
 
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    {this.place.parameters && this.place.parameters.place} place
+                    {place.parameters && place.parameters.place} place
                   </li>
                   <li className="property__feature property__feature--bedrooms">
-                    {this.place.parameters && this.place.parameters.bedrooms} Bedrooms
+                    {place.parameters && place.parameters.bedrooms} Bedrooms
                   </li>
                   <li className="property__feature property__feature--adults">
-                    Max {this.place.parameters && this.place.parameters.adults} adults
+                    Max {place.parameters && place.parameters.adults} adults
                   </li>
                 </ul>
                 <div className="property__price">
-                  <b className="property__price-value">&euro;{this.place.price}</b>
+                  <b className="property__price-value">&euro;{place.price}</b>
                   <span className="property__price-text">&nbsp;night</span>
                 </div>
                 <div className="property__inside">
@@ -119,10 +119,10 @@ class PlaceDetails extends PureComponent {
                       <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
                     </div>
                     <span className="property__user-name">
-                      {this.place.host.name}
+                      {place.host.name}
                     </span>
                     <span className="property__user-status">
-                      {this.place.host.status}
+                      {place.host.status}
                     </span>
                   </div>
                   <div className="property__description">
@@ -130,10 +130,10 @@ class PlaceDetails extends PureComponent {
                 </div>
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">
-                    Reviews &middot; <span className="reviews__amount">1</span>
+                    Reviews &middot; <span className="reviews__amount">{hotelComments.length}</span>
                   </h2>
-                  {this.hotelComments && <ReviewList reviews={this.hotelComments}/>}
-                  {this.userParams && <ReviewForm
+                  {hotelComments && <ReviewList reviews={hotelComments}/>}
+                  {userParams && <ReviewForm
                     onCommentPost={(rawComment) => this._postCommentHandler(rawComment)}/>
                   }
                 </section>
@@ -141,8 +141,8 @@ class PlaceDetails extends PureComponent {
             </div>
             <section className="property__map map">
               <Map
-                places={this.neighbors}
-                cityCoords={this.city.coords}
+                places={neighbors}
+                cityCoords={city.coords}
                 activePlace={this.props.activeItem}
               />
             </section>
@@ -152,7 +152,7 @@ class PlaceDetails extends PureComponent {
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
                 <PlaceList
-                  places={this.neighbors}
+                  places={neighbors}
                   onTitleClick={() => { }}
                   onCardActivate={(activePlace) => this.props.onSelect(activePlace.id)}
                 />
@@ -167,6 +167,13 @@ class PlaceDetails extends PureComponent {
 
   componentDidMount() {
     this.props.fetchHotelComments(this.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    this.id = Number(this.props.match.params.id);
+    if (Number(prevProps.match.params.id) !== this.id) {
+      this.props.fetchHotelComments(this.id);
+    }
   }
 
   _postCommentHandler(rawComment) {

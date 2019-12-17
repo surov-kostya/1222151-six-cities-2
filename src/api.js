@@ -8,7 +8,10 @@ const createAPI = (dispatch) => {
     withCredentials: true
   });
 
-  const onSuccess = (response) => response;
+  const onSuccess = (response) => {
+    dispatch(ActionCreator.serverError(0));
+    return response;
+  };
   const onFail = (err) => {
     const {url, method} = err.response.config;
     switch (err.response.status) {
