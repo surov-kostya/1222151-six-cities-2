@@ -12,7 +12,7 @@ class SortVariations extends PureComponent {
     this.sortVariations = props.sortVariations;
     this.onSort = props.onSort;
 
-    this._toggleDropdownHandler = this._toggleDropdownHandler.bind(this);
+    this._handleDropdownToggle = this._handleDropdownToggle.bind(this);
   }
 
   render() {
@@ -21,7 +21,7 @@ class SortVariations extends PureComponent {
         <span className="places__sorting-caption">Sort by</span>
         <button className="places__sorting-type" tabIndex="0"
           style={{border: `none`, backgroundColor: `transparent`, outline: `none`}}
-          onClick={this._toggleDropdownHandler}>
+          onClick={this._handleDropdownToggle}>
           {this.props.activeSortVariant && this.props.activeSortVariant.name}
           <svg className="places__sorting-arrow" width="7" height="4">
             <use xlinkHref="#icon-arrow-select"></use>
@@ -33,7 +33,7 @@ class SortVariations extends PureComponent {
               key={variant.id}
               onClick={() => {
                 this.onSort(variant.id);
-                this._toggleDropdownHandler();
+                this._handleDropdownToggle();
               }}
               className={
                 variant.id === this.props.activeSortVariant.id
@@ -50,7 +50,7 @@ class SortVariations extends PureComponent {
     );
   }
 
-  _toggleDropdownHandler() {
+  _handleDropdownToggle() {
     this.setState((prevState) => ({isSortMenuShown: !prevState.isSortMenuShown}));
   }
 }

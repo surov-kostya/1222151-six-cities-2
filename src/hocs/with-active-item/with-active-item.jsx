@@ -7,7 +7,7 @@ const withActiveItem = (Component) => {
       super(props);
 
       this.state = {activeItem: props.activeItem};
-      this._selectHandler = this._selectHandler.bind(this);
+      this._handleItemSelect = this._handleItemSelect.bind(this);
     }
 
     render() {
@@ -16,12 +16,12 @@ const withActiveItem = (Component) => {
         <Component
           {...this.props}
           activeItem={activeItem}
-          onSelect={(itemId) => this._selectHandler(itemId)}
+          onSelect={(itemId) => this._handleItemSelect(itemId)}
         />
       );
     }
 
-    _selectHandler(itemId) {
+    _handleItemSelect(itemId) {
       this.setState({activeItem: itemId});
     }
   }

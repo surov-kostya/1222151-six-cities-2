@@ -12,8 +12,8 @@ const withFromState = (Component) => {
         rating: DEF_RATING
       };
 
-      this._commentInputHandler = this._commentInputHandler.bind(this);
-      this._ratingSetHandler = this._ratingSetHandler.bind(this);
+      this._handleCommentInput = this._handleCommentInput.bind(this);
+      this._handleRatingSet = this._handleRatingSet.bind(this);
     }
 
     render() {
@@ -21,17 +21,17 @@ const withFromState = (Component) => {
         <Component
           {...this.props}
           comment={this.state}
-          onCommentInput={this._commentInputHandler}
-          onRatingSet={this._ratingSetHandler}
+          onCommentInput={this._handleCommentInput}
+          onRatingSet={this._handleRatingSet}
         />
       );
     }
 
-    _commentInputHandler(comment) {
+    _handleCommentInput(comment) {
       this.setState({comment});
     }
 
-    _ratingSetHandler(rating) {
+    _handleRatingSet(rating) {
       this.setState({rating});
     }
   }
