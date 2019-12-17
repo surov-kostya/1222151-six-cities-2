@@ -78,7 +78,7 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
       <Route path="/favorites" exact>
         <FavoritesWithAuth serverError={serverError} path={`/favorites`}/>
       </Route>
-      <Route path="page-not-found" render={() => (
+      <Route path="/page-not-found" render={() => (
         <h1>Page not found</h1>
       )}/>
     </Switch>

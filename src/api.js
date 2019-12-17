@@ -10,18 +10,18 @@ const createAPI = (dispatch) => {
 
   const onSuccess = (response) => response;
   const onFail = (err) => {
-    if (err.response && [403, 400, 401].includes(err.response.status)) {
-      switch (err.response.status) {
-        case 401:
+    const {url, method} = err.response.config;
+    switch (err.response.status) {
+      case 401:
+        if (!url.endsWith(`/login`) && method !== `get`) {
           dispatch(ActionCreator.serverError(401));
-          break;
-        default:
-          window.location.replace(`/page-not-found`);
-      }
+        }
+        break;
+      case 404:
+        window.location.replace(`/page-not-found`);
     }
     return err;
   };
-
   api.interceptors.response.use(onSuccess, onFail);
 
   return api;

@@ -12,7 +12,7 @@ import Header from '../header/header';
 class PlaceDetails extends PureComponent {
   constructor(props) {
     super(props);
-    this.id = Number(props.match.params.id);
+    this.id = Number(this.props.match.params.id);
     this._postCommentHandler = this._postCommentHandler.bind(this);
   }
 
@@ -20,11 +20,12 @@ class PlaceDetails extends PureComponent {
     if (!this.props.data.places.length) {
       return <h1>Loading...</h1>;
     }
+    this.id = Number(this.props.match.params.id);
     this.userParams = this.props.application.userParams;
     this.place = this.props.data.places.find((place) => place.id === this.id);
     this.city = this.props.application.city;
     this.neighbors = this.props.data.places.filter((place) => place.id !== this.id);
-    this.hotelComments = this.props.data ? this.props.data.hotelComments : undefined;
+    this.hotelComments = this.props.data.hotelComments;
     const isPlaceFavorite = this.props.data.favorites.length
       ? this.props.data.favorites.some((favPlace) => this.id === favPlace.id)
       : false;
