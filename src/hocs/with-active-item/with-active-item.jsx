@@ -10,6 +10,10 @@ const withActiveItem = (Component) => {
       this._handleItemSelect = this._handleItemSelect.bind(this);
     }
 
+    _handleItemSelect(itemId) {
+      this.setState({activeItem: itemId});
+    }
+
     render() {
       const activeItem = this.state.activeItem;
       return (
@@ -19,10 +23,6 @@ const withActiveItem = (Component) => {
           onSelect={(itemId) => this._handleItemSelect(itemId)}
         />
       );
-    }
-
-    _handleItemSelect(itemId) {
-      this.setState({activeItem: itemId});
     }
   }
 

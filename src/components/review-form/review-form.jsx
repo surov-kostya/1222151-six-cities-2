@@ -13,6 +13,10 @@ class ReviewForm extends PureComponent {
     this._handleRatingSet = this._handleRatingSet.bind(this);
   }
 
+  _handleRatingSet(event) {
+    this.props.onRatingSet(Number(event.target.value));
+  }
+
   render() {
     const {hotelId, comment, application} = this.props;
     return (
@@ -85,10 +89,6 @@ class ReviewForm extends PureComponent {
       </form>
 
     );
-  }
-
-  _handleRatingSet(event) {
-    this.props.onRatingSet(Number(event.target.value));
   }
 }
 

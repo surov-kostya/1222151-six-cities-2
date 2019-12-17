@@ -15,6 +15,10 @@ class SortVariations extends PureComponent {
     this._handleDropdownToggle = this._handleDropdownToggle.bind(this);
   }
 
+  _handleDropdownToggle() {
+    this.setState((prevState) => ({isSortMenuShown: !prevState.isSortMenuShown}));
+  }
+
   render() {
     return (
       <div className="places__sorting" action="#" method="get">
@@ -48,10 +52,6 @@ class SortVariations extends PureComponent {
         </ul>}
       </div>
     );
-  }
-
-  _handleDropdownToggle() {
-    this.setState((prevState) => ({isSortMenuShown: !prevState.isSortMenuShown}));
   }
 }
 

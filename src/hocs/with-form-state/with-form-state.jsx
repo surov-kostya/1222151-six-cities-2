@@ -16,6 +16,15 @@ const withFromState = (Component) => {
       this._handleRatingSet = this._handleRatingSet.bind(this);
     }
 
+
+    _handleCommentInput(comment) {
+      this.setState({comment});
+    }
+
+    _handleRatingSet(rating) {
+      this.setState({rating});
+    }
+
     render() {
       return (
         <Component
@@ -25,14 +34,6 @@ const withFromState = (Component) => {
           onRatingSet={this._handleRatingSet}
         />
       );
-    }
-
-    _handleCommentInput(comment) {
-      this.setState({comment});
-    }
-
-    _handleRatingSet(rating) {
-      this.setState({rating});
     }
   }
 

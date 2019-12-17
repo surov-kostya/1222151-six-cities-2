@@ -12,6 +12,12 @@ export class Favorites extends PureComponent {
     super(props);
   }
 
+  componentDidMount() {
+    if (!this.props.data.favorites.length) {
+      this.props.fetchFavorites();
+    }
+  }
+
   render() {
     const favPlaces = this.props.data.favorites;
     const favCities = favPlaces
@@ -76,12 +82,6 @@ export class Favorites extends PureComponent {
           </Link>
         </footer>
       </div>);
-  }
-
-  componentDidMount() {
-    if (!this.props.data.favorites.length) {
-      this.props.fetchFavorites();
-    }
   }
 }
 

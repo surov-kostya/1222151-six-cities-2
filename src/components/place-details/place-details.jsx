@@ -18,6 +18,17 @@ class PlaceDetails extends PureComponent {
     this.id = Number(this.props.match.params.id);
   }
 
+  componentDidMount() {
+    this.props.fetchHotelComments(this.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    this.id = Number(this.props.match.params.id);
+    if (Number(prevProps.match.params.id) !== this.id) {
+      this.props.fetchHotelComments(this.id);
+    }
+  }
+
   render() {
     if (!this.props.data.places.length) {
       return <h1>Loading...</h1>;
@@ -165,17 +176,6 @@ class PlaceDetails extends PureComponent {
       </div>
 
     );
-  }
-
-  componentDidMount() {
-    this.props.fetchHotelComments(this.id);
-  }
-
-  componentDidUpdate(prevProps) {
-    this.id = Number(this.props.match.params.id);
-    if (Number(prevProps.match.params.id) !== this.id) {
-      this.props.fetchHotelComments(this.id);
-    }
   }
 }
 
