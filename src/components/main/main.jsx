@@ -13,7 +13,7 @@ const CityListWrapped = withActiveItem(CityList);
 const CityPlacesWrapped = withActiveItem(CityPlaces);
 
 const Main = (props) => {
-  const {cities, currentCity, onChooseCity, places, onSort, activeSortVariant, sortVariations, onTitleClick} = props;
+  const {cities, currentCity, onChooseCity, places, onSort, activeSortVariant, sortVariations} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -40,7 +40,6 @@ const Main = (props) => {
               onSort={onSort}
               activeSortVariant={activeSortVariant}
               sortVariations={sortVariations}
-              onTitleClick={onTitleClick}
             />
             : <MainEmpty currentCity={currentCity} />}
         </div>
@@ -53,7 +52,6 @@ Main.propTypes = {
   places: arrayOf(placeType),
   cities: arrayOf(cityType),
   currentCity: cityType,
-  onTitleClick: func,
   onChooseCity: func,
   activeSortVariant: variantType,
   onSort: func,

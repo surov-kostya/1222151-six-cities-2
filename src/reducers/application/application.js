@@ -1,10 +1,11 @@
 import {variations} from '../../mocks/sort-variations';
-// import {ActionCreator as ActionCreatorData} from '../data/data';
+import {Operation as OperationData} from '../data/data';
 
 const initialState = {
   city: undefined,
   mainSortVariant: variations[0],
-  userParams: undefined
+  userParams: undefined,
+  isFormBlocked: false
 };
 
 export const getInitState = () => {
@@ -14,7 +15,8 @@ export const getInitState = () => {
 export const ActionType = {
   SORT_MAIN: `SORT_MAIN`,
   CHANGE_CITY: `CHANGE_CITY`,
-  SET_USER_PARAMS: `SET_USER_PARAMS`
+  SET_USER_PARAMS: `SET_USER_PARAMS`,
+  TOGGLE_FORM_BLOCK: `TOGGLE_FORM_BLOCK`
 };
 
 export const ActionCreator = {
@@ -38,6 +40,13 @@ export const ActionCreator = {
       payload: params
     }
     ;
+  },
+
+  toggleFormBlock: (status) => {
+    return {
+      type: ActionType.TOGGLE_FORM_BLOCK,
+      payload: status
+    };
   }
 };
 
@@ -62,7 +71,6 @@ export const Operation = {
     return api.get(`/login`).
       then(({data, status}) => {
         if (status === 200) {
-          // dispatch(ActionCreator.toggleAuthReq());
           dispatch(ActionCreator.setUserParams({
             id: data.id,
             name: data.name,
@@ -70,6 +78,7 @@ export const Operation = {
             avatarSrc: data.avatar_url,
             status: data.is_pro ? `Pro` : ``
           }));
+          OperationData.fetchFavorites();
         }
       });
   }
@@ -78,6 +87,8 @@ export const Operation = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.TOGGLE_FORM_BLOCK:
+      return Object.assign({}, state, {isFormBlocked: action.payload});
     case ActionType.SORT_MAIN:
       return Object.assign({}, state, {mainSortVariant: action.payload});
     case ActionType.CHANGE_CITY:

@@ -55,7 +55,6 @@ const store = mockStore({
       avatarSrc: `/static/avatar/2.jpg`,
       status: ``
     },
-    isAuthorizationRequired: true,
     mainSortVariant: {
       id: 0,
       name: `Popular`

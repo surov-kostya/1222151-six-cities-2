@@ -6,6 +6,7 @@ import leaflet from 'leaflet';
 class Map extends PureComponent {
   constructor(props) {
     super(props);
+    this.currentPlace = props.currentPlace;
     this._map = createRef();
     this.map = undefined;
 
@@ -45,9 +46,10 @@ class Map extends PureComponent {
             })
         .addTo(this.map);
 
-      this.props.places.forEach((place) => {
+      const places = this.currentPlace ? [...this.props.places, this.currentPlace] : this.props.places;
+      places.forEach((place) => {
         leaflet
-          .marker(place.coords, {icon: this.icon})
+          .marker(place.coords, {icon: this.currentPlace && this.currentPlace.id === place.id ? this.activeIcon : this.icon})
           .addTo(this.map);
       });
     }
@@ -57,7 +59,9 @@ class Map extends PureComponent {
     this.map.setView(this.props.cityCoords, this.zoom);
     this.props.places.forEach((place) => {
       leaflet
-        .marker(place.coords, {icon: this.props.activePlace && place.id === this.props.activePlace ? this.activeIcon : this.icon})
+        .marker(place.coords, {
+          icon: this.props.activePlace && place.id === this.props.activePlace ? this.activeIcon : this.icon
+        })
         .addTo(this.map);
     });
   }
@@ -66,7 +70,8 @@ class Map extends PureComponent {
 Map.propTypes = {
   places: arrayOf(placeType),
   cityCoords: arrayOf(number),
-  activePlace: number
+  activePlace: number,
+  currentPlace: placeType
 };
 
 export default Map;

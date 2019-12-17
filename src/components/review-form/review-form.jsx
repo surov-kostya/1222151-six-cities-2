@@ -1,54 +1,51 @@
 import React from 'react';
-import {func} from 'prop-types';
+import {connect} from 'react-redux';
+import {Operation} from '../../reducers/reducer';
+import {ActionCreator} from '../../reducers/application/application';
+import {func, number, shape, string, bool} from 'prop-types';
 
-const ReviewForm = ({onCommentPost}) => {
-  const rawComment = {
-    rating: 0,
-    text: ``
-  };
-
+const ReviewForm = ({postComment, onCommentInput, onRatingSet, hotelId, comment, application, toggleFormBlock}) => {
   const ratingHandler = (event) => {
-    rawComment.rating = event.target.value;
+    onRatingSet(Number(event.target.value));
   };
 
   return (
     <form className="reviews__form form" onSubmit={(event) => {
       event.preventDefault();
-      if (rawComment.text || rawComment.rating) {
-        onCommentPost(rawComment);
-      }
+      toggleFormBlock(true);
+      postComment(hotelId, comment);
     }}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={ratingHandler}/>
+        <input className="form__rating-input visually-hidden" disabled={application.isFormBlocked} name="rating" value="5" id="5-stars" type="radio" onChange={ratingHandler}/>
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" onChange={ratingHandler} />
+        <input className="form__rating-input visually-hidden" disabled={application.isFormBlocked} name="rating" value="4" id="4-stars" type="radio" onChange={ratingHandler} />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" onChange={ratingHandler} />
+        <input className="form__rating-input visually-hidden" disabled={application.isFormBlocked} name="rating" value="3" id="3-stars" type="radio" onChange={ratingHandler} />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" onChange={ratingHandler} />
+        <input className="form__rating-input visually-hidden" disabled={application.isFormBlocked} name="rating" value="2" id="2-stars" type="radio" onChange={ratingHandler} />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" onChange={ratingHandler} />
+        <input className="form__rating-input visually-hidden" disabled={application.isFormBlocked} name="rating" value="1" id="1-star" type="radio" onChange={ratingHandler} />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
@@ -57,14 +54,19 @@ const ReviewForm = ({onCommentPost}) => {
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={(event) => {
-          rawComment.text = event.target.value;
+          onCommentInput(event.target.value);
         }}
       ></textarea>
+      <div className="reviews__button-wrapper">
+        <p className="reviews__help">{comment.comment.length}</p>
+      </div>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit"
+          disabled={!(comment.comment.length >= 50 && comment.comment.length <= 300 && comment.rating && !application.isFormBlocked)}
+        >Submit</button>
       </div>
     </form>
 
@@ -72,7 +74,22 @@ const ReviewForm = ({onCommentPost}) => {
 };
 
 ReviewForm.propTypes = {
-  onCommentPost: func
+  onRatingSet: func,
+  postComment: func,
+  onCommentInput: func,
+  hotelId: number,
+  comment: shape({comment: string, rating: number}),
+  application: shape({isFormBlocked: bool}),
+  toggleFormBlock: func
 };
 
-export default ReviewForm;
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, state, ownProps);
+};
+const mapDispatchToProps = (dispatch) => ({
+  postComment: (hotelId, comment) => dispatch(Operation.postComment(hotelId, comment)),
+  toggleFormBlock: (status) => dispatch(ActionCreator.toggleFormBlock(status))
+});
+
+export {ReviewForm};
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);

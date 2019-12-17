@@ -25,9 +25,6 @@ const store = createStore(
 const init = () => {
   store.dispatch(Operation.fetchCityList());
   store.dispatch(Operation.checkAuth());
-  if (!store.getState().application.isAuthorizationRequired) {
-    store.dispatch(Operation.fetchFavorites());
-  }
   ReactDOM.render(
       <Provider store={store}>
         <BrowserRouter>

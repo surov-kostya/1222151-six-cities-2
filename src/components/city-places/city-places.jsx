@@ -7,7 +7,7 @@ import {variantType} from '../../models/index';
 import {arrayOf, func, number} from 'prop-types';
 
 const CityPlaces = (props) => {
-  const {places, currentCity, onSort, activeSortVariant, sortVariations, onTitleClick, onSelect, activeItem} = props;
+  const {places, currentCity, onSort, activeSortVariant, sortVariations, onSelect, activeItem} = props;
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
@@ -21,7 +21,6 @@ const CityPlaces = (props) => {
         <div className="cities__places-list tabs__content">
           <PlaceList
             places={places}
-            onTitleClick={onTitleClick}
             onCardActivate={(place) => onSelect(place.id)}
           />
         </div>
@@ -43,7 +42,6 @@ CityPlaces.propTypes = {
   places: arrayOf(placeType),
   cities: arrayOf(cityType),
   currentCity: cityType,
-  onTitleClick: func,
   onChooseCity: func,
   activeSortVariant: variantType,
   onSort: func,

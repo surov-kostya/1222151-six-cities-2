@@ -4,16 +4,18 @@ import ReviewList from '../review-list/review-list';
 import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
 import ReviewForm from '../review-form/review-form';
+import withFormState from '../../hocs/with-form-state/with-form-state';
 import {placeType, cityType, userParamsType, reviewType} from '../../models/index';
-import {arrayOf, func, shape, string, number, bool} from 'prop-types';
+import {arrayOf, func, shape, string, number} from 'prop-types';
 import {Operation} from '../../reducers/reducer';
 import Header from '../header/header';
+
+const ReviewFormWithState = withFormState(ReviewForm);
 
 class PlaceDetails extends PureComponent {
   constructor(props) {
     super(props);
     this.id = Number(this.props.match.params.id);
-    this._postCommentHandler = this._postCommentHandler.bind(this);
   }
 
   render() {
@@ -21,7 +23,7 @@ class PlaceDetails extends PureComponent {
       return <h1>Loading...</h1>;
     }
     const place = this.props.data.places.find((item) => item.id === this.id);
-    const neighbors = this.props.data.places.filter((item) => item.id !== this.id);
+    const neighbors = this.props.data.places.filter((item) => item.id !== this.id).slice(0, 3);
     const city = this.props.application.city;
     const hotelComments = this.props.data.hotelComments;
     const userParams = this.props.application.userParams;
@@ -93,7 +95,7 @@ class PlaceDetails extends PureComponent {
 
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    {place.parameters && place.parameters.place} place
+                    {place.parameters && place.parameters.place}
                   </li>
                   <li className="property__feature property__feature--bedrooms">
                     {place.parameters && place.parameters.bedrooms} Bedrooms
@@ -115,8 +117,10 @@ class PlaceDetails extends PureComponent {
                 <div className="property__host">
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
-                    <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                      <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <div className={
+                      `property__avatar-wrapper user__avatar-wrapper ${place.host.status === `Pro` ? `property__avatar-wrapper--pro` : ``}`
+                    }>
+                      <img className="property__avatar user__avatar" src={place.host.avatarSrc} width="74" height="74" alt="Host avatar" />
                     </div>
                     <span className="property__user-name">
                       {place.host.name}
@@ -132,10 +136,8 @@ class PlaceDetails extends PureComponent {
                   <h2 className="reviews__title">
                     Reviews &middot; <span className="reviews__amount">{hotelComments.length}</span>
                   </h2>
-                  {hotelComments && <ReviewList reviews={hotelComments}/>}
-                  {userParams && <ReviewForm
-                    onCommentPost={(rawComment) => this._postCommentHandler(rawComment)}/>
-                  }
+                  {hotelComments && <ReviewList reviews={hotelComments.slice(0, 10)}/>}
+                  {userParams && <ReviewFormWithState hotelId={this.id} />}
                 </section>
               </div>
             </div>
@@ -144,6 +146,7 @@ class PlaceDetails extends PureComponent {
                 places={neighbors}
                 cityCoords={city.coords}
                 activePlace={this.props.activeItem}
+                currentPlace={place}
               />
             </section>
           </section>
@@ -153,7 +156,6 @@ class PlaceDetails extends PureComponent {
               <div className="near-places__list places__list">
                 <PlaceList
                   places={neighbors}
-                  onTitleClick={() => { }}
                   onCardActivate={(activePlace) => this.props.onSelect(activePlace.id)}
                 />
               </div>
@@ -175,10 +177,6 @@ class PlaceDetails extends PureComponent {
       this.props.fetchHotelComments(this.id);
     }
   }
-
-  _postCommentHandler(rawComment) {
-    this.props.postComment(this.id, rawComment);
-  }
 }
 
 PlaceDetails.propTypes = {
@@ -194,10 +192,9 @@ PlaceDetails.propTypes = {
   application: shape({
     userParams: userParamsType,
     city: cityType,
-    isAuthorizationRequired: bool
   }),
   match: shape({params: shape({id: string | number, city: string})}),
-  changeFavorites: func
+  changeFavorites: func,
 };
 
 const mapStateToProps = (state, ownProps) => {

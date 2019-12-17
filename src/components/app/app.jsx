@@ -4,7 +4,7 @@ import Main from '../main/main';
 import PlaceDetails from '../place-details/place-details';
 import SignIn from '../sign-in/sign-in';
 import Favorites from '../favorites/favorites';
-import {arrayOf, func, shape, bool, number, string} from 'prop-types';
+import {arrayOf, func, shape, number} from 'prop-types';
 import {placeType, cityType} from '../../models/index';
 import {connect} from 'react-redux';
 import {Operation} from '../../reducers/reducer';
@@ -51,7 +51,6 @@ const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sor
           places={sortPlaces(places, mainSortVariant)}
           cities={cities}
           currentCity={city}
-          onTitleClick={() => {}}
           onChooseCity={(chosenCity) => {
             chooseCity(chosenCity);
             fetchOfferList(chosenCity.name);
@@ -90,7 +89,6 @@ App.propTypes = {
   application: shape({
     city: cityType,
     mainSortVariant: variantType,
-    isAuthorizationRequired: bool
   }),
   chooseCity: func,
   fetchOfferList: func,

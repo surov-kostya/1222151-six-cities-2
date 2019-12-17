@@ -9,27 +9,26 @@ import {placeType} from '../../models/index';
 export class Favorites extends PureComponent {
   constructor(props) {
     super(props);
-    this.data = props.data;
-    this.fetchFavorites = props.fetchFavorites;
-    this.favPlaces = props.data.favorites;
-    this.favCities = this.favPlaces
-      .map((place) => place.city)
-      .filter((city, index, array) => array.indexOf(city) === index);
   }
 
   render() {
+    const favPlaces = this.props.data.favorites;
+    const favCities = favPlaces
+      .map((place) => place.city)
+      .filter((city, index, array) => array.indexOf(city) === index);
+
     return (
       <div className="page">
         <Header />
 
-        {this.favPlaces.length
+        {favPlaces.length
           ? (<main className="page__main page__main--favorites">
             <div className="page__favorites-container container">
               <section className="favorites">
                 <h1 className="favorites__title">Saved listing</h1>
                 <ul className="favorites__list">
                   {
-                    this.favCities.map((city) => (
+                    favCities.map((city) => (
                       <li key={city} className="favorites__locations-items">
                         <div className="favorites__locations locations locations--current">
                           <div className="locations__item">
@@ -40,11 +39,10 @@ export class Favorites extends PureComponent {
                         </div>
                         <div className="favorites__places">
                           {
-                            this.favPlaces.filter((place) => place.city === city).map((place) => (
+                            favPlaces.filter((place) => place.city === city).map((place) => (
                               <PlaceCard
                                 key={place.id}
                                 place={place}
-                                onTitleClick={() => {}}
                                 onCardActivate={() => {}}
                               />
                             ))
@@ -80,7 +78,9 @@ export class Favorites extends PureComponent {
   }
 
   componentDidMount() {
-    this.fetchFavorites();
+    if (!this.props.data.favorites.length) {
+      this.props.fetchFavorites();
+    }
   }
 }
 

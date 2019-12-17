@@ -90,7 +90,7 @@ const offerBuilder = (item) => ({
   mark: item.is_premium ? `Premium` : `Standard`,
   rating: Math.round(item.rating),
   parameters: {
-    place: `Entire`,
+    place: item.type === `room` ? `Private room` : item.type.charAt(0).toUpperCase() + item.type.slice(1),
     bedrooms: item.bedrooms,
     adults: item.max_adults
   },
@@ -102,7 +102,8 @@ const offerBuilder = (item) => ({
     status: item.host.is_pro ? `Pro` : ``,
     avatarSrc: item.host.avatar_url
   },
-  coords: [item.location.latitude, item.location.longitude]
+  coords: [item.location.latitude, item.location.longitude],
+  type: item.type
 });
 
 export const reviewsBuilder = (reviewArr) => (
@@ -117,7 +118,7 @@ export const reviewsBuilder = (reviewArr) => (
     rating: review.rating,
     text: review.comment,
     creationDate: review.date
-  }))
+  })).sort((revA, revB) => Date.parse(revB.creationDate) - Date.parse(revA.creationDate))
 );
 
 export const Operation = {
@@ -167,7 +168,7 @@ export const Operation = {
   },
 
   postComment: (hotelId, comment) => (dispatch, _, api) => {
-    return api.post(`comments/${hotelId}`, {rating: comment.rating, comment: comment.text}).
+    return api.post(`comments/${hotelId}`, {rating: comment.rating, comment: comment.comment}).
       then((response) => {
         if (response.status === 200) {
           dispatch(ActionCreator.postComment(reviewsBuilder(response.data)));

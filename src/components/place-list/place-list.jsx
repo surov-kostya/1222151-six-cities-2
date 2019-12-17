@@ -9,7 +9,6 @@ const PlaceList = (props) => {
         {props.places.map((place) => <PlaceCard
           key={place.id}
           place={place}
-          onTitleClick={props.onTitleClick}
           onCardActivate={props.onCardActivate}
         />)}
       </>
@@ -19,7 +18,6 @@ const PlaceList = (props) => {
 
 PlaceList.propTypes = {
   places: PropTypes.arrayOf(placeType),
-  onTitleClick: PropTypes.func,
   onCardActivate: PropTypes.func
 };
 

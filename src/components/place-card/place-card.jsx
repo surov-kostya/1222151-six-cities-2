@@ -5,7 +5,7 @@ import {shape, arrayOf, func, string} from 'prop-types';
 import {placeType} from '../../models/index';
 import {Link} from 'react-router-dom';
 
-export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites, data, application}) => {
+export const PlaceCard = ({place, onCardActivate, changeFavorites, data, application}) => {
   const isPlaceFavorite = data.favorites.length
     ? data.favorites.some((favPlace) => place.id === favPlace.id)
     : false;
@@ -16,9 +16,9 @@ export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites,
         <span>{place.mark}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${application.city.name}/${place.id}`}>
+        {application.city && <Link to={`/offer/${application.city.name}/${place.id}`}>
           <img className="place-card__image" src={place.imageSrc} width="260" height="200" alt="Place image" />
-        </Link>
+        </Link>}
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -43,9 +43,9 @@ export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites,
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#" onClick={onTitleClick}>{place.name}</a>
+          {application.city && <Link to={`/offer/${application.city.name}/${place.id}`}>{place.name}</Link>}
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{place.parameters && place.parameters.place}</p>
       </div>
     </article>
   );
@@ -53,7 +53,6 @@ export const PlaceCard = ({place, onTitleClick, onCardActivate, changeFavorites,
 
 PlaceCard.propTypes = {
   place: placeType,
-  onTitleClick: func,
   onCardActivate: func,
   changeFavorites: func,
   data: shape({favorites: arrayOf(placeType)}),
