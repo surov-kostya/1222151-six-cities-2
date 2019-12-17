@@ -13,7 +13,7 @@ export const reviewType = shape({
   author: personType.isRequired,
   rating: number.isRequired,
   text: string.isRequired,
-  creationDate: string.isRequired
+  creationDate: string
 });
 
 export const placeType = shape({

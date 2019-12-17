@@ -17,7 +17,7 @@ const PLACES = [{
   ],
   "mark": `Premium`,
   "rating": 2.4,
-  "parametrs": {
+  "parameters": {
     "place": `Entire`,
     "bedrooms": 4,
     "adults": 10
@@ -49,7 +49,7 @@ const store = mockStore({
   data: {
     places: PLACES,
     favorites: PLACES,
-    hotelComments: [{id: 1, rating: 4, text: `atata`}]
+    hotelComments: [{id: 1, rating: 4, text: `atata`, author: {id: 0, name: `Vasya`, avatarSrc: `ddd`}}]
   },
   application: {
     city: CITY,
@@ -72,7 +72,7 @@ const USER_PARAMS = {
 };
 
 const HOTEL_COMMENT = {
-  id: 1, rating: 4, text: `atata`, author: {avatarSrc: `ddd`, name: `ddd`}
+  id: 1, rating: 4, text: `atata`, author: {avatarSrc: `ddd`, name: `ddd`, id: 1}
 };
 
 const MOCK_HOTEL_ID = 101;

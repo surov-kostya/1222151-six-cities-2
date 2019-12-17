@@ -183,16 +183,20 @@ exports[`PlaceDetails renders correctly 1`] = `
           >
             <li
               className="property__feature property__feature--entire"
-            />
+            >
+              Entire
+            </li>
             <li
               className="property__feature property__feature--bedrooms"
             >
+              4
                Bedrooms
             </li>
             <li
               className="property__feature property__feature--adults"
             >
               Max 
+              10
                adults
             </li>
           </ul>
