@@ -16,7 +16,7 @@ exports[`PlaceCard renders correctly 1`] = `
     className="cities__image-wrapper place-card__image-wrapper"
   >
     <a
-      href="/offer/0"
+      href="/offer/Paris/0"
       onClick={[Function]}
     >
       <img
@@ -50,7 +50,7 @@ exports[`PlaceCard renders correctly 1`] = `
         </span>
       </div>
       <button
-        className="place-card__bookmark-buttonfalse button"
+        className="place-card__bookmark-button  button"
         onClick={[Function]}
         type="button"
       >
@@ -94,7 +94,7 @@ exports[`PlaceCard renders correctly 1`] = `
       className="place-card__name"
     >
       <a
-        href="#"
+        href="/offer/Paris/0"
         onClick={[Function]}
       >
         Beautiful && luxurious apartment at great location
@@ -102,9 +102,7 @@ exports[`PlaceCard renders correctly 1`] = `
     </h2>
     <p
       className="place-card__type"
-    >
-      Apartment
-    </p>
+    />
   </div>
 </article>
 `;

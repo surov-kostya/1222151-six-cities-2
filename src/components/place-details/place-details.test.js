@@ -46,7 +46,11 @@ const CITY = {
 
 const mockStore = configureStore([]);
 const store = mockStore({
-  data: {places: PLACES, favorites: PLACES},
+  data: {
+    places: PLACES,
+    favorites: PLACES,
+    hotelComments: [{id: 1, rating: 4, text: `atata`}]
+  },
   application: {
     city: CITY,
     userParams: {
@@ -66,7 +70,11 @@ it(`PlaceDetails renders correctly`, () => {
           <PlaceDetails
             match={{params: {id: 101}}}
             fetchHotelComments={() => {}}
-            data={{places: PLACES, favorites: PLACES}}
+            data={{
+              places: PLACES,
+              favorites: PLACES,
+              hotelComments: [{id: 1, rating: 4, text: `atata`, author: {avatarSrc: `ddd`, name: `ddd`}}]
+            }}
             application={{
               city: CITY,
               userParams: {

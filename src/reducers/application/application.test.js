@@ -52,6 +52,13 @@ describe(`Reducer works correctly`, () => {
       payload: CITY,
     })).toEqual(Object.assign({}, initState, {city: CITY}));
   });
+
+  it(`Reducer should block review form`, () => {
+    expect(reducer(initState, {
+      type: ActionType.TOGGLE_FORM_BLOCK,
+      payload: true,
+    })).toEqual(Object.assign({}, initState, {isFormBlocked: true}));
+  });
 });
 
 describe(`Sign on function`, () => {
@@ -65,7 +72,7 @@ describe(`Sign on function`, () => {
     status: ``
   };
 
-  it(`post to /login runs toggle auth and set user params`, () => {
+  it(`post to /login sets user params`, () => {
     const dispatch = jest.fn();
     const api = createAPI(dispatch);
     const mockApi = new MockAdapter(api);
@@ -79,9 +86,26 @@ describe(`Sign on function`, () => {
     return postToLogin(dispatch, undefined, api)
       .then(() => {
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.TOGGLE_AUTH_REQ
+          type: ActionType.SET_USER_PARAMS,
+          payload: MOCK_RESPONSE
         });
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
+      });
+  });
+
+  it(`get to /login runs sets user params`, () => {
+    const dispatch = jest.fn();
+    const api = createAPI(dispatch);
+    const mockApi = new MockAdapter(api);
+
+    const getToLogin = Operation.checkAuth();
+
+    mockApi
+      .onGet(`/login`)
+      .reply(200, MOCK_RESPONSE);
+
+    return getToLogin(dispatch, undefined, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledWith({
           type: ActionType.SET_USER_PARAMS,
           payload: MOCK_RESPONSE
         });

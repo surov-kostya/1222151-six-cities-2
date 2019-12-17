@@ -188,9 +188,9 @@ describe(`fetchOffers function`, () => {
       `https://htmlacademy-react-2.appspot.com/six-cities/static/hotel/17.jpg`
     ],
     "mark": `Premium`,
-    "rating": 2.4,
-    "parametrs": {
-      "place": `Entire`,
+    "rating": 2,
+    "parameters": {
+      "place": `House`,
       "bedrooms": 4,
       "adults": 10
     },
@@ -207,7 +207,8 @@ describe(`fetchOffers function`, () => {
     "coords": [
       53.573341000000006,
       10.025654000000001
-    ]
+    ],
+    "type": `house`
   };
 
   const mockComments = [
@@ -345,7 +346,7 @@ describe(`fetchOffers function`, () => {
     const api = createAPI(dispatch);
     const mockApi = new MockAdapter(api);
 
-    const commentsLoader = Operation.postComment(HOTEL_ID, COMMENT);
+    const commentsLoader = Operation.postComment(HOTEL_ID, COMMENT, ()=>{});
 
     mockApi
       .onPost(`/comments/${HOTEL_ID}`)

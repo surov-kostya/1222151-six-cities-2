@@ -44,7 +44,8 @@ const store = mockStore({
   data: {
     places: PLACES,
     favorites: PLACES,
-    cities
+    cities,
+    serverError: {status: 0, message: ``}
   },
   application: {
     city: {id: 0, name: `Paris`, coords: [1, 2]},
@@ -70,7 +71,6 @@ it(`App renders correctly`, () => {
               chooseCity={() => {}}
               fetchOfferList={() => {}}
               sortVariations={variations}
-
             />
           </BrowserRouter >
         </Provider >

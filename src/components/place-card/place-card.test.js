@@ -42,6 +42,7 @@ const PLACES = [{
 
 const store = mockStore({
   data: {favorites: PLACES},
+  application: {city: {name: `Paris`}}
 });
 
 

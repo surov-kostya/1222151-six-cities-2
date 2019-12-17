@@ -92,7 +92,6 @@ exports[`Favorites renders correctly 1`] = `
               >
                 <a
                   className="locations__item-link"
-                  href="#"
                 >
                   <span>
                     Hamburg
@@ -116,20 +115,7 @@ exports[`Favorites renders correctly 1`] = `
                 </div>
                 <div
                   className="cities__image-wrapper place-card__image-wrapper"
-                >
-                  <a
-                    href="/offer/101"
-                    onClick={[Function]}
-                  >
-                    <img
-                      alt="Place image"
-                      className="place-card__image"
-                      height="200"
-                      src="https://htmlacademy-react-2.appspot.com/six-cities/static/hotel/6.jpg"
-                      width="260"
-                    />
-                  </a>
-                </div>
+                />
                 <div
                   className="place-card__info"
                 >
@@ -152,7 +138,7 @@ exports[`Favorites renders correctly 1`] = `
                       </span>
                     </div>
                     <button
-                      className="place-card__bookmark-button--active button"
+                      className="place-card__bookmark-button place-card__bookmark-button--active button"
                       onClick={[Function]}
                       type="button"
                     >
@@ -194,19 +180,10 @@ exports[`Favorites renders correctly 1`] = `
                   </div>
                   <h2
                     className="place-card__name"
-                  >
-                    <a
-                      href="#"
-                      onClick={[Function]}
-                    >
-                      Loft Studio in the Central Area
-                    </a>
-                  </h2>
+                  />
                   <p
                     className="place-card__type"
-                  >
-                    Apartment
-                  </p>
+                  />
                 </div>
               </article>
             </div>
@@ -220,7 +197,8 @@ exports[`Favorites renders correctly 1`] = `
   >
     <a
       className="footer__logo-link"
-      href="main.html"
+      href="/"
+      onClick={[Function]}
     >
       <img
         alt="6 cities logo"

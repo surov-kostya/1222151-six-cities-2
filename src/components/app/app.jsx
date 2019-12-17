@@ -36,7 +36,7 @@ const sortPlaces = (places, sortVariant) => {
 };
 
 
-const App = ({ data, application, chooseCity, fetchOfferList, sortVariations, sortMain, signIn, resetServerError}) => {
+const App = ({data, application, chooseCity, fetchOfferList, sortVariations, sortMain, signIn, resetServerError}) => {
   const places = data.places;
   const cities = data.cities;
   const city = application.city;

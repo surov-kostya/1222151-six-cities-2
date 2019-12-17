@@ -82,15 +82,6 @@ exports[`PlaceDetails renders correctly 1`] = `
             <img
               alt="Photo studio"
               className="property__image"
-              src="https://htmlacademy-react-2.appspot.com/six-cities/static/hotel/6.jpg"
-            />
-          </div>
-          <div
-            className="property__image-wrapper"
-          >
-            <img
-              alt="Photo studio"
-              className="property__image"
               src="https://htmlacademy-react-2.appspot.com/six-cities/static/hotel/2.jpg"
             />
           </div>
@@ -136,12 +127,19 @@ exports[`PlaceDetails renders correctly 1`] = `
               Loft Studio in the Central Area
             </h1>
             <button
-              className="property__bookmark-button button"
+              className="property__bookmark-button property__bookmark-button--active button"
+              onClick={[Function]}
               type="button"
             >
               <svg
                 className="property__bookmark-icon"
                 height="33"
+                style={
+                  Object {
+                    "fill": "#4481c3",
+                    "stroke": "#4481c3",
+                  }
+                }
                 width="31"
               >
                 <use
@@ -164,7 +162,7 @@ exports[`PlaceDetails renders correctly 1`] = `
               <span
                 style={
                   Object {
-                    "width": "96%",
+                    "width": "48%",
                   }
                 }
               />
@@ -185,9 +183,7 @@ exports[`PlaceDetails renders correctly 1`] = `
           >
             <li
               className="property__feature property__feature--entire"
-            >
-               place
-            </li>
+            />
             <li
               className="property__feature property__feature--bedrooms"
             >
@@ -245,7 +241,7 @@ exports[`PlaceDetails renders correctly 1`] = `
               className="property__host-user user"
             >
               <div
-                className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper"
+                className="property__avatar-wrapper user__avatar-wrapper property__avatar-wrapper--pro"
               >
                 <img
                   alt="Host avatar"
@@ -283,6 +279,68 @@ exports[`PlaceDetails renders correctly 1`] = `
                 1
               </span>
             </h2>
+            <ul
+              className="reviews__list"
+            >
+              <li
+                className="reviews__item"
+              >
+                <div
+                  className="reviews__user user"
+                >
+                  <div
+                    className="reviews__avatar-wrapper user__avatar-wrapper"
+                  >
+                    <img
+                      alt="Reviews avatar"
+                      className="reviews__avatar user__avatar"
+                      height="54"
+                      src="ddd"
+                      width="54"
+                    />
+                  </div>
+                  <span
+                    className="reviews__user-name"
+                  >
+                    ddd
+                  </span>
+                </div>
+                <div
+                  className="reviews__info"
+                >
+                  <div
+                    className="reviews__rating rating"
+                  >
+                    <div
+                      className="reviews__stars rating__stars"
+                    >
+                      <span
+                        style={
+                          Object {
+                            "width": "80%",
+                          }
+                        }
+                      />
+                      <span
+                        className="visually-hidden"
+                      >
+                        Rating
+                      </span>
+                    </div>
+                  </div>
+                  <p
+                    className="reviews__text"
+                  >
+                    atata
+                  </p>
+                  <time
+                    className="reviews__time"
+                  >
+                    undefined NaN
+                  </time>
+                </div>
+              </li>
+            </ul>
             <form
               className="reviews__form form"
               onSubmit={[Function]}
@@ -425,6 +483,15 @@ exports[`PlaceDetails renders correctly 1`] = `
                 <p
                   className="reviews__help"
                 >
+                  0
+                </p>
+              </div>
+              <div
+                className="reviews__button-wrapper"
+              >
+                <p
+                  className="reviews__help"
+                >
                   To submit review please make sure to set 
                   <span
                     className="reviews__star"
@@ -441,7 +508,7 @@ exports[`PlaceDetails renders correctly 1`] = `
                 </p>
                 <button
                   className="reviews__submit form__submit button"
-                  disabled=""
+                  disabled={true}
                   type="submit"
                 >
                   Submit

@@ -8,8 +8,6 @@ import {variations} from './mocks/sort-variations';
 import {compose} from 'recompose';
 import thunk from 'redux-thunk';
 import createAPI from "./api.js";
-import {BrowserRouter} from 'react-router-dom';
-
 
 const api = createAPI((...args) => store.dispatch(...args));
 

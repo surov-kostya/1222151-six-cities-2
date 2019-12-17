@@ -16,6 +16,7 @@ exports[`ReviewForm renders correctly 1`] = `
   >
     <input
       className="form__rating-input visually-hidden"
+      disabled={true}
       id="5-stars"
       name="rating"
       onChange={[Function]}
@@ -39,6 +40,7 @@ exports[`ReviewForm renders correctly 1`] = `
     </label>
     <input
       className="form__rating-input visually-hidden"
+      disabled={true}
       id="4-stars"
       name="rating"
       onChange={[Function]}
@@ -62,6 +64,7 @@ exports[`ReviewForm renders correctly 1`] = `
     </label>
     <input
       className="form__rating-input visually-hidden"
+      disabled={true}
       id="3-stars"
       name="rating"
       onChange={[Function]}
@@ -85,6 +88,7 @@ exports[`ReviewForm renders correctly 1`] = `
     </label>
     <input
       className="form__rating-input visually-hidden"
+      disabled={true}
       id="2-stars"
       name="rating"
       onChange={[Function]}
@@ -108,6 +112,7 @@ exports[`ReviewForm renders correctly 1`] = `
     </label>
     <input
       className="form__rating-input visually-hidden"
+      disabled={true}
       id="1-star"
       name="rating"
       onChange={[Function]}
@@ -132,11 +137,21 @@ exports[`ReviewForm renders correctly 1`] = `
   </div>
   <textarea
     className="reviews__textarea form__textarea"
+    disabled={true}
     id="review"
     name="review"
     onChange={[Function]}
     placeholder="Tell how was your stay, what you like and what can be improved"
   />
+  <div
+    className="reviews__button-wrapper"
+  >
+    <p
+      className="reviews__help"
+    >
+      3
+    </p>
+  </div>
   <div
     className="reviews__button-wrapper"
   >
@@ -159,7 +174,7 @@ exports[`ReviewForm renders correctly 1`] = `
     </p>
     <button
       className="reviews__submit form__submit button"
-      disabled=""
+      disabled={true}
       type="submit"
     >
       Submit
