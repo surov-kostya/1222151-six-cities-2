@@ -5,6 +5,7 @@ import Header from '../header/header';
 import PlaceCard from '../place-card/place-card';
 import {shape, arrayOf, func} from 'prop-types';
 import {placeType} from '../../models/index';
+import {Link} from 'react-router-dom';
 
 export class Favorites extends PureComponent {
   constructor(props) {
@@ -32,7 +33,7 @@ export class Favorites extends PureComponent {
                       <li key={city} className="favorites__locations-items">
                         <div className="favorites__locations locations locations--current">
                           <div className="locations__item">
-                            <a className="locations__item-link" href="#">
+                            <a className="locations__item-link">
                               <span>{city}</span>
                             </a>
                           </div>
@@ -70,9 +71,9 @@ export class Favorites extends PureComponent {
         }
 
         <footer className="footer container">
-          <a className="footer__logo-link" href="main.html">
+          <Link to="/" className="footer__logo-link">
             <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-          </a>
+          </Link>
         </footer>
       </div>);
   }

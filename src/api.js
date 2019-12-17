@@ -10,7 +10,7 @@ const createAPI = (dispatch) => {
   });
 
   const onSuccess = (response) => {
-    dispatch(ActionCreatorData.serverError(0));
+    dispatch(ActionCreatorData.serverError({status: 0, message: ``}));
     return response;
   };
   const onFail = (err) => {
@@ -19,14 +19,13 @@ const createAPI = (dispatch) => {
     switch (err.response.status) {
       case 401:
         if (!url.endsWith(`/login`) && method !== `get`) {
-          dispatch(ActionCreatorData.serverError(401));
+          dispatch(ActionCreatorData.serverError({status: 401, message: ``}));
         }
         break;
-      case 404:
-        window.location.replace(`/page-not-found`);
-        break;
       default:
-        alert(err.response.data.error);
+        dispatch(ActionCreatorData.serverError({
+          status: err.response.status,
+          message: err.response.data.error}));
     }
     return err;
   };

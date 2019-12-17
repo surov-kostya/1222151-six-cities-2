@@ -5,7 +5,7 @@ const initialState = {
   places: [],
   hotelComments: [],
   favorites: [],
-  serverError: 0
+  serverError: {status: 0, message: ``}
 };
 
 export const getInitState = () => {
@@ -24,10 +24,10 @@ export const ActionType = {
 };
 
 export const ActionCreator = {
-  serverError: (errorCode) => {
+  serverError: (error) => {
     return {
       type: ActionType.SERVER_ERROR,
-      payload: errorCode
+      payload: error
     };
   },
 
@@ -167,9 +167,10 @@ export const Operation = {
       });
   },
 
-  postComment: (hotelId, comment) => (dispatch, _, api) => {
-    return api.post(`comments/${hotelId}`, {rating: comment.rating, comment: comment.comment}).
+  postComment: (hotelId, comment, cb) => (dispatch, _, api) => {
+    return api.post(`/comments/${hotelId}`, {rating: comment.rating, comment: comment.comment}).
       then((response) => {
+        cb(response);
         if (response.status === 200) {
           dispatch(ActionCreator.postComment(reviewsBuilder(response.data)));
         }

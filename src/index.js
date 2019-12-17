@@ -27,9 +27,7 @@ const init = () => {
   store.dispatch(Operation.checkAuth());
   ReactDOM.render(
       <Provider store={store}>
-        <BrowserRouter>
-          <App sortVariations={variations}/>
-        </BrowserRouter>
+        <App sortVariations={variations}/>
       </Provider>,
       document.querySelector(`#root`)
   );
